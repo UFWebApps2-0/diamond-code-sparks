@@ -20,6 +20,7 @@ import ForgetPassword from './views/TeacherLogin/ForgetPassword';
 import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
 import OrgDashboard from './views/OrgDashboard/OrgDashboard';
+import CreateOrg from './views/OrgDashboard/CreateOrg';
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
         <Route path='/sandbox' element={<BlocklyPage isSandbox={true} />} />
         {/* Make org pages private once admin role has been created */}
         <Route path='/orgdash' element={<OrgDashboard />} />
+        <Route path='/createorg' element={<CreateOrg />} />
         <Route
           path='/report'
           element={

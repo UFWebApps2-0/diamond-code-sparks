@@ -17,6 +17,11 @@ export default function OrgDashboard() {
 	        </div>
 	        <div id='orgs-container'>
 	        	<p>[Orgs will go here]</p>
+	        	<input
+	        		type='button'
+	        		onClick={() => navigate('/createorg')}
+	        		value='Create new organization'
+	        	/>
 	        </div>
 	    </div>
     );
