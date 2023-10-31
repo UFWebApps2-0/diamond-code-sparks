@@ -24,24 +24,35 @@ export default function HomeJoin(props) {
   };
 
   return (
-    <div
-      id='box'
-      onKeyPress={(e) => {
-        if (e.key === 'Enter') handleLogin();
-      }}
-    >
-      <input
-        type='text'
-        value={joinCode}
-        placeholder='Join Code'
-        onChange={(e) => setJoinCode(e.target.value)}
-      />
-      <input
-        type='button'
-        value={loading ? 'Loading...' : 'Join'}
-        onClick={handleLogin}
-        disabled={loading}
-      />
+    <div>
+      <div
+        id='box'
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') handleLogin();
+        }}
+      >
+        <input
+          type='text'
+          value={joinCode}
+          placeholder='Join Code'
+          onChange={(e) => setJoinCode(e.target.value)}
+        />
+        <input
+          type='button'
+          value={loading ? 'Loading...' : 'Join'}
+          onClick={handleLogin}
+          disabled={loading}
+        />
+      </div>
+      {/* Straight to org dashboard for testing purposes */}
+      <div>
+        <input
+          type='button'
+          value='Go to Org Dashboard'
+          onClick={() => navigate('/orgdash')}
+          style={{marginTop: 40}}
+        />
+      </div>
     </div>
   );
 }
