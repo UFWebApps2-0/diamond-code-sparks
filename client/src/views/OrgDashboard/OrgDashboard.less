@@ -2,15 +2,6 @@
 
 // duplicated from Dashboard.less to achieve consistency in design; edited for organization dashboard use
 
-#main-header {
-    color: #colors[text-secondary];
-    font-weight: bolder;
-    margin-left: 5%;
-    margin-bottom: 3%;
-    text-align: left;
-    padding-top: 20px;
-}
-
 #orgs-container {
     margin: 6vh auto 4vh auto;
     padding-top: 40px;
@@ -41,14 +32,6 @@
             background: #colors[quinary];
         }
     }
-}
-
-#dashboard-card-container {
-    display: inline-grid;
-    grid-template-columns: auto auto;
-    justify-content: center;
-    width: 80vw;
-    margin: auto auto auto 2%;
 }
 
 #dashboard-org-card {
@@ -115,46 +98,21 @@
         #number {
             font-size: 1.4vw;
             margin: 0;
-            padding-top: 20px;
+            padding-top: 15px;
 
         }
 
         #label {
             font-size: 1vw;
-            padding-bottom: 20px;
+            padding-bottom: 10px;
         }
 
-        #dashboard-display-code-modal {
-            height: 49.5%;
-
-            #dashboard-display-code-btn {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                width: 100%;
-                height: 100%;
-                background-color:  #colors[quaternary];
-                border-top-right-radius: 10px;
-                border: none;
-    
-                &:hover {
-                    background: #colors[quinary];
-                }
-    
-                #code-display-text {
-                    font-size: 15em;
-                    text-align: center;
-                  }
-            }
-        }
-        
         #divider {
             background-color: #colors[tertiary];
-            height: 1%;
+            height: 4px;
         }
 
-        #student-number-container {
+        #number-container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -162,9 +120,15 @@
             width: 100%;
             height: 49.5%;
             background-color: #colors[quaternary];
-            border-bottom-right-radius: 10px;
         }
     }
 
+    #card-right-content-container>:first-child {
+        border-top-right-radius: 10px;
+    }
+
+    #card-right-content-container>:last-child {
+        border-bottom-right-radius: 10px;
+    }
 }
   
