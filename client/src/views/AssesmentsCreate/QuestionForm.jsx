@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
+import {Button} from 'antd';
 
 function QuestionForm() {
   const [questions, setQuestions] = useState([]);
 
   const addQuestion = (e) => {
     e.preventDefault();
-    setQuestions([...questions, { text: '', options: [] }]);
+    setQuestions([...questions, {type:"free response", text: '', options: [] }]);
+  };
+
+  const addMultQuestion = (e) => {
+    e.preventDefault();
+    setQuestions([...questions, {type:"multiple choice",text: '', options: ['', '','',''] }]);
   };
 
   const handleQuestionChange = (index, text) => {
@@ -42,7 +48,8 @@ function QuestionForm() {
 
   return (
     <div>
-      <button onClick={addQuestion}>Add Question</button>
+      <Button onClick={addMultQuestion}>Add multiple choice question</Button>
+      <Button onClick={addQuestion}>Add free response question</Button>
       {questions.map((question, questionIndex) => (
         <div key={questionIndex}>
           <input
@@ -51,8 +58,8 @@ function QuestionForm() {
             value={question.text}
             onChange={(e) => handleQuestionChange(questionIndex, e.target.value)}
           />
-          <button onClick={(e) => removeQuestion(e, questionIndex)}>Remove Question</button>
-          {question.options.map((option, optionIndex) => (
+          <Button onClick={(e) => removeQuestion(e, questionIndex)}>Remove Question</Button>
+          {question.type=="free response" ? (question.options.map((option, optionIndex) => (
             <div key={optionIndex}>
               <input
                 type="text"
@@ -62,8 +69,24 @@ function QuestionForm() {
               />
               <button onClick={(e) => removeOption(questionIndex, optionIndex)}>Remove Option</button>
             </div>
-          ))}
-          <button onClick={(e) => addOption(e, questionIndex)}>Add Option</button>
+          ))) : (
+            <select multiple={true}>
+                {question.options.map((option, optionIndex) =>
+                 (
+                <div key={optionIndex}>
+                <option
+                    value={option}
+                    onChange={(e) => handleOptionChange(questionIndex, optionIndex, e.target.value)}
+                >
+                    {option}
+                </option>
+                <button onClick={(e) => removeOption(questionIndex, optionIndex)}>Remove Option</button>
+                </div>
+            )
+            )}
+          </select>)
+             }
+          <Button onClick={(e) => addOption(e, questionIndex)}>Add Option</Button>
         </div>
       ))}
     </div>
