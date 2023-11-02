@@ -1,7 +1,7 @@
 import NavBar from '../../components/NavBar/NavBar';
 import { Table, Popconfirm, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import CardView from './CardView';
+
 function Assessments()
 {
     const wsColumn = [
