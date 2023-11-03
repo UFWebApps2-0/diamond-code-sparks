@@ -21,7 +21,7 @@ import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
 import OrgDashboard from './views/OrgDashboard/OrgDashboard';
 import CreateOrg from './views/OrgDashboard/CreateOrg';
-import ManageAccount from './views/OrgDashboard/ManageAccount';
+// import ManageAccount from './views/OrgDashboard/ManageAccount';
 
 const App = () => {
   return (
