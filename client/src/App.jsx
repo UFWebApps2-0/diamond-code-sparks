@@ -38,7 +38,7 @@ const App = () => {
         {/* Make org pages private once admin role has been created */}
         <Route path='/orgdash' element={<OrgDashboard />} />
         <Route path='/createorg' element={<CreateOrg />} />
-        <Route path='/manageaccount' element={<ManageAccount />} />
+        {/* <Route path='/manageaccount' element={<ManageAccount />} /> */}
         <Route
           path='/activityLevel'
           element={
