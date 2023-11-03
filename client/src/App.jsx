@@ -21,6 +21,7 @@ import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
 import OrgDashboard from './views/OrgDashboard/OrgDashboard';
 import CreateOrg from './views/OrgDashboard/CreateOrg';
+import ManageAccount from './views/OrgDashboard/ManageAccount';
 
 const App = () => {
   return (
@@ -37,14 +38,7 @@ const App = () => {
         {/* Make org pages private once admin role has been created */}
         <Route path='/orgdash' element={<OrgDashboard />} />
         <Route path='/createorg' element={<CreateOrg />} />
-        <Route
-          path='/report'
-          element={
-            <PrivateRoute>
-              <Report />
-            </PrivateRoute>
-          }
-        />
+        <Route path='/manageaccount' element={<ManageAccount />} />
         <Route
           path='/activityLevel'
           element={
