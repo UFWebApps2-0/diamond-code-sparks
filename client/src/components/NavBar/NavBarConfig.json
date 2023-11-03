@@ -10,7 +10,7 @@
     "ContentCreatorDashboard": "/ccdashboard",
     "ResearcherDashboard": "/report",
     "BugReport": "/bugreport",
-    "AdminDashboard": "/adminDashboard"
+    "AdminDashboard": "/AdminDashboard"
   },
   "users": {
     "DefaultUser": ["Home", "TeacherLogin", "Sandbox", "About"],
@@ -24,6 +24,6 @@
       "BugReport"
     ],
     "Researcher": ["ResearcherDashboard", "BugReport", "SignOut"],
-    "Administrator": ["AccountInfo", "SignOut", "Sandbox", "BugReport"]
+    "Administrator": ["AdminDashboard","AccountInfo", "SignOut", "Sandbox", "BugReport"]
   }
 }

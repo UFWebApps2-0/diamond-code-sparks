@@ -9,11 +9,7 @@ function AdminDashboard() {
   const navigate = useNavigate();
 
   const userData = getUser();
-
-  // Call the function when the component is mounted
   
-
-
   return (
     <div className='container nav-padding'>
     <NavBar/>

@@ -20,8 +20,11 @@ export default function BlocklyPage({ isSandbox }) {
       // if we are in sandbox mode show all toolbox
       const sandboxActivity = JSON.parse(localStorage.getItem("sandbox-activity"))
       if (isSandbox) {
+        
         const AllToolboxRes = await getActivityToolboxAll()
-        if (!sandboxActivity?.id || value.role === "Mentor") {
+        
+        if (!sandboxActivity?.id || value.role === "Mentor" || value.role === "Administrator") {
+          
           if (AllToolboxRes.data) {
             let loadedActivity = {
               ...sandboxActivity,
@@ -42,8 +45,8 @@ export default function BlocklyPage({ isSandbox }) {
             setActivity(loadedActivity)
           } else {
             message.error(res.err)
-          }
-        }
+          } 
+        } 
       }
       // else show toolbox based on the activity we are viewing
       else {

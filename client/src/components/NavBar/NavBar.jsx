@@ -42,8 +42,8 @@ export default function NavBar() {
           &nbsp; Dashboard
         </Menu.Item>
       ) : null}
-      {shouldShowRoute('adminDashboard') ? (
-        <Menu.Item key='1' onClick={() => handleRouteChange(routes.AdminDashboard)}>
+      {shouldShowRoute('AdminDashboard') ? (
+        <Menu.Item key='9' onClick={() => handleRouteChange(routes.AdminDashboard)}>
           <i className='fa fa-home' />
           &nbsp; Dashboard
         </Menu.Item>
