@@ -65,7 +65,7 @@ const handleOk = () => {
             </svg>
             </button>
           <div id='page-header'>
-            <h1>Assignments</h1>
+            <h1>Assessments</h1>
           </div>
           <div id='content-creator-table-container' style={{ marginTop: '6.6vh' }}>
             <Table columns={wsColumn} />
