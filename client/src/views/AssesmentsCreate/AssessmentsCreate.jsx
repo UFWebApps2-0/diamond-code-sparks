@@ -9,7 +9,6 @@ function CreateAssessments()
         <div>
             <form>
                 <QuestionForm/>
-                <button type="submit">Submit</button>
         </form>
         </div>
     )
