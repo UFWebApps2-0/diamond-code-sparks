@@ -35,8 +35,6 @@
 }
 
 #dashboard-org-card {
-    // display: flex;
-    // flex-direction: row;
     text-align: center;
     width: 24vw;
     height: auto;
@@ -48,32 +46,11 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
     
+    position: relative;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
 
-    #card-button-container {
-        // margin: 10% auto 0 auto;
-        
-        button {
-            width: 9vw;
-            height: auto;
-            font-size: 1vw;
-            font-weight: 500;
-            border-radius: 30px;
-            margin: 10% auto auto auto;
-            background: #colors[quaternary];
-            border: none;
-            color: #colors[text-primary];
-            transition: 0.25s;
-            cursor: pointer;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
-
-            &:hover {
-                width: 10vw;
-                background: #colors[quinary];
-            }
-        }
-    }
-
-    #edit-org-button {
+    .edit-org-btn {
         height: 4vh;
         width: 5%;
         font-size: 1.2em;
@@ -85,7 +62,6 @@
         position: relative;
         left: 40%;
         margin-top: 15px;
-
 
         &:hover {
           cursor: pointer;
@@ -120,7 +96,7 @@
             height: 4px;
         }
 
-        #manage-button {
+        #manage-btn {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -142,4 +118,20 @@
         border-radius: 0px 0px 10px 10px;
     }
 }
-  
+
+.org-card-front, .org-card-back {
+    backface-visibility: hidden;
+}
+
+.org-card-back {
+    transform: rotateY(180deg);
+    position: absolute;
+    bottom: 20px;
+    //left: 100px;
+    right: 100px;
+}
+
+.flipped {
+    transform: rotateY(180deg);
+}
+
