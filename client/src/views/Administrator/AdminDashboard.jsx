@@ -28,8 +28,143 @@ function AdminDashboard() {
   const userData = getUser();
   const [classrooms, setClassrooms] = useState([]);
   const [learningStandardList, setLessonModuleList] = useState([]);
+  const [viewing, setViewing] = useState(parseInt(searchParams.get('activity')));
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const [lsResponse] = await Promise.all([
+        getLessonModuleAll(),
+      ]);
+      setLessonModuleList(lsResponse.data);
+    };
+    fetchData();
+  }, []);
+
+   //Create lesson table structure
+   const lessonColumns = [
+    {
+      title: 'Unit',
+      dataIndex: 'unit',
+      key: 'unit',
+      editable: true,
+      width: '22.5%',
+      align: 'left',
+    },
+    {
+      title: 'Lesson',
+      dataIndex: 'name',
+      key: 'name',
+      editable: true,
+      width: '22.5%',
+      align: 'left',
+    },
+    {
+      title: 'Description',
+      dataIndex: 'expectations',
+      key: 'character',
+      editable: true,
+      width: '22.5%',
+      align: 'left',
+    },
   
+  ];
+
+  //Create teacher structure
+  const teacherColumns = [
+    {
+      title: 'First Name',
+      dataIndex: 'firstName',
+      key: 'firstName',
+      editable: true,
+      width: '22.5%',
+      align: 'left',
+    },
+    {
+      title: 'Last Name',
+      dataIndex: 'lastName',
+      key: 'lastName',
+      editable: true,
+      width: '22.5%',
+      align: 'left',
+    },
+    {
+      title: 'School',
+      dataIndex: 'school',
+      key: 'school',
+      editable: true,
+      width: '22.5%',
+      align: 'left',
+    },
+
+    {
+      title: 'View Classes',
+      dataIndex: 'view',
+      key: 'view',
+      width: '22.5%',
+      align: 'left',
+    },
+  
+  ];
+
+
+  //Create student table structure
+  const studentColumns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      editable: true,
+      width: '22.5%',
+      align: 'left',
+    },
+    {
+      title: 'Animal',
+      dataIndex: 'animal',
+      key: 'animal',
+      width: '22.5%',
+      align: 'left',
+    },
+    {
+      title: 'Last Logged in',
+      dataIndex: 'log',
+      key: 'log',
+      width: '22.5%',
+      align: 'left',
+    },
+    {
+      title: 'View',
+      dataIndex: 'view',
+      key: 'view',
+      width: '10%',
+      align: 'left',
+      
+    },
+    {
+      title: 'Enrolled',
+      dataIndex: 'enrolled',
+      key: 'enrolled',
+      width: '10%',
+      align: 'left',
+    },
+  ];
+
+  //Create flagged content table structure
+  const flagColumns = [
+    {
+      title: 'Student Name',
+      dataIndex: 'studentName',
+      key: 'studentName',
+      width: '22.5%',
+      align: 'left',
+    },
+    {
+      title: 'Decription',
+      dataIndex: 'reason',
+      key: 'reason',
+      width: '22.5%',
+      align: 'left',
+    },
+  ];
 
   //Dashboard View
   return (
@@ -76,10 +211,10 @@ function AdminDashboard() {
               ))}
             </div>
           </div>
-          
+
         </TabPane>
 
-        <TabPane tab = 'Teachers' key='teachers'>
+        <TabPane tab = 'Teachers' key='teacher'>
         <div id='page-header'>
             <h1>
               Your Teachers
@@ -87,14 +222,23 @@ function AdminDashboard() {
           </div>
           <div id='content-creator-table-container'>
             <div id='content-creator-btn-container'>
-
+             PUT BUTTONS HERE
             </div>
             <Table
-              //Table info here
+              columns = {teacherColumns}
+              //dataSource = {learningStandardList}
+              rowClassName = 'editable-row'
+              rowKey = 'id'
+              onChange = {(Pagination) => {
+                setViewing(undefined);
+                setPage(Pagination.current);
+                setSearchParams({tab, page: Pagination.current});
+              }}
+              pagination = {{current: page ? page : 1}}
             ></Table>
           </div>
         </TabPane>
-        
+
         <TabPane tab = 'Students' key='students'>
         <div id='page-header'>
             <h1>
@@ -103,10 +247,19 @@ function AdminDashboard() {
           </div>
           <div id='content-creator-table-container'>
             <div id='content-creator-btn-container'>
-
+             PUT BUTTONS HERE
             </div>
             <Table
-              //Table info here
+              columns = {studentColumns}
+              //dataSource = {learningStandardList}
+              rowClassName = 'editable-row'
+              rowKey = 'id'
+              onChange = {(Pagination) => {
+                setViewing(undefined);
+                setPage(Pagination.current);
+                setSearchParams({tab, page: Pagination.current});
+              }}
+              pagination = {{current: page ? page : 1}}
             ></Table>
           </div>
         </TabPane>
@@ -119,10 +272,19 @@ function AdminDashboard() {
           </div>
           <div id='content-creator-table-container'>
             <div id='content-creator-btn-container'>
-             
+             PUT BUTTONS HERE
             </div>
             <Table
-              //Table info here
+              columns = {lessonColumns}
+              dataSource = {learningStandardList}
+              rowClassName = 'editable-row'
+              rowKey = 'id'
+              onChange = {(Pagination) => {
+                setViewing(undefined);
+                setPage(Pagination.current);
+                setSearchParams({tab, page: Pagination.current});
+              }}
+              pagination = {{current: page ? page : 1}}
             ></Table>
           </div>
         </TabPane>
@@ -135,10 +297,19 @@ function AdminDashboard() {
             </div>
             <div id='content-creator-table-container'>
             <div id='content-creator-btn-container'>
-
+            <br></br>
             </div>
             <Table
-              //Table info here
+              columns = {flagColumns}
+              dataSource = {learningStandardList}
+              rowClassName = 'editable-row'
+              rowKey = 'id'
+              onChange = {(Pagination) => {
+                setViewing(undefined);
+                setPage(Pagination.current);
+                setSearchParams({tab, page: Pagination.current});
+              }}
+              pagination = {{current: page ? page : 1}}
             ></Table>
           </div>
 
@@ -149,13 +320,22 @@ function AdminDashboard() {
             </div>
             <div id='content-creator-table-container'>
             <div id='content-creator-btn-container'>
-
+            <br></br>
             </div>
             <Table
-              //Table info here
+              columns = {flagColumns}
+              dataSource = {learningStandardList}
+              rowClassName = 'editable-row'
+              rowKey = 'id'
+              onChange = {(Pagination) => {
+                setViewing(undefined);
+                setPage(Pagination.current);
+                setSearchParams({tab, page: Pagination.current});
+              }}
+              pagination = {{current: page ? page : 1}}
             ></Table>
           </div>
-      
+
           <div id = 'page-header'>
             <h1>
               Flagged Users
@@ -163,10 +343,19 @@ function AdminDashboard() {
             </div>
             <div id='content-creator-table-container'>
             <div id='content-creator-btn-container'>
-
+            <br></br>
             </div>
             <Table
-              //Table info here
+              columns = {flagColumns}
+              dataSource = {learningStandardList}
+              rowClassName = 'editable-row'
+              rowKey = 'id'
+              onChange = {(Pagination) => {
+                setViewing(undefined);
+                setPage(Pagination.current);
+                setSearchParams({tab, page: Pagination.current});
+              }}
+              pagination = {{current: page ? page : 1}}
             ></Table>
             <br></br>
             <br></br>
@@ -176,9 +365,8 @@ function AdminDashboard() {
       </Tabs>
     </div>
 
-    
+
   );
 }
 
 export default AdminDashboard;
-
