@@ -1,9 +1,9 @@
 //List of imports
 import React, { useEffect, useState } from 'react';
-import { Tabs, Table, Popconfirm, message } from 'antd';
+import { Tabs, Table, Button, Popconfirm, message } from 'antd';
 import SavedWorkSpaceTab from '../../components/Tabs/SavedWorkspaceTab';
 import { getUser } from '../../Utils/AuthRequests';
-import { getMentor, getClassrooms, getLessonModuleAll } from '../../Utils/requests';
+import { getMentor, getClassrooms, getGrades, getLessonModuleAll } from '../../Utils/requests';
 import MentorSubHeader from '../../components/MentorSubHeader/MentorSubHeader';
 import DashboardDisplayCodeModal from '../Mentor/Dashboard/DashboardDisplayCodeModal';
 import NavBar from '../../components/NavBar/NavBar';
@@ -29,13 +29,20 @@ function AdminDashboard() {
   const [classrooms, setClassrooms] = useState([]);
   const [learningStandardList, setLessonModuleList] = useState([]);
   const [viewing, setViewing] = useState(parseInt(searchParams.get('activity')));
+  const [gradeList, setGradeList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const [lsResponse] = await Promise.all([
+      const [lsResponse, gradeResponse] = await Promise.all([
         getLessonModuleAll(),
+        getGrades(),
       ]);
       setLessonModuleList(lsResponse.data);
+
+      const grades = gradeResponse.data;
+      grades.sort((a, b) => (a.id > b.id ? 1 : -1));
+      setGradeList(grades);
+
     };
     fetchData();
   }, []);
@@ -209,6 +216,10 @@ function AdminDashboard() {
                 </div>
               </div>
               ))}
+                <br></br>
+                <button onClick = {null} id = "add-unit-btn">
+                + Add Organization
+                 </button>
             </div>
           </div>
 
@@ -222,7 +233,12 @@ function AdminDashboard() {
           </div>
           <div id='content-creator-table-container'>
             <div id='content-creator-btn-container'>
-             PUT BUTTONS HERE
+            <button onClick = {null} id = "add-unit-btn">
+                + Add Teacher
+              </button>
+              <button onClick = {null} id = "add-unit-btn">
+                + Upload Faculty List
+              </button>
             </div>
             <Table
               columns = {teacherColumns}
@@ -247,7 +263,12 @@ function AdminDashboard() {
           </div>
           <div id='content-creator-table-container'>
             <div id='content-creator-btn-container'>
-             PUT BUTTONS HERE
+            <button onClick = {null} id = "add-unit-btn">
+                + Add Student
+              </button>
+              <button onClick = {null} id = "add-unit-btn">
+                + Upload Roster
+              </button>
             </div>
             <Table
               columns = {studentColumns}
@@ -272,7 +293,12 @@ function AdminDashboard() {
           </div>
           <div id='content-creator-table-container'>
             <div id='content-creator-btn-container'>
-             PUT BUTTONS HERE
+              <UnitCreator gradeList = {gradeList}
+              //unable to get other button to work, think its result from not getting table to load (so replacement button)
+              />
+              <button onClick = {null} id = "add-unit-btn">
+                + Add Lesson
+              </button>
             </div>
             <Table
               columns = {lessonColumns}
