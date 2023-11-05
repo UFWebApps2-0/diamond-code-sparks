@@ -28,7 +28,9 @@ export default function TeacherLogin() {
   // Normal login
   const handleLogin = () => {
     setLoading(true);
-    let body = { identifier: email.value, password: password.value };
+    let body = { identifier: email, password: password }; // Removed ".value"
+
+    console.log(body);
 
     postUser(body)
       .then((response) => {
@@ -61,11 +63,11 @@ export default function TeacherLogin() {
     setEmail(userObject.email);
     // console.log(userObject.email)
 
-    let body = { identifier: email }; // Need password???
+    let body = { identifier: email }; // Need password??? // Removed ".value"
     
     postUser(body)
       .then((response) => {
-        setUserSession(response.data.jwt, JSON.stringify(response.data.user));
+        setUserSession(response.data.jwt, JSON.stringify(response.data.user)); 
         setLoading(false);
         if (response.data.user.role.name === 'Content Creator') {
           navigate('/ccdashboard');
