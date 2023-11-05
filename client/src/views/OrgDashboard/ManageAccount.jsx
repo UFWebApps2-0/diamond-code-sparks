@@ -27,7 +27,9 @@ export default function ManageAccount() {
           <option value="name">Name</option>
           <option value="email">Email</option>
           {/* // Add more options as needed */}
-        </select>
+              </select>
+            <button id="add-teacher-btn">Add</button>
+            <button id='remove-teacher-btn'>Remove</button>
         <table>
           <thead>
             <tr>
