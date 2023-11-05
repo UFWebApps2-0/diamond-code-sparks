@@ -121,7 +121,7 @@ export default function OrgDashboard() {
 				        				<p>Manage Classrooms</p>
 				        			</button>
 				        			<div className='divider' />
-				        			<button className='manage-btn'>
+				        			<button className='manage-btn' onClick={() => navigate('/managegalleries')}>
 				        				<p>Manage Galleries</p>
 				        			</button>
 				        			<div className='divider' />

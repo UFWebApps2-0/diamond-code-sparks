@@ -23,6 +23,7 @@ import OrgDashboard from './views/OrgDashboard/OrgDashboard';
 import CreateOrg from './views/OrgDashboard/CreateOrg';
 // import ManageAccount from './views/OrgDashboard/ManageAccount';
 import AdminClassroomDashboard from './views/AdminClassroomView/AdminClassroomDashboard';
+import AdminGalleryDashboard from './views/AdminGalleryView/AdminGalleryDashboard';
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
         <Route path='/orgdash' element={<OrgDashboard />} />
         <Route path='/createorg' element={<CreateOrg />} />
         <Route path='/admindashboard' element={<AdminClassroomDashboard />} />
+        <Route path='/managegalleries' element={<AdminGalleryDashboard />} />
         {/* <Route path='/manageaccount' element={<ManageAccount />} /> */}
       
         <Route
