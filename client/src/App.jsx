@@ -22,6 +22,7 @@ import TeacherLogin from './views/TeacherLogin/TeacherLogin';
 import OrgDashboard from './views/OrgDashboard/OrgDashboard';
 import CreateOrg from './views/OrgDashboard/CreateOrg';
 import ManageAccount from './views/OrgDashboard/ManageAccount';
+import AdminClassroomDashboard from './views/AdminClassroomView/AdminClassroomDashboard';
 
 const App = () => {
   return (
