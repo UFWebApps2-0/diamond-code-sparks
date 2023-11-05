@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/assessments",
+      "handler": "assessments.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/assessments/count",
+      "handler": "assessments.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/assessments/:id",
+      "handler": "assessments.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/assessments",
+      "handler": "assessments.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/assessments/:id",
+      "handler": "assessments.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/assessments/:id",
+      "handler": "assessments.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

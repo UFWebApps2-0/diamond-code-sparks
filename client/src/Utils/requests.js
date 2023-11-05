@@ -672,3 +672,18 @@ export const getClassroomWorkspace = async (id) =>
     auth: true,
     error: 'Unable to retrive classroom workspaces',
   });
+
+
+
+export const createAsessment = async (name, questionSet) =>
+makeRequest({
+  method: POST,
+  path: `${server}/assessments`,
+  auth: true,
+  data: {
+    assessmentName: name,
+    questions: questionSet
+  },
+
+  error: 'Failed to create Assessment',
+});
