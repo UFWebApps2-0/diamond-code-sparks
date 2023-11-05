@@ -8,8 +8,9 @@ import MentorSubHeader from '../../components/MentorSubHeader/MentorSubHeader';
 import DashboardDisplayCodeModal from '../Mentor/Dashboard/DashboardDisplayCodeModal';
 import NavBar from '../../components/NavBar/NavBar';
 import UnitCreator from '../ContentCreator/UnitCreator/UnitCreator';
+import UnitEditor from '../ContentCreator/UnitEditor/UnitEditor';
 import LessonModuleActivityCreator from '../ContentCreator/LessonModuleCreator/LessonModuleCreator';
-import './adminDashboard.less'
+import './AdminDashboard.less'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
@@ -56,6 +57,9 @@ function AdminDashboard() {
       editable: true,
       width: '22.5%',
       align: 'left',
+      render: (_, key) => (
+        <UnitEditor id={key.unit.id} unitName={key.unit.name} linkBtn={true} />
+      ),
     },
     {
       title: 'Lesson',
