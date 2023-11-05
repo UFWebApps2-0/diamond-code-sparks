@@ -19,7 +19,7 @@ import StudentLogin from './views/StudentLogin/StudentLogin';
 import ForgetPassword from './views/TeacherLogin/ForgetPassword';
 import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
-import SignUp from './views/SignUp/signup';
+import SignUp from './views/SignUp/signup'; // Added for sign up test
 
 const App = () => {
   return (
@@ -27,6 +27,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
+        {/* Added dummy sign up page for testing */}
         <Route path='/signup' element={<SignUp />} />
         <Route path='/teacherlogin' element={<TeacherLogin />} />
         <Route path='/forgot-password' element={<ForgetPassword />} />

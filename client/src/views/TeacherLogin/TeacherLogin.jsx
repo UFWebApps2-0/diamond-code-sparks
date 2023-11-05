@@ -25,6 +25,7 @@ export default function TeacherLogin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Normal login
   const handleLogin = () => {
     setLoading(true);
     let body = { identifier: email.value, password: password.value };
@@ -51,15 +52,16 @@ export default function TeacherLogin() {
       });
   };
 
+  // Google login
   const handleGoogleLogin = (res) => {
     console.log("Encoded JWT Token: " + res.credential)
-    const userObject = jwtDecode(res.credential);
+    const userObject = jwtDecode(res.credential); // Get user info for login
     
     // console.log(userObject);
     setEmail(userObject.email);
     // console.log(userObject.email)
 
-    let body = { identifier: email };
+    let body = { identifier: email }; // Need password???
     
     postUser(body)
       .then((response) => {
