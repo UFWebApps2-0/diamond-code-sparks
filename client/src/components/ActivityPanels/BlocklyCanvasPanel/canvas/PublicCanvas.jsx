@@ -61,6 +61,104 @@ export default function PublicCanvas({ activity, isSandbox }) {
 
   // Ashley: do not need to loadsave bc this user is unregistered
 
+  // Ashley: idk what this does but its in the other one (add push event)
+  const pushEvent = (type, blockId = '') => {
+    let blockType = '';
+    if (blockId !== '') {
+      let type = window.Blockly.mainWorkspace.getBlockById(blockId)?.type;
+      type ? blockType = type : blockType = ''; 
+    }
+
+    let xml = window.Blockly.Xml.workspaceToDom(workspaceRef.current);
+    let xml_text = window.Blockly.Xml.domToText(xml);
+    replayRef.current.push({
+      xml: xml_text,
+      action: type,
+      blockId: blockId,
+      blockType: blockType,
+      timestamp: Date.now(),
+      clicks: clicks.current,
+    });
+  };
+
+  // Ashley: also idk what this does
+  let blocked = false;
+  const blocklyEvent = (event) => {
+    // if it is a click event, add click
+    if (
+      (event.type === 'ui' && event.element === 'click') ||
+      event.element === 'selected'
+    ) {
+      clicks.current++;
+    }
+
+    // if it is other ui events or create events or is [undo, redo], return
+    if (event.type === 'ui' || !event.recordUndo) {
+      return;
+    }
+
+    // if event is in timeout, return
+    if (event.type === 'change' && blocked) {
+      return;
+    }
+
+    // if the event is change field value, only accept the latest change
+    if (
+      event.type === 'change' &&
+      event.element === 'field' &&
+      replayRef.current.length > 1 &&
+      replayRef.current[replayRef.current.length - 1].action ===
+        'change field' &&
+      replayRef.current[replayRef.current.length - 1].blockId === event.blockId
+    ) {
+      replayRef.current.pop();
+    }
+
+    // event delete always comes after a move, ignore the move
+    if (event.type === 'delete') {
+      if (replayRef.current[replayRef.current.length - 1].action === 'move') {
+        replayRef.current.pop();
+      }
+    }
+
+    // if event is change, add the detail action type
+    if (event.type === 'change' && event.element) {
+      pushEvent(`${event.type} ${event.element}`, event.blockId);
+    } else {
+      pushEvent(event.type, event.blockId);
+    }
+
+    // timeout for half a second
+    blocked = true;
+    setTimeout(() => {
+      blocked = false;
+    }, 500);
+  };
+  // Ashley: last add end here
+
+  // Ashley: add autosave
+  useEffect(() => {
+    // automatically save workspace every min
+    let autosaveInterval = setInterval(async () => {
+      if (workspaceRef.current && activityRef.current) {
+        const res = await handleSave(
+          activityRef.current.id,
+          workspaceRef,
+          replayRef.current
+        );
+        if (res.data) {
+          setLastAutoSave(res.data[0]);
+          setLastSavedTime(getFormattedDate(res.data[0].updated_at));
+        }
+      }
+    }, 60000);
+
+    // clean up - saves workspace and removes blockly div from DOM
+    return async () => {
+      clearInterval(autosaveInterval);
+    };
+  }, []);
+
   useEffect(() => {
     // once the activity state is set, set the workspace and save
     const setUp = async () => {
