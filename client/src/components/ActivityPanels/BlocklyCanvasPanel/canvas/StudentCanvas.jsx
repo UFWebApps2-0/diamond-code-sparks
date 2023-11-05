@@ -146,7 +146,7 @@ export default function StudentCanvas({ activity }) {
     // if event is change, add the detail action type
     if (event.type === 'change' && event.element) {
       pushEvent(`${event.type} ${event.element}`, event.blockId);
-      onChange(event);
+      handleSave(activity.id, workspaceRef, replayRef.current);
     } else {
       pushEvent(event.type, event.blockId);
     }
@@ -157,20 +157,6 @@ export default function StudentCanvas({ activity }) {
       blocked = false;
     }, 500);
   };
-
-  async function onChange(event){
-    if (event.type === 'change' && event.element) {
-      const res = await handleSave(
-        activityRef.current.id,
-        workspaceRef,
-        replayRef.current
-      );
-      if (res.data) {
-        setLastAutoSave(res.data[0]);
-        setLastSavedTime(getFormattedDate(res.data[0].updated_at));
-      }
-    }
-  }
 
   useEffect(() => {
     // automatically save workspace every min
