@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NavBar from "../../components/NavBar/NavBar";
 import './OrgDashboard.less';
 import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 
 export default function OrgDashboard() {
 	const [orgs, setOrgs] = useState([]);
@@ -74,13 +75,17 @@ export default function OrgDashboard() {
 	const handleEditOrg = (event, id) => {
 		event.preventDefault();
 
-		let updatedOrgs = [...orgs];
-		let index = updatedOrgs.findIndex(function (org) {
-			return org['id'] == id
-		});
-		updatedOrgs[index]['name'] = orgName;
-		setOrgs(updatedOrgs);
-		setOrgName('');
+		if (orgName != '') {
+			let updatedOrgs = [...orgs];
+			let index = updatedOrgs.findIndex(function (org) {
+				return org['id'] == id
+			});
+			updatedOrgs[index]['name'] = orgName;
+			setOrgs(updatedOrgs);
+			setOrgName('');
+		} else {
+			message.info('Name cannot be blank.');
+		}
 
 		// update when connected to backend to edit db rather than just locally
 	}
@@ -138,7 +143,7 @@ export default function OrgDashboard() {
      										value={orgName}
      										onChange={(e) => setOrgName(e.target.value)}
      									/>
-     									<button type='submit' className='manage-btn save-btn' onClick={handleFlip(org.id)}>Save Changes</button>
+     									<button type='submit' className='manage-btn save-btn' onClick={orgName != '' ? handleFlip(org.id) : null}>Save Changes</button>
      								</form>
      								<div className='divider' />
      								<button className='manage-btn warning-btn'>Delete Organization</button>
