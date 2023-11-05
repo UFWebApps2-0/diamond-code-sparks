@@ -35,6 +35,10 @@ export default function TeacherLogin() {
           navigate('/ccdashboard');
         } else if (response.data.user.role.name === 'Researcher') {
           navigate('/report');
+        } else if (response.data.user.role.name === 'Organization Administrator') {
+          console.log(response.data.user.role.name);
+          console.log('Proceed to admin org dashboard');
+          navigate('/orgdash');
         } else {
           navigate('/dashboard');
         }
