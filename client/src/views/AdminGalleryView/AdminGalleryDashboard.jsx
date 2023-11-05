@@ -59,7 +59,7 @@ export default function AdminGalleryDashboard() {
                 onClick = {() => alert("Add a new gallery")}
                 value = '(+) Create Gallery'
             />
-                <div id='dashboard-card-container'>
+                {/* <div id='dashboard-card-container'>
                     {classrooms.map((classroom) => (
                         <div key={classroom.id} id='dashboard-class-card'>
                             <div id='card-left-content-container'>
@@ -80,7 +80,7 @@ export default function AdminGalleryDashboard() {
                         </div>
                     </div>
                     ))}
-                </div>
+                </div> */}
             </div>
         </div>
       );
