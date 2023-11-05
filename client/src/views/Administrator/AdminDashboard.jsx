@@ -117,48 +117,6 @@ function AdminDashboard() {
   
   ];
 
-
-  //Create student table structure
-  const studentColumns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      editable: true,
-      width: '22.5%',
-      align: 'left',
-    },
-    {
-      title: 'Animal',
-      dataIndex: 'animal',
-      key: 'animal',
-      width: '22.5%',
-      align: 'left',
-    },
-    {
-      title: 'Last Logged in',
-      dataIndex: 'log',
-      key: 'log',
-      width: '22.5%',
-      align: 'left',
-    },
-    {
-      title: 'View',
-      dataIndex: 'view',
-      key: 'view',
-      width: '10%',
-      align: 'left',
-      
-    },
-    {
-      title: 'Enrolled',
-      dataIndex: 'enrolled',
-      key: 'enrolled',
-      width: '10%',
-      align: 'left',
-    },
-  ];
-
   //Create flagged content table structure
   const flagColumns = [
     {
@@ -195,7 +153,7 @@ function AdminDashboard() {
         <TabPane tab = 'Organizations' key='organizations'>
           <div id='page-header'>
             <h1>
-              Your Classrooms
+              Your Organizations
             </h1>
           </div>
           <div id = 'classrooms-container'>
@@ -229,6 +187,43 @@ function AdminDashboard() {
 
         </TabPane>
 
+        <TabPane tab = 'Classrooms' key='classrooms'>
+          <div id='page-header'>
+            <h1>
+              Your Classrooms
+            </h1>
+          </div>
+          <div id = 'classrooms-container'>
+            <div id = 'dashboard-card-container'>
+              {classrooms.map((classroom) => (
+                <div key={classroom.id} id='dashboard-class-card'>
+                <div id='card-left-content-container'>
+                  <h1 id='card-title'>{classroom.name}</h1>
+                  <div id='card-button-container' className='flex flex-row'>
+                    <button onClick={() => handleViewClassroom(classroom.id)}>
+                      View
+                    </button>
+                  </div>
+                </div>
+                <div id='card-right-content-container'>
+                  <DashboardDisplayCodeModal code={classroom.code} />
+                  <div id='divider' />
+                  <div id='student-number-container'>
+                    <h1 id='number'>{classroom.students.length}</h1>
+                    <p id='label'>Students</p>
+                  </div>
+                </div>
+              </div>
+              ))}
+                <br></br>
+                <button onClick = {null} id = "add-unit-btn">
+                + Add Classroom
+                 </button>
+            </div>
+          </div>
+
+        </TabPane>
+
         <TabPane tab = 'Teachers' key='teacher'>
         <div id='page-header'>
             <h1>
@@ -246,36 +241,6 @@ function AdminDashboard() {
             </div>
             <Table
               columns = {teacherColumns}
-              //dataSource = {learningStandardList}
-              rowClassName = 'editable-row'
-              rowKey = 'id'
-              onChange = {(Pagination) => {
-                setViewing(undefined);
-                setPage(Pagination.current);
-                setSearchParams({tab, page: Pagination.current});
-              }}
-              pagination = {{current: page ? page : 1}}
-            ></Table>
-          </div>
-        </TabPane>
-
-        <TabPane tab = 'Students' key='students'>
-        <div id='page-header'>
-            <h1>
-              Your Students
-            </h1>
-          </div>
-          <div id='content-creator-table-container'>
-            <div id='content-creator-btn-container'>
-            <button onClick = {null} id = "add-unit-btn">
-                + Add Student
-              </button>
-              <button onClick = {null} id = "add-unit-btn">
-                + Upload Roster
-              </button>
-            </div>
-            <Table
-              columns = {studentColumns}
               //dataSource = {learningStandardList}
               rowClassName = 'editable-row'
               rowKey = 'id'
