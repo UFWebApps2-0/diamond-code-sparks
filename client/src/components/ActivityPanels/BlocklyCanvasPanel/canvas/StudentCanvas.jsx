@@ -133,6 +133,7 @@ export default function StudentCanvas({ activity }) {
         'change field' &&
       replayRef.current[replayRef.current.length - 1].blockId === event.blockId
     ) {
+      handleSave(activity.id, workspaceRef, replayRef.current);
       replayRef.current.pop();
     }
 
@@ -146,7 +147,6 @@ export default function StudentCanvas({ activity }) {
     // if event is change, add the detail action type
     if (event.type === 'change' && event.element) {
       pushEvent(`${event.type} ${event.element}`, event.blockId);
-      handleSave(activity.id, workspaceRef, replayRef.current);
     } else {
       pushEvent(event.type, event.blockId);
     }
