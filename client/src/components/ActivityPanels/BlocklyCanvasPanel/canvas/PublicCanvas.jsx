@@ -28,6 +28,8 @@ export default function PublicCanvas({ activity, isSandbox }) {
   const [hoverUndo, setHoverUndo] = useState(false);
   const [hoverRedo, setHoverRedo] = useState(false);
   const [hoverCompile, setHoverCompile] = useState(false);
+  //Ashley added below
+  const [hoverImage, setHoverImage] = useState(false);
   const [hoverConsole, setHoverConsole] = useState(false);
   const [showConsole, setShowConsole] = useState(false);
   const [showPlotter, setShowPlotter] = useState(false);
@@ -35,10 +37,20 @@ export default function PublicCanvas({ activity, isSandbox }) {
   const [connectionOpen, setConnectionOpen] = useState(false);
   const [selectedCompile, setSelectedCompile] = useState(false);
   const [compileError, setCompileError] = useState('');
+  //ashley added bottom 3
+  const [saves, setSaves] = useState({});
+  const [lastSavedTime, setLastSavedTime] = useState(null);
+  const [lastAutoSave, setLastAutoSave] = useState(null);
 
   const [forceUpdate] = useReducer((x) => x + 1, 0);
+  //ashley added below
+  const navigate = useNavigate();
   const workspaceRef = useRef(null);
   const activityRef = useRef(null);
+
+  //ashley added blow x2
+  const replayRef = useRef([]);
+  const clicks = useRef(0);
 
   const setWorkspace = () => {
     workspaceRef.current = window.Blockly.inject('blockly-canvas', {
@@ -46,6 +58,8 @@ export default function PublicCanvas({ activity, isSandbox }) {
     });
     window.Blockly.addChangeListener(blocklyEvent);
   };
+
+  // Ashley: do not need to loadsave bc this user is unregistered
 
   useEffect(() => {
     // once the activity state is set, set the workspace and save
