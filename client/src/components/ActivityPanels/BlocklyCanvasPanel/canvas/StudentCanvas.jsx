@@ -155,6 +155,26 @@ export default function StudentCanvas({ activity }) {
     }, 500);
   };
 
+  useEffect(() => {
+    // Ashley Savigne: on chnage workspace
+    let onChangeSave = async (event) => {
+      if (event.type === 'change' && event.element) {
+        const res = await handleSave(
+          activityRef.current.id,
+          workspaceRef,
+          replayRef.current
+        );
+        if (res.data) {
+          setLastAutoSave(res.data[0]);
+          setLastSavedTime(getFormattedDate(res.data[0].updated_at));
+        }
+      }
+    };
+    workspaceRef.addChangeListener(onChangeSave)
+    return () => {
+      workspaceRef.removeChangeListener(onChangeSave);
+    };
+  }, [activityRef.current.id, workspaceRef, replayRef.current]);
   
   useEffect(() => {
     // automatically save workspace every min
