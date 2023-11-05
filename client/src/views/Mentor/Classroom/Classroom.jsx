@@ -1,15 +1,31 @@
 import {React, useEffect} from 'react';
 import { Tabs } from 'antd';
 import './Classroom.less';
-
 import NavBar from '../../../components/NavBar/NavBar';
 import Roster from './Roster/Roster';
 import Home from './Home/Home';
 import SavedWorkSpaceTab from '../../../components/Tabs/SavedWorkspaceTab';
 import Assessments from '../../Assessments/Assessments';
 import { useSearchParams, useParams } from 'react-router-dom';
-
+import { AssessmentButton } from '../../Assessments/AssessmentButton';
 const { TabPane } = Tabs;
+const name ="assessment1";
+const questionSet = {
+  setID: 123, // Add an overarching ID for the entire set
+  questions: {
+    question1: {
+      id: 1,
+      question: "Here is a question?",
+      answer: ["This is the answer", "secanswer"],
+      type: "multiple choice",
+    },
+    question2: {
+      id: 2,
+      question: "What is the blank",
+      type: "free response",
+    },
+  },
+};
 
 export default function Classroom({
   handleLogout,
@@ -51,9 +67,6 @@ export default function Classroom({
             setSearchParams={setSearchParams}
             classroomId={id}
           />
-        </TabPane>
-        <TabPane tab='Assignments' key='assignments'>
-          <Assessments />
         </TabPane>
       </Tabs>
     </div>
