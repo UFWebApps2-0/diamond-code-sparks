@@ -15,27 +15,29 @@ export default function CreateOrg() {
   return (
     <div className="container nav-padding">
       <NavBar />
-      <div id="create-header">Create Organization</div>
-      <div className="form-container">
-        <form onSubmit={handleSubmit}>
-          <label>
-            Organization Name:
-            <input
-              type="text"
-              value={orgName}
-              onChange={(e) => setOrgName(e.target.value)}
-            />
-          </label>
-          <label>
-            Description:
-            <textarea
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+      <div id="create-container">
+        <div id="create-header">Create Organization</div>
+        <div id="create-form-container">
+          <form onSubmit={handleSubmit}>
+            <label>
+              Organization Name:
+              <input
+                type="text"
+                value={orgName}
+                onChange={(e) => setOrgName(e.target.value)}
+              />
+            </label>
+            <label>
+              Description:
+              <textarea
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
       </div>
     </div>
   );
