@@ -27,6 +27,11 @@ export const getCurrUser = () => {
       role: 'Mentor',
       name: result.role.name,
     };
+  } else if (result.role.type == 'organization_administrator') {
+    return {
+      role: 'OrganizationAdministrator',
+      name: result.role.name,
+    }
   }
 };
 
