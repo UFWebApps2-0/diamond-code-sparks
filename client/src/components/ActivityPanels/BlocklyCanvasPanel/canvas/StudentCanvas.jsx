@@ -170,9 +170,9 @@ export default function StudentCanvas({ activity }) {
         }
       }
     };
-    workspaceRef.addChangeListener(onChangeSave)
+    workspace.addChangeListener(onChangeSave)
     return () => {
-      workspaceRef.removeChangeListener(onChangeSave);
+      workspace.removeChangeListener(onChangeSave);
     };
   }, [activityRef.current.id, workspaceRef, replayRef.current]);
   
