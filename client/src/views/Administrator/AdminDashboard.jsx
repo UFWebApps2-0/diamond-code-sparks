@@ -1,17 +1,16 @@
 //List of imports
 import React, { useEffect, useState } from 'react';
-import { Tabs, Table, Button, Popconfirm, message } from 'antd';
-import SavedWorkSpaceTab from '../../components/Tabs/SavedWorkspaceTab';
+import { Tabs, Table } from 'antd';
 import { getUser } from '../../Utils/AuthRequests';
-import { getMentor, getClassrooms, getGrades, getLessonModuleAll } from '../../Utils/requests';
-import MentorSubHeader from '../../components/MentorSubHeader/MentorSubHeader';
-import DashboardDisplayCodeModal from '../Mentor/Dashboard/DashboardDisplayCodeModal';
+import { getAllClassrooms, getAllSchools, getGrades, getLessonModuleAll, getTeachers } from '../../Utils/requests';
 import NavBar from '../../components/NavBar/NavBar';
-import UnitCreator from '../ContentCreator/UnitCreator/UnitCreator';
-import UnitEditor from '../ContentCreator/UnitEditor/UnitEditor';
-import LessonModuleActivityCreator from '../ContentCreator/LessonModuleCreator/LessonModuleCreator';
 import './AdminDashboard.less'
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import LessonTab from './LessonTab/LessonTab';
+import TeacherTab from './TeacherTab/TeacherTab';
+import ClassroomTab from './ClassroomTab/ClassroomTab';
+import OrganizationTab from './OrganizationTab/OrganizationTab';
+import ModerationTab from './ModerationTab/ModerationTab';
 
 
 const { TabPane } = Tabs;
@@ -22,21 +21,24 @@ function AdminDashboard() {
   const [tab, setTab] = useState(
     searchParams.has('tab') ? searchParams.get('tab') : 'organizations'
   );
-  const navigate = useNavigate();
   const [page, setPage] = useState(
     searchParams.has('page') ? parseInt(searchParams.get('page')) : 1
   );
   const userData = getUser();
-  const [classrooms, setClassrooms] = useState([]);
   const [learningStandardList, setLessonModuleList] = useState([]);
-  const [viewing, setViewing] = useState(parseInt(searchParams.get('activity')));
   const [gradeList, setGradeList] = useState([]);
+  const [teacherList, setTeacherList] = useState([]);
+  const [classroomList, setClassroomList] = useState([]);
+  const [organizationList, setOrganizationList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const [lsResponse, gradeResponse] = await Promise.all([
+      const [lsResponse, gradeResponse, teacherResponse, classroomResponse, organizationResponse] = await Promise.all([
         getLessonModuleAll(),
         getGrades(),
+        getTeachers(),
+        getAllClassrooms(),
+        getAllSchools()
       ]);
       setLessonModuleList(lsResponse.data);
 
@@ -44,317 +46,65 @@ function AdminDashboard() {
       grades.sort((a, b) => (a.id > b.id ? 1 : -1));
       setGradeList(grades);
 
+      setTeacherList(teacherResponse.data);
+      setClassroomList(classroomResponse.data);
+      setOrganizationList(organizationResponse.data);
     };
     fetchData();
   }, []);
 
-   //Create lesson table structure
-   const lessonColumns = [
-    {
-      title: 'Unit',
-      dataIndex: 'unit',
-      key: 'unit',
-      editable: true,
-      width: '22.5%',
-      align: 'left',
-      render: (_, key) => (
-        <UnitEditor id={key.unit.id} unitName={key.unit.name} linkBtn={true} />
-      ),
-    },
-    {
-      title: 'Lesson',
-      dataIndex: 'name',
-      key: 'name',
-      editable: true,
-      width: '22.5%',
-      align: 'left',
-    },
-    {
-      title: 'Description',
-      dataIndex: 'expectations',
-      key: 'character',
-      editable: true,
-      width: '22.5%',
-      align: 'left',
-    },
-  
-  ];
-
-  //Create teacher structure
-  const teacherColumns = [
-    {
-      title: 'First Name',
-      dataIndex: 'firstName',
-      key: 'firstName',
-      editable: true,
-      width: '22.5%',
-      align: 'left',
-    },
-    {
-      title: 'Last Name',
-      dataIndex: 'lastName',
-      key: 'lastName',
-      editable: true,
-      width: '22.5%',
-      align: 'left',
-    },
-    {
-      title: 'School',
-      dataIndex: 'school',
-      key: 'school',
-      editable: true,
-      width: '22.5%',
-      align: 'left',
-    },
-
-    {
-      title: 'View Classes',
-      dataIndex: 'view',
-      key: 'view',
-      width: '22.5%',
-      align: 'left',
-    },
-  
-  ];
-
-  //Create flagged content table structure
-  const flagColumns = [
-    {
-      title: 'Student Name',
-      dataIndex: 'studentName',
-      key: 'studentName',
-      width: '22.5%',
-      align: 'left',
-    },
-    {
-      title: 'Decription',
-      dataIndex: 'reason',
-      key: 'reason',
-      width: '22.5%',
-      align: 'left',
-    },
-  ];
-
   //Dashboard View
   return (
     <div className='container nav-padding'>
-    <NavBar/>
-    <div id='main-header' className='centered'>Welcome Administrator</div>
+      <NavBar />
+      <div id='main-header' className='centered'>Welcome Administrator</div>
 
-    <Tabs
+      <Tabs
         centered
         onChange={(activeKey) => {
           setTab(activeKey);
           setPage(1);
-          setViewing(undefined);
           setSearchParams({ tab: activeKey });
         }}
         activeKey={tab ? tab : 'organizations'}>
-        <TabPane tab = 'Organizations' key='organizations'>
-          <div id='page-header'>
-            <h1>
-              Your Organizations
-            </h1>
-          </div>
-          <div id = 'classrooms-container'>
-            <div id = 'dashboard-card-container'>
-              {classrooms.map((classroom) => (
-                <div key={classroom.id} id='dashboard-class-card'>
-                <div id='card-left-content-container'>
-                  <h1 id='card-title'>{classroom.name}</h1>
-                  <div id='card-button-container' className='flex flex-row'>
-                    <button onClick={() => handleViewClassroom(classroom.id)}>
-                      View
-                    </button>
-                  </div>
-                </div>
-                <div id='card-right-content-container'>
-                  <DashboardDisplayCodeModal code={classroom.code} />
-                  <div id='divider' />
-                  <div id='student-number-container'>
-                    <h1 id='number'>{classroom.students.length}</h1>
-                    <p id='label'>Students</p>
-                  </div>
-                </div>
-              </div>
-              ))}
-                <br></br>
-                <button onClick = {null} id = "add-unit-btn">
-                + Add Organization
-                 </button>
-            </div>
-          </div>
-
+        <TabPane tab='Organizations' key='organizations'>
+          <OrganizationTab
+            organizationList={organizationList}
+            page={page}
+            setPage={setPage}
+          />
         </TabPane>
 
-        <TabPane tab = 'Classrooms' key='classrooms'>
-          <div id='page-header'>
-            <h1>
-              Your Classrooms
-            </h1>
-          </div>
-          <div id = 'classrooms-container'>
-            <div id = 'dashboard-card-container'>
-              {classrooms.map((classroom) => (
-                <div key={classroom.id} id='dashboard-class-card'>
-                <div id='card-left-content-container'>
-                  <h1 id='card-title'>{classroom.name}</h1>
-                  <div id='card-button-container' className='flex flex-row'>
-                    <button onClick={() => handleViewClassroom(classroom.id)}>
-                      View
-                    </button>
-                  </div>
-                </div>
-                <div id='card-right-content-container'>
-                  <DashboardDisplayCodeModal code={classroom.code} />
-                  <div id='divider' />
-                  <div id='student-number-container'>
-                    <h1 id='number'>{classroom.students.length}</h1>
-                    <p id='label'>Students</p>
-                  </div>
-                </div>
-              </div>
-              ))}
-                <br></br>
-                <button onClick = {null} id = "add-unit-btn">
-                + Add Classroom
-                 </button>
-            </div>
-          </div>
-
+        <TabPane tab='Classrooms' key='classrooms'>
+          <ClassroomTab
+            classroomList={classroomList}
+            page={page}
+            setPage={setPage}
+          />
         </TabPane>
 
-        <TabPane tab = 'Teachers' key='teacher'>
-        <div id='page-header'>
-            <h1>
-              Your Teachers
-            </h1>
-          </div>
-          <div id='content-creator-table-container'>
-            <div id='content-creator-btn-container'>
-            <button onClick = {null} id = "add-unit-btn">
-                + Add Teacher
-              </button>
-              <button onClick = {null} id = "add-unit-btn">
-                + Upload Faculty List
-              </button>
-            </div>
-            <Table
-              columns = {teacherColumns}
-              //dataSource = {learningStandardList}
-              rowClassName = 'editable-row'
-              rowKey = 'id'
-              onChange = {(Pagination) => {
-                setViewing(undefined);
-                setPage(Pagination.current);
-                setSearchParams({tab, page: Pagination.current});
-              }}
-              pagination = {{current: page ? page : 1}}
-            ></Table>
-          </div>
+        <TabPane tab='Teachers' key='teacher'>
+          <TeacherTab
+            teacherList={teacherList}
+            page={page}
+            setPage={setPage}
+          />
         </TabPane>
 
-        <TabPane tab = 'Lessons' key='lessons'>
-        <div id='page-header'>
-            <h1>
-              Your Lessons
-            </h1>
-          </div>
-          <div id='content-creator-table-container'>
-            <div id='content-creator-btn-container'>
-              <UnitCreator gradeList = {gradeList}
-              //unable to get other button to work, think its result from not getting table to load (so replacement button)
-              />
-              <button onClick = {null} id = "add-unit-btn">
-                + Add Lesson
-              </button>
-            </div>
-            <Table
-              columns = {lessonColumns}
-              dataSource = {learningStandardList}
-              rowClassName = 'editable-row'
-              rowKey = 'id'
-              onChange = {(Pagination) => {
-                setViewing(undefined);
-                setPage(Pagination.current);
-                setSearchParams({tab, page: Pagination.current});
-              }}
-              pagination = {{current: page ? page : 1}}
-            ></Table>
-          </div>
+        <TabPane tab='Lessons' key='lessons'>
+          <LessonTab
+            learningStandardList={learningStandardList}
+            gradeList={gradeList}
+            page={page}
+            setPage={setPage}
+          />
         </TabPane>
 
-        <TabPane tab = 'Moderation' key='moderation'>
-        <div id='page-header'>
-            <h1>
-              Content for Review
-            </h1>
-            </div>
-            <div id='content-creator-table-container'>
-            <div id='content-creator-btn-container'>
-            <br></br>
-            </div>
-            <Table
-              columns = {flagColumns}
-              dataSource = {learningStandardList}
-              rowClassName = 'editable-row'
-              rowKey = 'id'
-              onChange = {(Pagination) => {
-                setViewing(undefined);
-                setPage(Pagination.current);
-                setSearchParams({tab, page: Pagination.current});
-              }}
-              pagination = {{current: page ? page : 1}}
-            ></Table>
-          </div>
-
-            <div id = 'page-header'>
-            <h1>
-              Past Reviews
-            </h1>
-            </div>
-            <div id='content-creator-table-container'>
-            <div id='content-creator-btn-container'>
-            <br></br>
-            </div>
-            <Table
-              columns = {flagColumns}
-              dataSource = {learningStandardList}
-              rowClassName = 'editable-row'
-              rowKey = 'id'
-              onChange = {(Pagination) => {
-                setViewing(undefined);
-                setPage(Pagination.current);
-                setSearchParams({tab, page: Pagination.current});
-              }}
-              pagination = {{current: page ? page : 1}}
-            ></Table>
-          </div>
-
-          <div id = 'page-header'>
-            <h1>
-              Flagged Users
-            </h1>
-            </div>
-            <div id='content-creator-table-container'>
-            <div id='content-creator-btn-container'>
-            <br></br>
-            </div>
-            <Table
-              columns = {flagColumns}
-              dataSource = {learningStandardList}
-              rowClassName = 'editable-row'
-              rowKey = 'id'
-              onChange = {(Pagination) => {
-                setViewing(undefined);
-                setPage(Pagination.current);
-                setSearchParams({tab, page: Pagination.current});
-              }}
-              pagination = {{current: page ? page : 1}}
-            ></Table>
-            <br></br>
-            <br></br>
-          </div>
+        <TabPane tab='Moderation' key='moderation'>
+          <ModerationTab 
+            page={page}
+            setPage={setPage}
+          />
         </TabPane>
 
       </Tabs>
