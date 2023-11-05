@@ -146,6 +146,7 @@ export default function StudentCanvas({ activity }) {
     // if event is change, add the detail action type
     if (event.type === 'change' && event.element) {
       pushEvent(`${event.type} ${event.element}`, event.blockId);
+      onChange(event);
     } else {
       pushEvent(event.type, event.blockId);
     }
@@ -156,10 +157,6 @@ export default function StudentCanvas({ activity }) {
       blocked = false;
     }, 500);
   };
-
-
-  var flyoutWorkspace = workspace.getFlyout().getWorkspace();
-  flyoutWorkspace.addChangeListener(onChange);
 
   async function onChange(event){
     if (event.type === 'change' && event.element) {
