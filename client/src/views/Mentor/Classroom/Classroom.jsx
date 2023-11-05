@@ -1,4 +1,4 @@
-import {React, useEffect} from 'react';
+import { React, useEffect } from 'react';
 import { Tabs } from 'antd';
 import './Classroom.less';
 
@@ -6,6 +6,7 @@ import NavBar from '../../../components/NavBar/NavBar';
 import Roster from './Roster/Roster';
 import Home from './Home/Home';
 import SavedWorkSpaceTab from '../../../components/Tabs/SavedWorkspaceTab';
+import LessonEditor from '../../ContentCreator/LessonEditor/LessonEditor';
 import { useSearchParams, useParams } from 'react-router-dom';
 
 const { TabPane } = Tabs;
@@ -49,6 +50,14 @@ export default function Classroom({
             searchParams={searchParams}
             setSearchParams={setSearchParams}
             classroomId={id}
+          />
+        </TabPane>
+        {/* Adding new tab to access lesson editor */}
+        <TabPane tab='Lesson Editor' key='lesson editor'>
+          <LessonEditor
+          // Lesson Editor requires props and other stuff that we can get from classroom data object
+          // Must redirect to ccdashboard??
+
           />
         </TabPane>
       </Tabs>

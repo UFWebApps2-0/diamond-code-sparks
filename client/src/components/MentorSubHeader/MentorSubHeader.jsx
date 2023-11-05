@@ -35,6 +35,7 @@ export default function MentorSubHeader(props) {
           <button onClick={() => setListView(false)} id='link'>
             <i className='fa fa-th' />
           </button>
+          // What is the use of this class name?
         ) : null}
         {listViewActive ? (
           <button onClick={() => setListView(true)} id='link'>
@@ -46,6 +47,8 @@ export default function MentorSubHeader(props) {
             <i className='fa fa-shopping-cart' />
           </Link>
         ) : null}
+
+        {/* Add a searchViewActive check */}
       </span>
     </div>
   );

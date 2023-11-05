@@ -11,6 +11,7 @@ import ListView from './ListView';
 import CardView from './CardView';
 import { Form, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import Search from './Search';
 
 export default function Roster({ classroomId }) {
   const [form] = Form.useForm();
@@ -19,14 +20,24 @@ export default function Roster({ classroomId }) {
   const [listView, setListView] = useState(true);
   const [classroom, setClassroom] = useState({});
   const navigate = useNavigate();
+  const [filterText, setFilterText] = useState('');
+
+  // Utilize classroom to get the grade
+
+  // The lesson editor requires props to be passed in check those and see if they exist in classroom
+  // 
 
   useEffect(() => {
     let data = [];
     getClassroom(classroomId).then((res) => {
       if (res.data) {
+        console.log(res.data);
         const classroom = res.data;
         setClassroom(classroom);
-        classroom.students.forEach((student) => {
+
+        // Added new filter result to the shown classroom
+        const filterRoster = classroom.students.filter((student) => student.name.toLowerCase().includes(filterText.toLowerCase()));
+        filterRoster.forEach((student) => {
           data.push({
             key: student.id,
             name: student.name,
@@ -43,7 +54,8 @@ export default function Roster({ classroomId }) {
         message.error(res.err);
       }
     });
-  }, [classroomId]);
+  }, [classroomId, filterText]);
+  // Added filterText state dependency to rerender student data with teachers inputted filter 
 
   const getFormattedDate = (value, locale = 'en-US') => {
     if (value) {
@@ -171,6 +183,7 @@ export default function Roster({ classroomId }) {
       <button id='home-back-btn' onClick={handleBack}>
         <i className='fa fa-arrow-left' aria-hidden='true' />
       </button>
+      {/* Render the mentor subheader with the proper information and functions */}
       <MentorSubHeader
         title={'Your Students'}
         addStudentsToTable={addStudentsToTable}
@@ -180,6 +193,14 @@ export default function Roster({ classroomId }) {
         listViewActive={!listView}
         setListView={setListView}
       />
+
+      {/* New search functionality added */}
+      <Search
+        filtertext={filterText}
+        setFilterText={setFilterText}
+      />
+
+      {/* render the list view or the card view if one such exists */}
       {listView ? (
         <ListView
           studentData={studentData}

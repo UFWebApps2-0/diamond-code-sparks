@@ -36,7 +36,7 @@ export default function Dashboard() {
   return (
     <div className='container nav-padding'>
       <NavBar isMentor={true} />
-      <div id='main-header'>Welcome {user.username}</div>
+      {/* <div id='main-header'>Welcome {user.username}</div> */}
       <MentorSubHeader title={'Your Classrooms'}></MentorSubHeader>
       <div id='classrooms-container'>
         <div id='dashboard-card-container'>

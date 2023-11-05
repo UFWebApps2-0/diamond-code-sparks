@@ -113,7 +113,7 @@ const App = () => {
           }
         />
         <Route path='/bugreport' element={<BugReport />} />
-        <Route path='*' element={<NotFound/>} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
   );
