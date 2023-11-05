@@ -247,7 +247,6 @@ function QuestionForm(id) {
 
 
   
-  );
 
 
   
