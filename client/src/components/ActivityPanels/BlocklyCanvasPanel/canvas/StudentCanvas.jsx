@@ -51,6 +51,8 @@ export default function StudentCanvas({ activity }) {
     window.Blockly.addChangeListener(blocklyEvent);
   };
 
+
+
   const loadSave = (selectedSave) => {
     try {
       let toLoad = activity.template;
@@ -155,27 +157,24 @@ export default function StudentCanvas({ activity }) {
     }, 500);
   };
 
-  useEffect(() => {
-    // Ashley Savigne: on chnage workspace
-    let onChangeSave = async (event) => {
-      if (event.type === 'change' && event.element) {
-        const res = await handleSave(
-          activityRef.current.id,
-          workspaceRef,
-          replayRef.current
-        );
-        if (res.data) {
-          setLastAutoSave(res.data[0]);
-          setLastSavedTime(getFormattedDate(res.data[0].updated_at));
-        }
+
+  var flyoutWorkspace = workspace.getFlyout().getWorkspace();
+  flyoutWorkspace.addChangeListener(onChange);
+
+  async function onChange(event){
+    if (event.type === 'change' && event.element) {
+      const res = await handleSave(
+        activityRef.current.id,
+        workspaceRef,
+        replayRef.current
+      );
+      if (res.data) {
+        setLastAutoSave(res.data[0]);
+        setLastSavedTime(getFormattedDate(res.data[0].updated_at));
       }
-    };
-    workspace.addChangeListener(onChangeSave)
-    return () => {
-      workspace.removeChangeListener(onChangeSave);
-    };
-  }, [activityRef.current.id, workspaceRef, replayRef.current]);
-  
+    }
+  }
+
   useEffect(() => {
     // automatically save workspace every min
     let autosaveInterval = setInterval(async () => {
