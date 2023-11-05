@@ -136,30 +136,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
   };
   // Ashley: last add end here
 
-  // Ashley: add autosave
-  useEffect(() => {
-    // automatically save workspace every min
-    let autosaveInterval = setInterval(async () => {
-      if (workspaceRef.current && activityRef.current) {
-        const res = await handleSave(
-          activityRef.current.id,
-          workspaceRef,
-          replayRef.current
-        );
-        if (res.data) {
-          setLastAutoSave(res.data[0]);
-          setLastSavedTime(getFormattedDate(res.data[0].updated_at));
-        }
-      }
-    }, 60000);
 
-    // clean up - saves workspace and removes blockly div from DOM
-    return async () => {
-      clearInterval(autosaveInterval);
-    };
-  }, []);
-
-  
   useEffect(() => {
     // once the activity state is set, set the workspace and save
     const setUp = async () => {
@@ -291,53 +268,24 @@ export default function PublicCanvas({ activity, isSandbox }) {
           >
             <Row id='icon-control-panel'>
               <Col flex='none' id='section-header'>
-                {activity.lesson_module_name}
+                Program your Arduino...
               </Col>
               <Col flex='auto'>
                 <Row align='middle' justify='end' id='description-container'>
                   <Col flex={'30px'}>
-                    <button
-                      onClick={handleGoBack}
-                      id='link'
-                      className='flex flex-column'
-                    >
-                      <i id='icon-btn' className='fa fa-arrow-left' />
-                    </button>
+                    <Row>
+                      <Col>
+                        <Link id='link' to={'/'} className='flex flex-column'>
+                          <i className='fa fa-home fa-lg' />
+                        </Link>
+                      </Col>
+                    </Row>
                   </Col>
                   <Col flex='auto' />
 
-                  <Col flex={'300px'}>
-                    {lastSavedTime ? `Last changes saved ${lastSavedTime}` : ''}
-                  </Col>
-                  <Col flex={'350px'}>
+                  <Col flex={'200px'}>
                     <Row>
-                      <Col className='flex flex-row' id='icon-align'>
-                        <VersionHistoryModal
-                          saves={saves}
-                          lastAutoSave={lastAutoSave}
-                          defaultTemplate={activity}
-                          getFormattedDate={getFormattedDate}
-                          loadSave={loadSave}
-                          pushEvent={pushEvent}
-                        />
-                        <button
-                          onClick={handleManualSave}
-                          id='link'
-                          className='flex flex-column'
-                        >
-                          <i
-                            id='icon-btn'
-                            className='fa fa-save'
-                            onMouseEnter={() => setHoverSave(true)}
-                            onMouseLeave={() => setHoverSave(false)}
-                          />
-                          {hoverSave && (
-                            <div className='popup ModalCompile4'>Save</div>
-                          )}
-                        </button>
-                      </Col>
-
-                      <Col className='flex flex-row' id='icon-align'>
+                      <Col className='flex flex-row'>
                         <button
                           onClick={handleUndo}
                           id='link'
@@ -385,7 +333,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
                       </Col>
                     </Row>
                   </Col>
-                  <Col flex={'180px'}>
+                  <Col flex={'230px'}>
                     <div
                       id='action-btn-container'
                       className='flex space-around'
@@ -399,9 +347,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
                           Upload to Arduino
                         </div>
                       )}
-                    <DisplayDiagramModal
-                      image={activity.images}
-                    />
+
                       <i
                         onClick={() => handleConsole()}
                         className='fas fa-terminal hvr-info'
@@ -425,7 +371,6 @@ export default function PublicCanvas({ activity, isSandbox }) {
             <div id='blockly-canvas' />
           </Spin>
         </div>
-
         <ConsoleModal
           show={showConsole}
           connectionOpen={connectionOpen}
@@ -438,7 +383,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
           plotData={plotData}
           setPlotData={setPlotData}
           plotId={plotId}
-        />          
+        />
       </div>
 
       {/* This xml is for the blocks' menu we will provide. Here are examples on how to include categories and subcategories */}
