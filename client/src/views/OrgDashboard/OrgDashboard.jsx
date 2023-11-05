@@ -7,6 +7,7 @@ export default function OrgDashboard() {
 	const [orgs, setOrgs] = useState([]);
 	const navigate = useNavigate();
 	const [isFlipped, setFlipped] = useState(new Set());
+	const [orgName, setOrgName] = useState("");
 
 	const sampleOrg = {
 		id: 1,
@@ -60,7 +61,6 @@ export default function OrgDashboard() {
 		// https://stackoverflow.com/questions/71720642/flipping-multiple-cards-in-react-functional-component
 
     	return (e) => {
-    		e.preventDefault();
     		let flipped = new Set(isFlipped)
     		if (flipped.has(id)) {
       			flipped.delete(id)
@@ -71,9 +71,22 @@ export default function OrgDashboard() {
     	}
 	}
 
-	const handleEditOrg = () => {
+	const handleEditOrg = (event, id) => {
 		event.preventDefault();
-		alert('submitted');
+
+		let updatedOrgs = [...orgs];
+		let index = updatedOrgs.findIndex(function (org) {
+			return org['id'] == id
+		});
+		updatedOrgs[index]['name'] = orgName;
+		setOrgs(updatedOrgs);
+		setOrgName('');
+
+		// update when connected to backend to edit db rather than just locally
+	}
+
+	const updateName = (id) => {
+		alert(id);
 	}
     
 	return (
@@ -117,13 +130,15 @@ export default function OrgDashboard() {
         							<i className='fa fa-arrow-left' aria-hidden='true' />
      							</button>
      							<div id='card-top-content-container'>
-     								<form onSubmit={handleEditOrg}>
+     								<form onSubmit={(e) => handleEditOrg(e, org.id)}>
      									<label>Edit Organization Name:</label>
      									<input
      										type='text'
      										placeholder={org.name}
+     										value={orgName}
+     										onChange={(e) => setOrgName(e.target.value)}
      									/>
-     									<button type='submit' className='manage-btn save-btn'>Save Changes</button>
+     									<button type='submit' className='manage-btn save-btn' onClick={handleFlip(org.id)}>Save Changes</button>
      								</form>
      								<div className='divider' />
      								<button className='manage-btn warning-btn'>Delete Organization</button>
