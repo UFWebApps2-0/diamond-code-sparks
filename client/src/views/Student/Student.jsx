@@ -14,6 +14,7 @@ function Student() {
       try {
         const res = await getStudentClassroom();
         if (res.data) {
+          alert(JSON.stringify(res.data.lesson_module.expectations));
           if (res.data.lesson_module) {
             setLessonModule(res.data.lesson_module);
           }
@@ -37,8 +38,9 @@ function Student() {
       <NavBar />
       <div id='activity-container'>
         <div id='header'>
-          <div>Select your Activity</div>
+          <div>{learningStandard.name}</div>
         </div>
+        <p id='lesson-module-expectations'>{`Expectations: ${learningStandard.expectations}`}</p>
         <ul>
           {learningStandard.activities ? (
             learningStandard.activities
