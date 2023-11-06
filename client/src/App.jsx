@@ -25,10 +25,7 @@ import ManageAccount from './views/OrgDashboard/ManageAccount';
 // import ManageAccount from './views/OrgDashboard/ManageAccount';
 import AdminClassroomDashboard from './views/AdminClassroomView/AdminClassroomDashboard';
 import AdminGalleryDashboard from './views/AdminGalleryView/AdminGalleryDashboard';
-admin-create-classroom
 import CreateClassroom from './views/AdminClassroomView/CreateClassroom';
-
-develop
 
 const App = () => {
   return (
@@ -48,10 +45,7 @@ const App = () => {
         <Route path='/manageaccount' element={<ManageAccount />} />
         <Route path='/admindashboard' element={<AdminClassroomDashboard />} />
         <Route path='/managegalleries' element={<AdminGalleryDashboard />} />
-          admin-create-classroom
         <Route path='/createclassroom' element={<CreateClassroom/>} />
-
-develop
         {/* <Route path='/manageaccount' element={<ManageAccount />} /> */}
         
       
