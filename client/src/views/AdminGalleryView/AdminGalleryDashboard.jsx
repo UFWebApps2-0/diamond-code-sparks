@@ -52,7 +52,7 @@ export default function AdminGalleryDashboard() {
                 <h1>Galleries</h1> 
             </div>
             
-            <div id='classrooms-container'>
+            <div id='galleries-container'>
 
             <input 
                 type = 'button'
