@@ -88,7 +88,7 @@ export default function OrgDashboard() {
 			message.info('Name cannot be blank.');
 		}
 
-		// update when connected to backend to edit db rather than just locally
+		// TODO: update when connected to backend to edit db rather than just locally
 	}
     
 	return (
@@ -143,7 +143,12 @@ export default function OrgDashboard() {
      									<button type='submit' className='manage-btn save-btn' onClick={orgName != '' ? handleFlip(org.id) : null}>Save Changes</button>
      								</form>
      								<div className='divider' />
-     								<DeleteOrgModal orgId={org.id} orgName={org.name} orgs={orgs}/>
+     								<DeleteOrgModal 
+     									orgId={org.id}
+     									orgName={org.name}
+     									orgs={orgs}
+     									setOrgs={setOrgs}
+     								/>
      							</div>
 				        	</div>
 		        		</div>

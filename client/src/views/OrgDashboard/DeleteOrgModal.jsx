@@ -4,7 +4,7 @@ import React, {useState} from "react";
 
 export default function DeleteOrgModal(props) {
     const [visible, setVisible] = useState(false);
-    const {orgId, orgName, orgs} = props;
+    const {orgId, orgName, orgs, setOrgs} = props;
     const [confirm, setConfirm] = useState('');
 
     const showModal = () => {
@@ -18,7 +18,15 @@ export default function DeleteOrgModal(props) {
 
     const handleDelete = () => {
         if (confirm == orgName) {
-            alert("test");
+            // TODO: update delete functionality when connected to back-end
+
+            let updatedOrgs = [...orgs];
+            let index = updatedOrgs.findIndex(function (org) {
+                return org['id'] == orgId
+            });
+            updatedOrgs.splice(index, 1);
+            setOrgs(updatedOrgs);
+            message.info(orgName + ' has been deleted.');
         } else {
             if (confirm == '') {
                 message.error('Confirm deletion.');
