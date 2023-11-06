@@ -2,8 +2,7 @@
   "kind": "collectionType",
   "collectionName": "assessments",
   "info": {
-    "name": "Assessments",
-    "description": ""
+    "name": "Assessments"
   },
   "options": {
     "increments": true,
