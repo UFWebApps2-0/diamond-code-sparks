@@ -52,11 +52,11 @@ export default function AdminClassroomDashboard() {
                 <h1>Classrooms</h1> 
             </div>
             
-            <div id='classrooms-container'>
+            <div id='admin-classrooms-container'>
 
             <input 
                 type = 'button'
-                onClick = {() => alert("Add a new classroom")}
+                onClick = {() => navigate('/createclassroom')}
                 value = '(+) Create Classroom'
             />
                 <div id='dashboard-card-container'>
