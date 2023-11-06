@@ -25,60 +25,23 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    setLoading(true);
-    let body = { identifier: email, password: password };
-
-    postUser(body)
-      .then((response) => {
-        setUserSession(response.data.jwt, JSON.stringify(response.data.user));
-        setLoading(false);
-        if (response.data.user.role.name === 'Content Creator') {
-          navigate('/ccdashboard');
-        } else if (response.data.user.role.name === 'Researcher') {
-          navigate('/report');
-        } else {
-          navigate('/dashboard');
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        message.error('Login failed. Please input a valid email and password.');
-      });
+  const handleSignUp = () => {
+    
   };
 
-  const handleGoogleLogin = (res) => {
+  const handleGoogleSignup = (res) => {
     console.log("Encoded JWT Token: " + res.credential)
     const userObject = jwtDecode(res.credential);
     console.log(userObject);
 
-    setEmail(userObject.email);
-
-    let body = { identifier: email };
     
-    postUser(body)
-      .then((response) => {
-        setUserSession(response.data.jwt, JSON.stringify(response.data.user));
-        setLoading(false);
-        if (response.data.user.role.name === 'Content Creator') {
-          navigate('/ccdashboard');
-        } else if (response.data.user.role.name === 'Researcher') {
-          navigate('/report');
-        } else {
-          navigate('/dashboard');
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        message.error('Login failed. Please input a valid email and password.');
-      });
   };
   
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
       client_id: "843146054096-pcjn6j6i1h9inpm58bre3c6rssb870fl.apps.googleusercontent.com",
-      callback: handleGoogleLogin
+      callback: handleGoogleSignup
     });
 
     google.accounts.id.renderButton(
@@ -109,7 +72,7 @@ export default function SignUp() {
           <form
             id='box'
             onKeyPress={(e) => {
-              if (e.key === 'Enter') handleLogin();
+              if (e.key === 'Enter') handleSignUp();
             }}
           >
             <div id='box-title'>Sign Up</div>
@@ -133,7 +96,7 @@ export default function SignUp() {
             <input
               type='button'
               value={loading ? 'Loading...' : 'Create Account'}
-              onClick={handleLogin}
+              onClick={handleSignUp}
               disabled={loading}
             />
           </form>
