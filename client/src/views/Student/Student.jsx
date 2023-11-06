@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
 import { getStudentClassroom } from '../../Utils/requests';
 import './Student.less';
+import ShareProgram from './SharePrograms';
 
 function Student() {
   const [learningStandard, setLessonModule] = useState({});
@@ -221,6 +222,7 @@ function Student() {
         <div id='header'>
           <div>Shared Programs</div>
         </div>
+        {/*<ShareProgram/>*/}
       </div>
       )}
       {/* add View Gallery */}
