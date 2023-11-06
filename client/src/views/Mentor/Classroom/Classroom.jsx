@@ -7,7 +7,6 @@ import Home from './Home/Home';
 import SavedWorkSpaceTab from '../../../components/Tabs/SavedWorkspaceTab';
 import Assessments from '../../Assessments/Assessments';
 import { useSearchParams, useParams } from 'react-router-dom';
-import { AssessmentButton } from '../../Assessments/AssessmentButton';
 const { TabPane } = Tabs;
 const name ="assessment1";
 const questionSet = {
@@ -67,6 +66,9 @@ export default function Classroom({
             setSearchParams={setSearchParams}
             classroomId={id}
           />
+        </TabPane>
+        <TabPane tab='Assessments' key='assessments'>
+          <Assessments classroomId={id} />
         </TabPane>
       </Tabs>
     </div>
