@@ -1,6 +1,34 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
+import { Select } from 'antd';
 function ShareProgram(){
+    const [selectedPerson, setSelectedPerson] = useState({});
+    function SelectPerson(){
+        const onChange = (value) => {
+            setSelectedPerson(value);
+        };
+        return(
+            <Select
+                showSearch
+                placeholder="Select a student"
+                onChange={onChange}
+                options={[
+                {
+                    value: 'jack',
+                    label: 'Jack',
+                },
+                {
+                    value: 'lucy',
+                    label: 'Lucy',
+                },
+                {
+                    value: 'tom',
+                    label: 'Tom',
+                },
+                ]}
+            />
+        );
+    }
     
     function ShareButton(){
         const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,6 +85,6 @@ function ShareProgram(){
 
     return (
         
-    )
+    );
 }
 export default ShareProgram;
