@@ -59,11 +59,13 @@ export default function TeacherLogin() {
     console.log("Encoded JWT Token: " + res.credential)
     const userObject = jwtDecode(res.credential); // Get user info for login
     
-    // console.log(userObject);
+    console.log(userObject);
     setEmail(userObject.email);
     // console.log(userObject.email)
 
-    let body = { identifier: email }; // Need password??? // Removed ".value"
+    let body = { identifier: userObject.email, password: 'easypassword' }; // Need password??? // Removed ".value"
+
+    console.log(body);
     
     postUser(body)
       .then((response) => {
