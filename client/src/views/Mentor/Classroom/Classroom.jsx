@@ -9,6 +9,8 @@ import Assessments from '../../Assessments/Assessments';
 import { useSearchParams, useParams } from 'react-router-dom';
 const { TabPane } = Tabs;
 const name ="assessment1";
+const description = "Description"
+
 const questionSet = {
   setID: 123, // Add an overarching ID for the entire set
   questions: {

@@ -675,15 +675,33 @@ export const getClassroomWorkspace = async (id) =>
 
 
 
-export const createAsessment = async (name, questionSet) =>
+export const createAssessment = async (name, classID, descript,questionSet) =>
 makeRequest({
   method: POST,
   path: `${server}/assessments`,
   auth: true,
   data: {
     assessmentName: name,
+    classroomID: classID,
+    description: descript,
     questions: questionSet
   },
 
   error: 'Failed to create Assessment',
 });
+
+export const getAssessment = async (id) =>
+  makeRequest({
+    method: GET,
+    path: `${server}/assessments/${id}`,
+    auth: true,
+    error: 'Unable to retrive assessment',
+  });
+
+  export const getAssessments = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/assessments`,
+    auth: true,
+    error: 'Unable to retrive assessments',
+  });

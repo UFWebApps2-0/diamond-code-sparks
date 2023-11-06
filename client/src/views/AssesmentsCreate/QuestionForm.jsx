@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button,Form, Input } from 'antd';
 import './CreateStyle.css';
 import { Select,Radio, Space } from 'antd';
-import { createAsessment } from '../../Utils/requests';
+import { createAssessment, getAssessments } from '../../Utils/requests';
 import { addStudent } from '../../Utils/requests';
 
 function QuestionForm(id) {
@@ -111,13 +111,13 @@ function QuestionForm(id) {
     let list1 = [id,name,description]
     let subList = list1.concat(listQ);
     console.log(subList);
-    const res = await createAsessment(name, questions);
-    console.log(res.data);
+    const res = await createAssessment(name,1,description, questions);
     
     //Reset now
     setName("");
     setDescription("");
     setQuestions([]);
+
 
   }
 
