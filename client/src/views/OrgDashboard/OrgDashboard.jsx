@@ -3,6 +3,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import './OrgDashboard.less';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
+import DeleteOrgModal from './DeleteOrgModal';
 
 export default function OrgDashboard() {
 	const [orgs, setOrgs] = useState([]);
@@ -89,10 +90,6 @@ export default function OrgDashboard() {
 
 		// update when connected to backend to edit db rather than just locally
 	}
-
-	const updateName = (id) => {
-		alert(id);
-	}
     
 	return (
 	    <div className='container nav-padding'>
@@ -146,7 +143,7 @@ export default function OrgDashboard() {
      									<button type='submit' className='manage-btn save-btn' onClick={orgName != '' ? handleFlip(org.id) : null}>Save Changes</button>
      								</form>
      								<div className='divider' />
-     								<button className='manage-btn warning-btn'>Delete Organization</button>
+     								<DeleteOrgModal orgId={org.id} orgName={org.name} orgs={orgs}/>
      							</div>
 				        	</div>
 		        		</div>
