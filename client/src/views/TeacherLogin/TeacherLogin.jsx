@@ -25,6 +25,8 @@ export default function TeacherLogin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const CLIENT_ID = "843146054096-pcjn6j6i1h9inpm58bre3c6rssb870fl.apps.googleusercontent.com";
+
   // Normal login
   const handleLogin = () => {
     setLoading(true);
@@ -58,14 +60,26 @@ export default function TeacherLogin() {
   const handleGoogleLogin = (res) => {
     console.log("Encoded JWT Token: " + res.credential)
     const userObject = jwtDecode(res.credential); // Get user info for login
-    
     console.log(userObject);
+
+    // Verify integrity of token
+    const { OAuth2Client } = require('google-auth-library');
+    const client = new OAuth2Client;
+    async function verify() {
+      const ticket = await client.verifyIdToken({
+          idToken: userObject,
+          audience: CLIENT_ID,
+      });
+
+      const payload = ticket.getPayload();
+      const userID = payload['sub'];
+    }
+    verify.catch(console.error); // Checks validity of token
+  
+    // Set email with returned token val
+    // NOTE: Google specifies that the Google userID should be the ONLY identifer
     setEmail(userObject.email);
-    // console.log(userObject.email)
-
-    let body = { identifier: userObject.email, password: 'easypassword' }; // Need password??? // Removed ".value"
-
-    console.log(body);
+    let body = { identifier: userObject.email, password: 'password' }; // Need password??? // Removed ".value"
     
     postUser(body)
       .then((response) => {
@@ -81,6 +95,7 @@ export default function TeacherLogin() {
       })
       .catch((error) => {
         setLoading(false);
+        console.log(error);
         message.error('Login failed. Please input a valid email and password.');
 
         // Clear input fields
