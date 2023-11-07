@@ -34,10 +34,20 @@ export default function Dashboard() {
     navigate(`/classroom/${classroomId}`);
   };
 
+  const lessonCreator = () => {
+    navigate(`/ccdashboard`)
+  }
+
   return (
     <div className='container nav-padding'>
       <NavBar />
       <div id='main-header'>Welcome {value.name}</div>
+      <MentorSubHeader title={'Create Lesson'} onClick={() => lessonCreator()}></MentorSubHeader>
+      <div id='lesson-creator'>
+        <button onClick={() => lessonCreator()}>
+          Create Lesson
+        </button>
+      </div>
       <MentorSubHeader title={'Your Classrooms'}></MentorSubHeader>
       <div id='classrooms-container'>
         <div id='dashboard-card-container'>

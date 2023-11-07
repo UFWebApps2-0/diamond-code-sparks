@@ -51,6 +51,9 @@ export default function Classroom({
             classroomId={id}
           />
         </TabPane>
+        <TabPane tab='Discussion' key='discussion'>
+          /* fill this out */
+        </TabPane>
       </Tabs>
     </div>
   );
