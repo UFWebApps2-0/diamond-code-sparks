@@ -104,6 +104,10 @@ export default function StudentCanvas({ activity }) {
     });
   };
 
+
+
+
+
   let blocked = false;
   const blocklyEvent = (event) => {
     // if it is a click event, add click
@@ -112,6 +116,7 @@ export default function StudentCanvas({ activity }) {
       event.element === 'selected'
     ) {
       clicks.current++;
+      handleManualSave();
     }
 
     // if it is other ui events or create events or is [undo, redo], return
@@ -133,7 +138,6 @@ export default function StudentCanvas({ activity }) {
         'change field' &&
       replayRef.current[replayRef.current.length - 1].blockId === event.blockId
     ) {
-      handleSave(activity.id, workspaceRef, replayRef.current);
       replayRef.current.pop();
     }
 

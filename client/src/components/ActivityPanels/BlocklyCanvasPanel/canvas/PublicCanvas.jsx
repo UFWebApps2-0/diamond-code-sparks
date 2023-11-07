@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import '../../ActivityLevels.less';
 // Ashley Savigne: added handle save
 import { compileArduinoCode, handleSave } from '../../Utils/helpers';
-import { message, Spin, Row, Col, Alert, Menu, Dropdown } from 'antd';
-// Ashley Savigne: added getsaves
+import { message, Spin, Row, Col, Alert, Dropdown, Menu } from 'antd';
 import { getSaves } from '../../../../Utils/requests';
 import CodeModal from '../modals/CodeModal';
 import ConsoleModal from '../modals/ConsoleModal';
@@ -25,6 +24,7 @@ import { useNavigate } from 'react-router-dom';
 let plotId = 1;
 
 export default function PublicCanvas({ activity, isSandbox }) {
+  const [hoverSave, setHoverSave] = useState(false);
   const [hoverUndo, setHoverUndo] = useState(false);
   const [hoverRedo, setHoverRedo] = useState(false);
   const [hoverCompile, setHoverCompile] = useState(false);
@@ -61,7 +61,38 @@ export default function PublicCanvas({ activity, isSandbox }) {
 
   // Ashley: do not need to loadsave bc this user is unregistered
 
-  // Ashley: idk what this does but its in the other one (add push event)
+  const loadSave = (selectedSave) => {
+    try {
+      let toLoad = activity.template;
+      if (selectedSave !== -1) {
+        if (lastAutoSave && selectedSave === -2) {
+          toLoad = lastAutoSave.workspace;
+          setLastSavedTime(getFormattedDate(lastAutoSave.updated_at));
+        } else if (saves.current && saves.current.id === selectedSave) {
+          toLoad = saves.current.workspace;
+          setLastSavedTime(getFormattedDate(saves.current.updated_at));
+        } else {
+          const s = saves.past.find((save) => save.id === selectedSave);
+          if (s) {
+            toLoad = s.workspace;
+            setLastSavedTime(getFormattedDate(s.updated_at));
+          } else {
+            message.error('Failed to restore save.');
+            return;
+          }
+        }
+      } else {
+        setLastSavedTime(null);
+      }
+      let xml = window.Blockly.Xml.textToDom(toLoad);
+      if (workspaceRef.current) workspaceRef.current.clear();
+      window.Blockly.Xml.domToWorkspace(xml, workspaceRef.current);
+      workspaceRef.current.clearUndo();
+    } catch (e) {
+      message.error('Failed to load save.');
+    }
+  };
+
   const pushEvent = (type, blockId = '') => {
     let blockType = '';
     if (blockId !== '') {
@@ -134,8 +165,29 @@ export default function PublicCanvas({ activity, isSandbox }) {
       blocked = false;
     }, 500);
   };
-  // Ashley: last add end here
 
+  useEffect(() => {
+    // automatically save workspace every min
+    let autosaveInterval = setInterval(async () => {
+      if (workspaceRef.current && activityRef.current) {
+        const res = await handleSave(
+          activityRef.current.id,
+          workspaceRef,
+          replayRef.current
+        );
+        if (res.data) {
+          setLastAutoSave(res.data[0]);
+          setLastSavedTime(getFormattedDate(res.data[0].updated_at));
+        }
+        
+      }
+    }, 60000);
+
+    // clean up - saves workspace and removes blockly div from DOM
+    return async () => {
+      clearInterval(autosaveInterval);
+    };
+  }, []);
 
   useEffect(() => {
     // once the activity state is set, set the workspace and save
@@ -143,19 +195,60 @@ export default function PublicCanvas({ activity, isSandbox }) {
       activityRef.current = activity;
       if (!workspaceRef.current && activity && Object.keys(activity).length !== 0) {
         setWorkspace();
+
+        let onLoadSave = null;
+        const res = await getSaves(activity.id);
+        if (res.data) {
+          if (res.data.current) onLoadSave = res.data.current;
+          setSaves(res.data);
+        } else {
+          console.log(res.err);
+        }
+
+        if (onLoadSave) {
+          let xml = window.Blockly.Xml.textToDom(onLoadSave.workspace);
+          window.Blockly.Xml.domToWorkspace(xml, workspaceRef.current);
+          replayRef.current = onLoadSave.replay;
+          setLastSavedTime(getFormattedDate(onLoadSave.updated_at));
+        } else if (activity.template) {
+          let xml = window.Blockly.Xml.textToDom(activity.template);
+          window.Blockly.Xml.domToWorkspace(xml, workspaceRef.current);
+        }
+
+        pushEvent('load workspace');
+        workspaceRef.current.clearUndo();
       }
     };
     setUp();
   }, [activity]);
 
+  const handleManualSave = async () => {
+    // save workspace then update load save options
+    pushEvent('save');
+    const res = await handleSave(activity.id, workspaceRef, replayRef.current);
+    if (res.err) {
+      message.error(res.err);
+    } else {
+      setLastSavedTime(getFormattedDate(res.data[0].updated_at));
+      message.success('Workspace saved successfully.');
+    }
+
+    const savesRes = await getSaves(activity.id);
+    if (savesRes.data) setSaves(savesRes.data);
+  };
+
   const handleUndo = () => {
-    if (workspaceRef.current.undoStack_.length > 0)
+    if (workspaceRef.current.undoStack_.length > 0) {
       workspaceRef.current.undo(false);
+      pushEvent('undo');
+    }
   };
 
   const handleRedo = () => {
-    if (workspaceRef.current.redoStack_.length > 0)
+    if (workspaceRef.current.redoStack_.length > 0) {
       workspaceRef.current.undo(true);
+      pushEvent('redo');
+    }
   };
 
   const handleConsole = async () => {
@@ -174,6 +267,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
       }
       setConnectionOpen(true);
       setShowConsole(true);
+      pushEvent('show serial monitor');
     }
     // if serial monitor is shown, close the connection
     else {
@@ -206,6 +300,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
       }
       setConnectionOpen(true);
       setShowPlotter(true);
+      pushEvent('show serial plotter');
     } else {
       plotId = 1;
       if (connectionOpen) {
@@ -235,9 +330,24 @@ export default function PublicCanvas({ activity, isSandbox }) {
         setSelectedCompile,
         setCompileError,
         activity,
-        false
+        true
       );
+      pushEvent('compile');
     }
+  };
+
+  const handleGoBack = () => {
+    if (
+      window.confirm(
+        'All unsaved progress will be lost. Do you still want to go back?'
+      )
+    )
+      navigate(-1);
+  };
+
+  const getFormattedDate = (value, locale = 'en-US') => {
+    let output = new Date(value).toLocaleDateString(locale);
+    return output + ' ' + new Date(value).toLocaleTimeString(locale);
   };
 
   const menu = (
@@ -268,24 +378,53 @@ export default function PublicCanvas({ activity, isSandbox }) {
           >
             <Row id='icon-control-panel'>
               <Col flex='none' id='section-header'>
-                Program your Arduino...
+                {activity.lesson_module_name}
               </Col>
               <Col flex='auto'>
                 <Row align='middle' justify='end' id='description-container'>
                   <Col flex={'30px'}>
-                    <Row>
-                      <Col>
-                        <Link id='link' to={'/'} className='flex flex-column'>
-                          <i className='fa fa-home fa-lg' />
-                        </Link>
-                      </Col>
-                    </Row>
+                    <button
+                      onClick={handleGoBack}
+                      id='link'
+                      className='flex flex-column'
+                    >
+                      <i id='icon-btn' className='fa fa-arrow-left' />
+                    </button>
                   </Col>
                   <Col flex='auto' />
 
-                  <Col flex={'200px'}>
+                  <Col flex={'300px'}>
+                    {lastSavedTime ? `Last changes saved ${lastSavedTime}` : ''}
+                  </Col>
+                  <Col flex={'350px'}>
                     <Row>
-                      <Col className='flex flex-row'>
+                      <Col className='flex flex-row' id='icon-align'>
+                        <VersionHistoryModal
+                          saves={saves}
+                          lastAutoSave={lastAutoSave}
+                          defaultTemplate={activity}
+                          getFormattedDate={getFormattedDate}
+                          loadSave={loadSave}
+                          pushEvent={pushEvent}
+                        />
+                        <button
+                          onClick={handleManualSave}
+                          id='link'
+                          className='flex flex-column'
+                        >
+                          <i
+                            id='icon-btn'
+                            className='fa fa-save'
+                            onMouseEnter={() => setHoverSave(true)}
+                            onMouseLeave={() => setHoverSave(false)}
+                          />
+                          {hoverSave && (
+                            <div className='popup ModalCompile4'>Save</div>
+                          )}
+                        </button>
+                      </Col>
+
+                      <Col className='flex flex-row' id='icon-align'>
                         <button
                           onClick={handleUndo}
                           id='link'
@@ -333,7 +472,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
                       </Col>
                     </Row>
                   </Col>
-                  <Col flex={'230px'}>
+                  <Col flex={'180px'}>
                     <div
                       id='action-btn-container'
                       className='flex space-around'
@@ -347,7 +486,9 @@ export default function PublicCanvas({ activity, isSandbox }) {
                           Upload to Arduino
                         </div>
                       )}
-
+                    <DisplayDiagramModal
+                      image={activity.images}
+                    />
                       <i
                         onClick={() => handleConsole()}
                         className='fas fa-terminal hvr-info'
@@ -371,6 +512,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
             <div id='blockly-canvas' />
           </Spin>
         </div>
+
         <ConsoleModal
           show={showConsole}
           connectionOpen={connectionOpen}
@@ -383,7 +525,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
           plotData={plotData}
           setPlotData={setPlotData}
           plotId={plotId}
-        />
+        />          
       </div>
 
       {/* This xml is for the blocks' menu we will provide. Here are examples on how to include categories and subcategories */}
