@@ -2,15 +2,33 @@
 import { Table, Popconfirm, message } from 'antd';
 import {Modal,Button,Switch} from 'antd';
 import { useEffect, useState } from 'react';
-import { getAssessment, getClassroom } from '../../Utils/requests';
+import { getAssessments, getClassroom } from '../../Utils/requests';
 import StudentAssessmenmts from './StudentAssessments';
 import './assessmentStyle.css';
 import QuestionForm from '../AssesmentsCreate/QuestionForm';
+import ViewAssessment from './ViewAssessment';
 
 function Assessments({ classroomId})
 {
     const [names,setNames]=useState([]);
     const [assessments,setAssessments]=useState([]);
+    const [visible, setVisible] = useState(false);
+    const [view,setView] = useState(new Array(getAssessments().then((res)=>res.data.length)).fill(false));
+
+    const viewWork = (i) => {
+      let temp = [...view];
+      temp[i] = true;
+      setView(temp);
+      console.log("viewing work");
+    }
+
+    const leaveWork = (i) => {
+      let temp = [...view];
+      temp[i] = false;
+      setView(temp);
+      console.log("leaving work");
+    }
+
     useEffect(() => {
       getClassroom(classroomId).then((res) => {
         if (res.data) {
@@ -22,30 +40,54 @@ function Assessments({ classroomId})
           message.error(res.err);
         }
       });
-      getAssessment(15).then((res) => {
+      //BAD!!! Need to fix how id is stored since righ now it is not using classroom id 
+      getAssessments().then((res) => {
         let temp = [];
-        temp.push({
-          key:res.data.id,
-          name:res.data.assessmentName,
-          description:res.data.description,
-          open:<Button type="sucess" success>
-          Open
-      </Button>,
-          delete:<Popconfirm title="Sure to delete?" onConfirm={() => {
-            message.success('Deleted');
-          }}>
-          <Button type="primary" danger>
-              Delete
-          </Button>
-          </Popconfirm>,
-          public:<Switch
-          />
-        
-        });
+        console.log(res.data);
+        for(let i=0;i<res.data.length;i++){
+            if(res.data[i].classroomID==classroomId){
+              
+              temp.push({
+                key:res.data[i].id,
+                name:res.data[i].assessmentName,
+                description:res.data[i].description,
+                open:
+                <>
+                  <Button type="sucess" onClick={()=>viewWork(i)}>
+                    Open
+                  </Button>
+                  <Modal
+                    title={"View Assessment"}
+                    visible={view[i]} // Change 'open' to 'visible'
+                    onCancel={leaveWork}
+                    width={'75vw'}
+                    footer={[
+                      <Button key="ok" type="primary" onClick={()=>leaveWork(i)}>
+                        Cancel
+                      </Button>,
+                    ]}
+                  >
+                    <ViewAssessment questions = {res.data[i].questions}/>
+                </Modal>
+            </>
+                ,
+                delete:<Popconfirm title="Sure to delete?" onConfirm={() => {
+                  message.success('Deleted');
+                }}>
+                <Button type="primary" danger>
+                    Delete
+                </Button>
+                </Popconfirm>,
+                public:<Switch
+                />
+              
+              });
+          }
+        }
         setAssessments([...temp]);
 
       });
-    }, [classroomId]);
+    }, [classroomId,visible,view]);
 
     const wsColumn = [
         {
@@ -125,7 +167,7 @@ function Assessments({ classroomId})
       }
     ]
 
-    const [visible, setVisible] = useState(false);
+    
     const showModal = () => {
       setVisible(true);
   };
@@ -146,15 +188,13 @@ const handleBack = () => {
           <button id='home-back-btn' onClick={handleBack}>
             <i className='fa fa-arrow-left' aria-hidden='true' />
           </button>
+          <Button id="assessment" onClick={showModal} >
+            Create Assessment
+          </Button>
           <div>
           <div id='page-header'>
             <h1>Assessments</h1>
           </div>
-          <button id="assessment" onClick={showModal} >
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
-              </svg>
-          </button>
           <div id='content-creator-table-container' style={{ marginTop: '6.6vh' }}>
             <Table columns={wsColumn} dataSource={assessments}/>
           </div>
