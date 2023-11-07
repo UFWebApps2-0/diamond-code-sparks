@@ -1,0 +1,7 @@
+#assessment {
+    float:right;
+    right: 160px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 0 10px #ccc;
+}
