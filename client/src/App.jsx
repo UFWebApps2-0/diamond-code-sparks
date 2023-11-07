@@ -20,7 +20,7 @@ import ForgetPassword from './views/TeacherLogin/ForgetPassword';
 import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
 
-import ProgramPage from './views/ProgramPage/Program_Page';
+import MyProgramPage from './views/ProgramPage/MyProgramPage';
 
 const App = () => {
   return (
@@ -34,7 +34,7 @@ const App = () => {
         <Route path='/login' element={<StudentLogin />} />
         <Route path='/replay/:saveID' element={<Replay />} />
         <Route path='/sandbox' element={<BlocklyPage isSandbox={true} />} />
-        <Route path='/program_page' element={<ProgramPage />} />
+        <Route path='/program_page' element={<MyProgramPage />} />
         <Route
           path='/report'
           element={

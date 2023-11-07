@@ -1,5 +1,5 @@
 import React from 'react';
-import './Program_Page.less';
+//import './Program_Page.less';
 
 function ProgramPage() {
   return (

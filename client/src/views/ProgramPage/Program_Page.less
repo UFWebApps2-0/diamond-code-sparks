@@ -4,6 +4,8 @@
     align-items: stretch;
     font-family: Arial, sans-serif;
     
+   
+
     .header {
       display: flex;
       align-items: center;
@@ -75,3 +77,22 @@
     }
   }
   
+  .program_page{
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      position: sticky;
+      z-index: 10; /* High z-index to ensure it's above other content */
+    }
+
+    .react-component {
+      margin-top: 60px;
+    }
+  }
