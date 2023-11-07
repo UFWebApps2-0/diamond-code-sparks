@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Button,Form, Input } from 'antd';
 import './CreateStyle.css';
 import { Select,Radio, Space } from 'antd';
-import { createAsessment } from '../../Utils/requests';
-import { addStudent } from '../../Utils/requests';
+import { createAssessment } from '../../Utils/requests';
 
 function QuestionForm(id) {
   const [questions, setQuestions] = useState([]);
@@ -107,11 +106,8 @@ function QuestionForm(id) {
       alert("Please enter an assessment description")
       return;
     }
-    let listQ = questions;
-    let list1 = [id,name,description]
-    let subList = list1.concat(listQ);
-    console.log(subList);
-    const res = await createAsessment(name, questions);
+    
+    const res = await createAssessment(name,id.id,description, questions);
     console.log(res.data);
     
     //Reset now

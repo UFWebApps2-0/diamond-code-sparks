@@ -528,6 +528,12 @@
           "questions": {
             "type": "object"
           },
+          "description": {
+            "type": "string"
+          },
+          "classroomID": {
+            "type": "integer"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -541,6 +547,12 @@
           },
           "questions": {
             "type": "object"
+          },
+          "description": {
+            "type": "string"
+          },
+          "classroomID": {
+            "type": "integer"
           },
           "published_at": {
             "type": "string",

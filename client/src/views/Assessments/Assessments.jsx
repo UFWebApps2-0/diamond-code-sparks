@@ -1,14 +1,16 @@
-import NavBar from '../../components/NavBar/NavBar';
+
 import { Table, Popconfirm, message } from 'antd';
 import {Modal,Button,Switch} from 'antd';
 import { useEffect, useState } from 'react';
-import { getClassroom } from '../../Utils/requests';
+import { getAssessment, getClassroom } from '../../Utils/requests';
 import StudentAssessmenmts from './StudentAssessments';
 import './assessmentStyle.css';
 import QuestionForm from '../AssesmentsCreate/QuestionForm';
+
 function Assessments({ classroomId})
 {
     const [names,setNames]=useState([]);
+    const [assessments,setAssessments]=useState([]);
     useEffect(() => {
       getClassroom(classroomId).then((res) => {
         if (res.data) {
@@ -19,6 +21,29 @@ function Assessments({ classroomId})
         } else {
           message.error(res.err);
         }
+      });
+      getAssessment(15).then((res) => {
+        let temp = [];
+        temp.push({
+          key:res.data.id,
+          name:res.data.assessmentName,
+          description:res.data.description,
+          open:<Button type="sucess" success>
+          Open
+      </Button>,
+          delete:<Popconfirm title="Sure to delete?" onConfirm={() => {
+            message.success('Deleted');
+          }}>
+          <Button type="primary" danger>
+              Delete
+          </Button>
+          </Popconfirm>,
+          public:<Switch
+          />
+        
+        });
+        setAssessments([...temp]);
+
       });
     }, [classroomId]);
 
@@ -131,7 +156,7 @@ const handleBack = () => {
               </svg>
           </button>
           <div id='content-creator-table-container' style={{ marginTop: '6.6vh' }}>
-            <Table columns={wsColumn} />
+            <Table columns={wsColumn} dataSource={assessments}/>
           </div>
           <Modal
                 title={"Create Assessment"}

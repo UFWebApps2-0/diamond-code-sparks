@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "assessments",
   "info": {
-    "name": "Assessments"
+    "name": "Assessments",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -15,6 +16,12 @@
     },
     "questions": {
       "type": "json"
+    },
+    "description": {
+      "type": "string"
+    },
+    "classroomID": {
+      "type": "integer"
     }
   }
 }
