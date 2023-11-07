@@ -214,6 +214,7 @@ function Student() {
         <div id='header'>
           <div>Share Program</div>
         </div>
+        <ShareProgram/>
       </div>
       )}
       {/*add shared with you page*/}
@@ -222,7 +223,6 @@ function Student() {
         <div id='header'>
           <div>Shared Programs</div>
         </div>
-        {/*<ShareProgram/>*/}
       </div>
       )}
       {/* add View Gallery */}
