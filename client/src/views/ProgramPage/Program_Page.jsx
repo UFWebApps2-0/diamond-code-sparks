@@ -1,35 +1,23 @@
 import React from 'react';
+import MyCards from './MyCards';
 //import './Program_Page.less';
 
 function ProgramPage() {
   return (
     <div className="my-programs">
       <div className="header">
-        <button className="back-button">←</button>
-        <h1>My Programs</h1>
-        <div className="menu">menu ▾</div>
+        My Programs
       </div>
       <div className="programs-list">
         <div className="program new-program">
           <div className="add-icon">+</div>
           <div>New Program</div>
         </div>
-        <div className="program">
-          <div className="program-title">Program 1</div>
-          <button className="edit-button">edit</button>
-          <button className="share-button">share</button>
-        </div>
-        <div className="program submitted">
-          <div className="program-title">Program 2 for Lesson 3</div>
-          <button className="edit-button">edit</button>
-          <button className="share-button">share</button>
-        </div>
-        <div className="program">
-          <div className="program-title">Program 3 for Lesson 2</div>
-          <button className="edit-button">edit</button>
-          <button className="share-button">share</button>
-        </div>
+        <MyCards programNumber={1} lessonNumber={2}/>
+        <MyCards programNumber={2} lessonNumber={3}/>
+        <MyCards programNumber={3} lessonNumber={2}/>
       </div>
+      {/* gonna change class name to footer */}
       <div className="footer">
         <div className="footer-title">People you've worked with on Lesson 2</div>
         {/* Placeholder for user icons */}

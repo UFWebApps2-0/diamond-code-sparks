@@ -5,7 +5,7 @@ import NavBar from '../../components/NavBar/NavBar';
 
 function MyProgramPage() {
   return (
-    <div className="program_page">
+    <div className="program_page" >
     <div className="flex-container">
         <div className="navbar">
         <NavBar />
