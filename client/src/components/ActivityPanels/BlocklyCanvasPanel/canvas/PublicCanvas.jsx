@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useReducer } from 'react';
 import { Link } from 'react-router-dom';
 import '../../ActivityLevels.less';
-import { compileArduinoCode } from '../../Utils/helpers';
+import { compileArduinoCode, exportWorkspace, importWorkspace } from '../../Utils/helpers';
 import { message, Spin, Row, Col, Alert, Menu, Dropdown } from 'antd';
 import CodeModal from '../modals/CodeModal';
 import ConsoleModal from '../modals/ConsoleModal';
@@ -48,6 +48,15 @@ export default function PublicCanvas({ activity, isSandbox }) {
     };
     setUp();
   }, [activity]);
+  
+  const handleImport = () => {
+    importWorkspace(workspaceRef.current, prompt("enter workspace serialization code here: "));
+    forceUpdate.x;
+  }
+
+  const handleExport = () => {
+    alert(exportWorkspace(workspaceRef.current));
+  }
 
   const handleUndo = () => {
     if (workspaceRef.current.undoStack_.length > 0)
@@ -153,6 +162,28 @@ export default function PublicCanvas({ activity, isSandbox }) {
       </Menu.Item>
     </Menu>
   );
+  
+  // TODO After login, the work will be lost. Make sure this doesn't happen.
+  let promptLogin = true;
+  const checkLogin = () => {
+    if (promptLogin) {
+      if (confirm("Do you want to login to save your work?")) {
+        window.location.href = "/teacherlogin";
+      }
+      promptLogin = false;  // Don't prompt the user again
+    }
+    setTimeout(checkLogin, 30000);
+  }
+
+  // Start the timeout
+  useEffect(() => {
+    let ignore = false;
+    if (!ignore) {
+      setTimeout(checkLogin, 30000);
+      // checkLogin();
+    }
+    return () => {ignore = true;}
+  }, []);
 
   return (
     <div id='horizontal-container' className='flex flex-column'>
@@ -183,7 +214,18 @@ export default function PublicCanvas({ activity, isSandbox }) {
                     </Row>
                   </Col>
                   <Col flex='auto' />
-
+                  <Col flex={'200px'}>
+                    <Row>
+                      <Col className='flex flex-row'>
+                        <button onClick={() => handleImport()} className='flex flex-column'>
+                        Import
+                        </button>
+                        <button onClick={() => handleExport()} className='flex flex-column'>
+                        Export
+                        </button>
+                      </Col>
+                    </Row>
+                  </Col>
                   <Col flex={'200px'}>
                     <Row>
                       <Col className='flex flex-row'>

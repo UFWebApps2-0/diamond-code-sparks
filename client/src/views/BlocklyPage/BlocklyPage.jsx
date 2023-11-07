@@ -14,7 +14,7 @@ export default function BlocklyPage({ isSandbox }) {
   const [value] = useGlobalState("currUser")
   const [activity, setActivity] = useState({})
   const navigate = useNavigate()
-
+  
   useEffect(() => {
     const setup = async () => {
       // if we are in sandbox mode show all toolbox

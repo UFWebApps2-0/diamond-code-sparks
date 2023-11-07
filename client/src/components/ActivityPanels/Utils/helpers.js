@@ -20,6 +20,17 @@ export const setLocalSandbox = (workspaceRef) => {
   localStorage.setItem('sandbox-activity', JSON.stringify(lastActivity));
 };
 
+// TODO finish exporting and importing workspace
+// Returns a string
+export const exportWorkspace = (workspaceRef) => {
+	return new XMLSerializer().serializeToString(window.Blockly.Xml.workspaceToDom(workspaceRef));
+}
+
+// serializedJson should be a string
+export const importWorkspace = (workspaceRef, serializedJson) => {
+	window.Blockly.Xml.domToWorkspace(new DOMParser().parseFromString(serializedJson, "application/xml"), workspaceRef);
+}
+
 // Generates xml from blockly canvas
 export const getXml = (workspaceRef, shouldAlert = true) => {
   const { Blockly } = window;
