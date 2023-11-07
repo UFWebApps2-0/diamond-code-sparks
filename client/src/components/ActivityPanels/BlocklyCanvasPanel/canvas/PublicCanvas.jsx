@@ -50,13 +50,15 @@ export default function PublicCanvas({ activity, isSandbox }) {
   }, [activity]);
 
   const handleUndo = () => {
-    if (workspaceRef.current.undoStack_.length > 0)
-      workspaceRef.current.undo(false);
+    if (workspaceRef.current.undoStack_.length > 0) //makes sure that trying to undo only works when the stack isnt length 0
+          workspaceRef.current.undo(false);
+      message.error('current size of the stack is ' + workspaceRef.current.undoStack_.length); // loltkyx
   };
 
   const handleRedo = () => {
     if (workspaceRef.current.redoStack_.length > 0)
-      workspaceRef.current.undo(true);
+          workspaceRef.current.undo(true);
+      message.error('current size of the stack is ' + workspaceRef.current.undoStack_.length); // loltkyx
   };
 
   const handleConsole = async () => {
@@ -197,7 +199,8 @@ export default function PublicCanvas({ activity, isSandbox }) {
                             className='fa fa-undo-alt'
                             style={
                               workspaceRef.current
-                                ? workspaceRef.current.undoStack_.length < 1
+                                    ? workspaceRef.current.undoStack_.length < 1
+                                        //kevin here is where its grayed out if no undo
                                   ? { color: 'grey', cursor: 'default' }
                                   : null
                                 : null

@@ -20,6 +20,9 @@ export const setLocalSandbox = (workspaceRef) => {
   localStorage.setItem('sandbox-activity', JSON.stringify(lastActivity));
 };
 
+
+//**WE NEED TO WRITE CODE TO REVERSE THIS FOR USER STORY SO TEACHERS CAN SHARE THERE TEMPLATE**
+
 // Generates xml from blockly canvas
 export const getXml = (workspaceRef, shouldAlert = true) => {
   const { Blockly } = window;
