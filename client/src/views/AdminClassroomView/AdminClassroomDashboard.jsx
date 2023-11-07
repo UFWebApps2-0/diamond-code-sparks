@@ -13,8 +13,7 @@ export default function AdminClassroomDashboard() {
         id: 1,
         name: "Classroom 1",
         teachers: [
-            {teachername: "teachername1"},
-            {teachername: "teachername2"}
+            {teachername: "teachername1"}
         ],
         code: "9999",
         school: {
@@ -22,7 +21,8 @@ export default function AdminClassroomDashboard() {
         },
         students: [
             {studentname: "name1"},
-            {studentname: "name2"}
+            {studentname: "name2"},
+            {studentname: "name3"}
         ]
         
     }
@@ -39,7 +39,10 @@ export default function AdminClassroomDashboard() {
         },
         students: [
             {studentname: "name1"},
-            {studentname: "name2"}
+            {studentname: "name2"},
+            {studentname: "name3"},
+            {studentname: "name4"},
+            {studentname: "name5"}
         ]
     }
 

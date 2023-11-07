@@ -3,6 +3,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import "../OrgDashboard/CreateOrg.less"
 import { useNavigate } from "react-router-dom";
 
+
 export default function CreateClassroom() {
     const[classroomName, setClassroomName] = useState("");
 
@@ -24,6 +25,7 @@ export default function CreateClassroom() {
                   onChange={(e) => setClassroomName(e.target.value)}
                 />
               </label>
+              
               {/* Other Classroom Fields */}
               <input type="submit" value="Submit" />
             </form>
