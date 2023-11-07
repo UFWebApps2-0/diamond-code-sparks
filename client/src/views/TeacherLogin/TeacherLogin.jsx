@@ -5,6 +5,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import { postUser, setUserSession } from '../../Utils/AuthRequests';
 import './TeacherLogin.less';
 
+// Additions
 import { jwtDecode } from 'jwt-decode';
 
 const useFormInput = (initialValue) => {
@@ -63,18 +64,22 @@ export default function TeacherLogin() {
     console.log(userObject);
 
     // Verify integrity of token
-    const { OAuth2Client } = require('google-auth-library');
-    const client = new OAuth2Client;
-    async function verify() {
-      const ticket = await client.verifyIdToken({
-          idToken: userObject,
-          audience: CLIENT_ID,
-      });
+    try {
+      const { OAuth2Client } = require('google-auth-library');
+      const client = new OAuth2Client;
+      async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: userObject,
+            audience: CLIENT_ID,
+        });
 
-      const payload = ticket.getPayload();
-      const userID = payload['sub'];
+        const payload = ticket.getPayload();
+        const userID = payload['sub'];
+      }
+      verify.catch(console.error); // Checks validity of token
+    } catch (error) {
+      console.error('Error during import:', error);
     }
-    verify.catch(console.error); // Checks validity of token
   
     // Set email with returned token val
     // NOTE: Google specifies that the Google userID should be the ONLY identifer
