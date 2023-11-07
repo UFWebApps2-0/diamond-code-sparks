@@ -86,6 +86,7 @@ export default function TeacherLogin() {
     setEmail(userObject.email);
     let body = { identifier: userObject.email, password: 'password' }; // Need password??? // Removed ".value"
     
+    // Still uses a hardcode value: DO NOT DEPLOY IN THIS STATE
     postUser(body)
       .then((response) => {
         setUserSession(response.data.jwt, JSON.stringify(response.data.user)); 
