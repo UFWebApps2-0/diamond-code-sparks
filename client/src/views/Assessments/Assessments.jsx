@@ -8,6 +8,9 @@ import './assessmentStyle.css';
 import QuestionForm from '../AssesmentsCreate/QuestionForm';
 import ViewAssessment from './ViewAssessment';
 
+
+//Creates the page on the Teacher view of the Assessments
+//Get access to creating assessments, assessment managament, and student assessments
 function Assessments({ classroomId})
 {
     const [names,setNames]=useState([]);
@@ -19,16 +22,15 @@ function Assessments({ classroomId})
       let temp = [...view];
       temp[i] = true;
       setView(temp);
-      console.log("viewing work");
     }
 
     const leaveWork = (i) => {
       let temp = [...view];
       temp[i] = false;
       setView(temp);
-      console.log("leaving work");
     }
 
+    //Upon rereendering, get the students and assessments
     useEffect(() => {
       getClassroom(classroomId).then((res) => {
         if (res.data) {
@@ -40,10 +42,9 @@ function Assessments({ classroomId})
           message.error(res.err);
         }
       });
-      //BAD!!! Need to fix how id is stored since righ now it is not using classroom id 
+      //Get all assessments and the assessment with correct id is stored in assesments table
       getAssessments().then((res) => {
         let temp = [];
-        console.log(res.data);
         for(let i=0;i<res.data.length;i++){
             if(res.data[i].classroomID==classroomId){
               
@@ -67,7 +68,7 @@ function Assessments({ classroomId})
                       </Button>,
                     ]}
                   >
-                    <ViewAssessment questions = {res.data[i].questions}/>
+                    <ViewAssessment name= {res.data[i].assessmentName} description = {res.data[i].description} questions = {res.data[i].questions}/>
                 </Modal>
             </>
                 ,
@@ -89,6 +90,7 @@ function Assessments({ classroomId})
       });
     }, [classroomId,visible,view]);
 
+    //Create the column headers for the table displaying all assessments
     const wsColumn = [
         {
           title: 'Name',
@@ -138,6 +140,7 @@ function Assessments({ classroomId})
 
     ]
 
+    //The columns of the student assessments table
     const studColumns = [
       {
         title: 'Name',

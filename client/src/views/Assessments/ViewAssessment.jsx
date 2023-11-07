@@ -1,13 +1,14 @@
 import { Select,Radio, Space } from 'antd';
 import { Button,Form, Input } from 'antd';
 import React, { useState } from 'react';
-function ViewAssessment({questions}){
 
-
+//Function that views the created assessment
+function ViewAssessment({name,description,questions}){
 
     return (
         <div>
-            <h1>View Assessment</h1>
+            <h1>{name}</h1>
+            <h2>Description: {description}</h2>
             {questions.map((question, index) => (
                 <div key={index}>
                     {question.type === "Multiple Choice" ? (
