@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Workspace({ handleLogout }) {
   const [activity, setActivity] = useState({});
 
+  console.log("hellooo")
   useEffect(() => {
     const localActivity = JSON.parse(localStorage.getItem('my-activity'));
     const navigate = useNavigate();
