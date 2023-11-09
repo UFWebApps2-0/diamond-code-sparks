@@ -1,0 +1,29 @@
+/* Ensure the header has a relative position to contain absolute elements */
+.header {
+    position: relative; 
+  }
+  
+  /* Style for the filter input, making sure it doesn't overflow */
+  .filter-input {
+    position: absolute; 
+    top: 10px; /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+    width: calc(100% - 20px); /* Adjust width to make sure it doesn't overlap */
+    box-sizing: border-box; /* Include padding and borders in the element's width */
+  }
+  
+  /* Style for the "Your Classrooms" label */
+  .classrooms-label {
+    position: absolute; 
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    font-size: 0.9em; /* Reduce font size if necessary */
+  }
+  
+  @media (max-width: 768px) {
+    .filter-input,
+    .classrooms-label {
+      font-size: 0.8em; /* Even smaller font size for smaller screens */
+    }
+  }
+  
