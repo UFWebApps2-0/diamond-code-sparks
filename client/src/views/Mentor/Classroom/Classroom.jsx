@@ -5,6 +5,7 @@ import './Classroom.less';
 import NavBar from '../../../components/NavBar/NavBar';
 import Roster from './Roster/Roster';
 import Home from './Home/Home';
+import Groups from './Groups/Groups';
 import SavedWorkSpaceTab from '../../../components/Tabs/SavedWorkspaceTab';
 import { useSearchParams, useParams } from 'react-router-dom';
 
@@ -43,6 +44,9 @@ export default function Classroom({
         </TabPane>
         <TabPane tab='Roster' key='roster'>
           <Roster handleLogout={handleLogout} classroomId={id} />
+        </TabPane>
+        <TabPane tab='Groups' key='groups'>
+         <Groups handleLogout={handleLogout} classroomId={id} />
         </TabPane>
         <TabPane tab='Saved Workspaces' key='workspace'>
           <SavedWorkSpaceTab
