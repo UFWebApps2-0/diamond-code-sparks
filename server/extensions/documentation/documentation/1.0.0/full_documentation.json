@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/02/2023 6:59:36 PM"
+    "x-generation-date": "11/10/2023 7:32:22 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -12162,6 +12162,9 @@
                   "type": "string"
                 }
               },
+              "Administrator": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -12970,6 +12973,9 @@
                   "type": "string"
                 }
               },
+              "Administrator": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -13413,6 +13419,51 @@
                 }
               }
             }
+          },
+          "Administrator": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmationToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -13438,6 +13489,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "Administrator": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

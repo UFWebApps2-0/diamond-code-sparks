@@ -16,7 +16,7 @@
         "policies": []
       }
     },
-    {
+   {
       "method": "GET",
       "path": "/schools/:id",
       "handler": "school.findOne",

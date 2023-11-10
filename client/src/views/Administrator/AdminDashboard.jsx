@@ -45,10 +45,10 @@ function AdminDashboard() {
       const grades = gradeResponse.data;
       grades.sort((a, b) => (a.id > b.id ? 1 : -1));
       setGradeList(grades);
-
+      setOrganizationList(organizationResponse.data);
       setTeacherList(teacherResponse.data);
       setClassroomList(classroomResponse.data);
-      setOrganizationList(organizationResponse.data);
+     
     };
     fetchData();
   }, []);

@@ -557,6 +557,9 @@
                   "type": "string"
                 }
               },
+              "Administrator": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
