@@ -51,6 +51,11 @@ function AdminDashboard() {
      
     };
     fetchData();
+    const intervalId = setInterval(fetchData, 1000); // 1 second in milliseconds
+
+  // Clean up the interval when the component is unmounted
+    return () => clearInterval(intervalId);
+    
   }, []);
 
   //Dashboard View
