@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import "./AdminClassroomDashboard.less";
-import DashboardDisplayCodeModal from "../Mentor/Dashboard/DashboardDisplayCodeModal";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminClassroomDashboard() {
-    const [classrooms, setClassrooms] = useState([]);
-    // const user = getUser();
+    const [classrooms] = useState([]);
     const navigate = useNavigate();
 
     const sampleClassroom1 = {
