@@ -33,36 +33,46 @@ export default function Dashboard() {
   const handleViewClassroom = (classroomId) => {
     navigate(`/classroom/${classroomId}`);
   };
+  const handleViewAllLessonsClick = () => {
+    navigate('/all-lessons');
+  };
 
   return (
-    <div className='container nav-padding'>
-      <NavBar />
-      <div id='main-header'>Welcome {value.name}</div>
-      <MentorSubHeader title={'Your Classrooms'}></MentorSubHeader>
-      <div id='classrooms-container'>
-        <div id='dashboard-card-container'>
-          {classrooms.map((classroom) => (
-            <div key={classroom.id} id='dashboard-class-card'>
-              <div id='card-left-content-container'>
-                <h1 id='card-title'>{classroom.name}</h1>
-                <div id='card-button-container' className='flex flex-row'>
-                  <button onClick={() => handleViewClassroom(classroom.id)}>
-                    View
-                  </button>
+      <div className='container nav-padding'>
+        <NavBar />
+        <div id='main-header'>Welcome {value.name}</div>
+        <div className='sub-header-container'>
+          <MentorSubHeader title={'Your Classrooms'} />
+        </div>
+        <div id='classrooms-container'>
+          <div id='dashboard-card-container'>
+            {classrooms.map((classroom) => (
+              <div key={classroom.id} id='dashboard-class-card'>
+                <div id='card-left-content-container'>
+                  <h1 id='card-title'>{classroom.name}</h1>
+                  <div id='card-button-container'>
+                    <button onClick={() => handleViewClassroom(classroom.id)}>
+                      View
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div id='card-right-content-container'>
-                <DashboardDisplayCodeModal code={classroom.code} />
-                <div id='divider' />
-                <div id='student-number-container'>
-                  <h1 id='number'>{classroom.students.length}</h1>
-                  <p id='label'>Students</p>
+                <div id='card-right-content-container'>
+                  <DashboardDisplayCodeModal code={classroom.code} />
+                  <div id='divider' />
+                  <div id='student-number-container'>
+                    <h1 id='number'>{classroom.students.length}</h1>
+                    <p id='label'>Students</p>
+                  </div>
                 </div>
+                
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <button onClick={handleViewAllLessonsClick} className="view-all-lessons-button">
+            View all Lessons
+          </button>
         </div>
       </div>
-    </div>
-  );
+    );
+    
 }
