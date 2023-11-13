@@ -4,7 +4,7 @@ import "./AdminClassroomDashboard.less";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminClassroomDashboard() {
-    const [classrooms] = useState([]);
+    const [classrooms, setClassrooms] = useState([]);
     const navigate = useNavigate();
 
     const sampleClassroom1 = {
