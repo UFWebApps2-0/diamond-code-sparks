@@ -31,6 +31,15 @@ const BlocklyCanvasPanel = ({ activity, isSandbox, setActivity }) => {
           isMentorActivity={!activity.selectedToolbox && !isSandbox}
         />
       );
+    case 'Administrator':
+      return (
+        <ContentCreatorCanvas
+          activity={activity}
+          setActivity={setActivity}
+          isSandbox={isSandbox}
+          isMentorActivity={!activity.selectedToolbox && !isSandbox}
+        />
+      );
     default:
       return <div></div>;
   }

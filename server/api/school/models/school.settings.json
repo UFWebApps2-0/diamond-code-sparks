@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "schools",
   "info": {
-    "name": "School"
+    "name": "School",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -25,6 +27,10 @@
     "mentors": {
       "via": "school",
       "collection": "mentor"
+    },
+    "Administrator": {
+      "plugin": "users-permissions",
+      "model": "user"
     }
   }
 }

@@ -16,8 +16,8 @@
       "type": "string"
     },
     "school": {
-      "model": "school",
-      "via": "mentors"
+      "via": "mentors",
+      "model": "school"
     },
     "classrooms": {
       "via": "mentors",

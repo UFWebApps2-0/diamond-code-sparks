@@ -313,6 +313,20 @@ export const addStudent = async (name, character, classroom) =>
     error: 'Failed to add student.',
   });
 
+export const addOrganization = async(name, county, state, administrator) => 
+  makeRequest({
+    method: POST, 
+    path: `${server}/schools`,
+    data: {
+      name: name,
+      county: county,
+      state: state,
+      Administrator: administrator,
+    },
+    auth: true,
+    error: 'Failed to add organization',
+  });
+
 export const addStudents = async (students, classroom) =>
   makeRequest({
     method: POST,
@@ -671,4 +685,12 @@ export const getClassroomWorkspace = async (id) =>
     path: `${server}/classroom/workspaces/${id}`,
     auth: true,
     error: 'Unable to retrive classroom workspaces',
+  });
+
+export const getAllSchools = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/schools`,
+    auth: true,
+    error: 'Schools could not be retrieved.',
   });

@@ -27,3 +27,9 @@ export const setUserSession = (jwt, user) => {
   sessionStorage.setItem('user', user);
   setUserState(getCurrUser());
 };
+
+export const getUser = () =>{
+
+  return JSON.parse(sessionStorage.getItem('user'));
+}
+

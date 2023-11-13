@@ -42,6 +42,12 @@ export default function NavBar() {
           &nbsp; Dashboard
         </Menu.Item>
       ) : null}
+      {shouldShowRoute('AdminDashboard') ? (
+        <Menu.Item key='9' onClick={() => handleRouteChange(routes.AdminDashboard)}>
+          <i className='fa fa-home' />
+          &nbsp; Dashboard
+        </Menu.Item>
+      ) : null}
       {shouldShowRoute('ContentCreatorDashboard') ? (
         <Menu.Item
           key='2'
@@ -115,6 +121,8 @@ export default function NavBar() {
             ? '/student'
             : value.role === 'Researcher'
             ? '/report'
+            : value.role === 'Administrator'
+            ? '/adminDashboard'
             : '/'
         }
       >

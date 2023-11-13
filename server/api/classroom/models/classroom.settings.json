@@ -15,8 +15,8 @@
       "type": "string"
     },
     "school": {
-      "model": "school",
-      "via": "classrooms"
+      "via": "classrooms",
+      "model": "school"
     },
     "sessions": {
       "via": "classroom",
