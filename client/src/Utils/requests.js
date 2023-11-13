@@ -43,6 +43,13 @@ const makeRequest = async ({ method, path, data, auth = false, error }) => {
 
   return { data: res, err: err };
 };
+export const getAllClassroomLessons = async (teacherId) =>
+  makeRequest({
+    method: GET,
+    path: `${server}/lessons`,
+    auth: true,
+    error: 'Could not retrieve lessons for the teacher.',
+  });
 
 export const getActivities = async () =>
   makeRequest({
