@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import "../OrgDashboard/CreateOrg.less"
-import { useNavigate } from "react-router-dom";
-
 
 export default function CreateClassroom() {
     const[classroomName, setClassroomName] = useState("");
@@ -18,7 +16,7 @@ export default function CreateClassroom() {
           <div id="create-form-container">
             <form onSubmit={handleSubmit}>
               <label>
-                Classroom Name:
+                Classroom Name: {' '}
                 <input
                   type="text"
                   value={classroomName}
