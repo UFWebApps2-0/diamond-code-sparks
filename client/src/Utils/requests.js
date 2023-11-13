@@ -504,6 +504,14 @@ export const getLessonModuleActivities = async (lsId) =>
     error: 'Activity cannot be retrived',
   });
 
+export const getLessonModuleDiscussions = async (lsId) =>
+  makeRequest({
+    method: GET,
+    path: `${server}/discussions?lesson_module.id=${lsId}`,
+    auth: true,
+    error: 'Discussion cannot be retrived',
+  });
+
   export const getActivityLevels = async (lsId) =>
   makeRequest({
     method: GET,
