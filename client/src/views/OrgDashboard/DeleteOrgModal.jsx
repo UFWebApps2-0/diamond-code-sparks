@@ -1,7 +1,6 @@
 import {Modal, Button, message} from 'antd';
 import React, {useState} from "react";
 
-
 export default function DeleteOrgModal(props) {
     const [visible, setVisible] = useState(false);
     const {orgId, orgName, orgs, setOrgs} = props;
@@ -27,12 +26,10 @@ export default function DeleteOrgModal(props) {
             updatedOrgs.splice(index, 1);
             setOrgs(updatedOrgs);
             message.info(orgName + ' has been deleted.');
+        } else if (confirm == '') {
+            message.error('Confirm deletion.');
         } else {
-            if (confirm == '') {
-                message.error('Confirm deletion.');
-            } else {
-                message.warning('Typo in ' + orgName + '.');
-            }
+            message.warning('Typo in ' + orgName + '.');
         }
     }
 

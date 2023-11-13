@@ -8,8 +8,8 @@ import DeleteOrgModal from './DeleteOrgModal';
 export default function OrgDashboard() {
 	const [orgs, setOrgs] = useState([]);
 	const navigate = useNavigate();
-	const [isFlipped, setFlipped] = useState(new Set());
-	const [orgName, setOrgName] = useState("");
+	const [isFlipped, setIsFlipped] = useState(new Set());
+	const [orgName, setOrgName] = useState('');
 
 	const sampleOrg = {
 		id: 1,
@@ -69,7 +69,7 @@ export default function OrgDashboard() {
       		} else {
         	 	flipped.add(id)
       		}
-      		setFlipped(flipped)
+      		setIsFlipped(flipped)
     	}
 	}
 
@@ -77,6 +77,7 @@ export default function OrgDashboard() {
 		event.preventDefault();
 
 		if (orgName != '') {
+			// find the corresponding org and update its name with the form input
 			let updatedOrgs = [...orgs];
 			let index = updatedOrgs.findIndex(function (org) {
 				return org['id'] == id
@@ -102,7 +103,7 @@ export default function OrgDashboard() {
 	        <div id='orgs-container'>
 	        	<div id='dashboard-card-container'>
 	        		{orgs.map((org) => (
-		        		<div key={org.id} id='dashboard-org-card' className={isFlipped.has(org.id) ? "flipped" : ""}>
+		        		<div key={org.id} id='dashboard-org-card' className={isFlipped.has(org.id) ? 'flipped' : ''}>
 		        			<div className="org-card-front">
 				        		<button id='edit-org-btn' onClick={handleFlip(org.id)}>
 									<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
