@@ -508,6 +508,7 @@ export const getLessonModuleDiscussions = async (lsId) =>
   makeRequest({
     method: GET,
     path: `${server}/discussions?lesson_module.id=${lsId}`,
+    // path: `${server}/discussions`,
     auth: true,
     error: 'Discussion cannot be retrived',
   });

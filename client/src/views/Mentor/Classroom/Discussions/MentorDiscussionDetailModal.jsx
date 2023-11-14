@@ -15,7 +15,7 @@ const SCIENCE = 1
 const MAKING = 2
 const COMPUTATION = 3
 
-const MentorActivityDetailModal = ({
+const MentorDiscussionDetailModal = ({
   learningStandard,
   selectActivity,
   setActivities,
@@ -300,4 +300,4 @@ const MentorActivityDetailModal = ({
   )
 }
 
-export default MentorActivityDetailModal
+export default MentorDiscussionDetailModal

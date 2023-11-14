@@ -4,11 +4,12 @@ import {
   getClassroom,
   getLessonModule,
   getLessonModuleDiscussions,
-  // getLessonModuleDiscussions,
 } from '../../../../Utils/requests';
 import MentorSubHeader from '../../../../components/MentorSubHeader/MentorSubHeader';
-import DisplayCodeModal from '../Home/DisplayCodeModal';
-import MentorDiscussionDetailModal from '../Home/MentorDiscussionDetailModal';
+import CreateDiscussionModal from './CreateDiscussionModal';
+import MentorDiscussionDetailModal from './MentorDiscussionDetailModal';
+import MentorActivityDetailModal from '../Home/MentorActivityDetailModal';
+// import LessonModuleModal from './LessonModuleSelect/LessonModuleModal';
 import LessonModuleModal from '../Home/LessonModuleSelect/LessonModuleModal';
 import { message, Tag } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -21,13 +22,14 @@ export default function Discussions({ classroomId, viewing }) {
   const [gradeId, setGradeId] = useState(null);
   const [activeLessonModule, setActiveLessonModule] = useState(null);
   const [activityDetailsVisible, setActivityDetailsVisible] = useState(false)
+  const [discussionDetailsVisible, setDiscussionDetailsVisible] = useState(false)
   const navigate = useNavigate();
 
   const SCIENCE = 1;
   const MAKING = 2;
   const COMPUTATION = 3;
 
-  useEffect(() => {
+  useEffect(() => { // if the classroom id changes, get the new classroom info
     const fetchData = async () => {
       const res = await getClassroom(classroomId);
       if (res.data) {
@@ -43,13 +45,10 @@ export default function Discussions({ classroomId, viewing }) {
             else {
               message.error(lsRes.err);
             }
-            const activityRes = await getLessonModuleDiscussions(lsRes.data.id);
-            // const activityRes = await getLessonModuleDiscussions(lsRes.data.id);
-            console.log(activityRes);
-            if (activityRes) setActivities(activityRes.data);
-            else {
-              message.error(activityRes.err);
-            }
+            const discRes = await getLessonModuleDiscussions(lsRes.data.id);
+            console.log(discRes);
+            if (discRes) setDiscussions(discRes.data);
+            else { message.error(discRes.err); }
           }
         });
       } else {
@@ -58,21 +57,6 @@ export default function Discussions({ classroomId, viewing }) {
     };
     fetchData();
   }, [classroomId]);
-
-  const handleViewActivity = (activity, name) => {
-    activity.lesson_module_name = name;
-    localStorage.setItem('sandbox-activity', JSON.stringify(activity));
-    navigate('/sandbox');
-  };
-
-  const openActivityInWorkspace = (activity, name) => {
-    activity.lesson_module_name = name;
-    activity.template = activity.activity_template;
-    delete activity.id;
-    delete activity.activity_template;
-    localStorage.setItem('sandbox-activity', JSON.stringify(activity));
-    navigate('/sandbox');
-  };
 
   const handleBack = () => {
     navigate('/dashboard');
@@ -94,28 +78,30 @@ export default function Discussions({ classroomId, viewing }) {
 
   return (
     <div>
+      {/* return home */}
       <button id='home-back-btn' onClick={handleBack}>
         <i className='fa fa-arrow-left' aria-hidden='true' />
       </button>
-      <DisplayCodeModal code={classroom.code} /> 
-      {/* the above displays the join code, replace with create new discussion button */}
+      {/* make new discussion button */}
+      <CreateDiscussionModal code={classroom.code} /> {/* stil needs to be given logic*/}
       <MentorSubHeader title={classroom.name}></MentorSubHeader>
-      <div id='home-content-container'>
-        <div id='active-lesson-module'>
+      <div id='home-content-container'> {/* container for the whole page */}
+        <div id='active-lesson-module'> {/* container for the currently selected lesson module */}
           {activeLessonModule ? (
             <div>
               <div id='active-lesson-module-title-container'>
-                <h3>{`Learning Standard - ${activeLessonModule.name}`}</h3>
-                <LessonModuleModal
+                <h3>{`Learning Standard - ${activeLessonModule.name}`}</h3> 
+                <LessonModuleModal ///////////// button to change the lesson module
                   setActiveLessonModule={setActiveLessonModule}
                   classroomId={classroomId}
                   gradeId={gradeId}
                   viewing={viewing}
                   setActivities={setActivities}
+                  // setDiscussions={setDiscussions}
                 />
               </div>
               <p id='lesson-module-expectations'>{`Expectations: ${activeLessonModule.expectations}`}</p>
-             {activeLessonModule.link ? (
+             {activeLessonModule.link ? ( // if there is a link to additional resources, display it
                 <p>
                   Addtional resources to the lesson:{' '}
                   <a
@@ -127,116 +113,33 @@ export default function Discussions({ classroomId, viewing }) {
                   </a>
                 </p>
               ) : null}
-              {activities ? (
+              {discussions ? ( // display the discussions for this lesson module
                 <div id='card-btn-container' className='flex space-between'>
-                  {activities.map((activity) => (
-                    <div id="view-activity-card" key={activity.id}>
-                      <div id='activity-title'>
-                       Discussion Number {activity.number}
+                  {discussions.map((discussion) => ( // map through each discussion in discussions
+                    <div id="view-discussion-card" key={discussion.id}>
+                      <div id='discussion-title'>
+                       {discussion.Title} {/* title each card w a discussion topic */}
                        </div>
-                      <div id='view-activity-heading' style={{display: "flex"}}>
-                        
-                        {/* <button
-                          id='view-activity-button'
-                          style={{marginRight: "auto"}}
-                          onClick={() =>
-                            handleViewActivity(activity, activeLessonModule.name)
-                          }
-                        >
-                          Student Template
-                        </button>
-                        {activity.activity_template && (
-                          <button
-                            id='view-activity-button'
-                            style={{marginRight: "auto"}}
-                            onClick={() =>
-                              openActivityInWorkspace(
-                                activity,
-                                activeLessonModule.name
-                              )
-                            }
-                          >
-                            Demo Template
-                          </button>
-                        )} */}
-                        <MentorDiscussionDetailModal
+                      <div id='view-discussion-heading' style={{display: "flex"}}>
+                        <MentorDiscussionDetailModal ///////////// button for mentor to view the discussion details
                           learningStandard={activeLessonModule}
-                          selectActivity={activity}
+                          selectActivity={discussion}
                           activityDetailsVisible={false}
                           setActivityDetailsVisible={false}
                           setActivities={setActivities}
                           viewing={false}
                         />
                       </div>
-                      <div id='view-activity-info'>
-                        {/* <p>
-                          <strong>STANDARDS: </strong>
-                          {activity.StandardS}
-                        </p> */}
+                      <div id='view-discussion-info'> {/* display the discussion info */}
                         <p>
                           <strong>Description: </strong>
-                          {activity.description}
+                          {discussion.Description}
                         </p>
-                        {/* <p>
-                          <strong>Classroom Materials: </strong>
-                          {activity.learning_components
-                            .filter(
-                              (component) =>
-                                component.learning_component_type === SCIENCE
-                            )
-                            .map((element, index) => {
-                              return (
-                                <Tag
-                                  key={index}
-                                  color={color[(index + 1) % 11]}
-                                >
-                                  {element.type}
-                                </Tag>
-                              );
-                            })}
-                        </p>
-                        <p>
-                          <strong>Student Materials: </strong>
-                          {activity.learning_components
-                            .filter(
-                              (component) =>
-                                component.learning_component_type === MAKING
-                            )
-                            .map((element, index) => {
-                              return (
-                                <Tag
-                                  key={index}
-                                  color={color[(index + 4) % 11]}
-                                >
-                                  {element.type}
-                                </Tag>
-                              );
-                            })}
-                        </p>
-                        <p>
-                          <strong>Arduino Components: </strong>
-                          {activity.learning_components
-                            .filter(
-                              (component) =>
-                                component.learning_component_type ===
-                                COMPUTATION
-                            )
-                            .map((element, index) => {
-                              return (
-                                <Tag
-                                  key={index}
-                                  color={color[(index + 7) % 11]}
-                                >
-                                  {element.type}
-                                </Tag>
-                              );
-                            })}
-                        </p> */}
-                        {activity.link ? (
+                        {discussion.link ? (
                           <p>
                             <strong>Link to Additional Information: </strong>
-                            <a href={activity.link} target='_blank' rel='noreferrer'>
-                              {activity.link}
+                            <a href={discussion.link} target='_blank' rel='noreferrer'>
+                              {discussion.link}
                             </a>
                           </p>
                         ) : null}
@@ -246,8 +149,9 @@ export default function Discussions({ classroomId, viewing }) {
                 </div>
               ) : null}
             </div>
-          ) : (
-            <div>
+          ) : ( 
+            // if there is no active lesson module, display this message
+            <div> 
               <p>There is currently no active lesson set.</p>
               <p>Click the button below to browse available lessons.</p>
               <LessonModuleModal

@@ -53,6 +53,7 @@ export default function Classroom({
           />
         </TabPane>
         <TabPane tab='Discussions' key='discussions'>
+          {/* new discussions page */}
           <Discussions
             classroomId={parseInt(id)}
             selectedActivity={selectedActivity}
