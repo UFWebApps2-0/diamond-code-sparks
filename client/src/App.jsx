@@ -19,7 +19,7 @@ import StudentLogin from './views/StudentLogin/StudentLogin';
 import ForgetPassword from './views/TeacherLogin/ForgetPassword';
 import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
-
+import Notifications from './views/Notifications/Notifications';
 const App = () => {
   return (
     <div>
@@ -93,6 +93,14 @@ const App = () => {
           element={
             <PrivateRoute>
               <BlocklyPage isSandbox={false} />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/notifications'
+          element={
+            <PrivateRoute>
+              <Notifications />
             </PrivateRoute>
           }
         />
