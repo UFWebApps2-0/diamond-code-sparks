@@ -35,6 +35,7 @@ export default function StudentCanvas({ activity }) {
   const [saves, setSaves] = useState({});
   const [lastSavedTime, setLastSavedTime] = useState(null);
   const [lastAutoSave, setLastAutoSave] = useState(null);
+  const [codeSubmitted, setCodeSubmitted] = useState(false);
 
   const [forceUpdate] = useReducer((x) => x + 1, 0);
   const navigate = useNavigate();
@@ -299,6 +300,7 @@ export default function StudentCanvas({ activity }) {
     }
   };
   const handleCompile = async () => {
+    setCodeSubmitted(true); //When code is submitted, it sets this useState variable to true.
     if (showConsole || showPlotter) {
       message.warning(
         'Close Serial Monitor and Serial Plotter before uploading your code'
@@ -495,7 +497,15 @@ export default function StudentCanvas({ activity }) {
                 </Row>
               </Col>
             </Row>
-            <div id='blockly-canvas' />
+            <div id='blockly-canvas' /> {/*This updates the page to show the next activity button when code is compiled.*/}
+            {codeSubmitted && (
+              <button 
+                id="next-activity-button"
+                onClick={handleActivityChange}
+              >
+                Next Activity
+              </button>
+            )}   
           </Spin>
         </div>
 
@@ -511,7 +521,7 @@ export default function StudentCanvas({ activity }) {
           plotData={plotData}
           setPlotData={setPlotData}
           plotId={plotId}
-        />          
+        />      
       </div>
 
       {/* This xml is for the blocks' menu we will provide. Here are examples on how to include categories and subcategories */}
@@ -539,6 +549,7 @@ export default function StudentCanvas({ activity }) {
             ))
         }
       </xml>
+      
 
       {compileError && (
         <Alert
