@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import BlocklyCanvasPanel from "../../components/ActivityPanels/BlocklyCanvasPanel/BlocklyCanvasPanel"
 import NavBar from "../../components/NavBar/NavBar"
+import Blank from "./Blank";
+import SplitPane from 'react-split-pane';
+import './Blank.css'
+
 import {
   getAuthorizedWorkspaceToolbox,
   getActivityToolbox,
@@ -17,6 +21,7 @@ export default function BlocklyPage({ isSandbox }) {
 
   useEffect(() => {
     const setup = async () => {
+      
       // if we are in sandbox mode show all toolbox
       const sandboxActivity = JSON.parse(localStorage.getItem("sandbox-activity"))
       if (isSandbox) {
@@ -72,12 +77,59 @@ export default function BlocklyPage({ isSandbox }) {
     setup()
   }, [isSandbox, navigate, value.role])
 
-  return (
+  /*
+    return (
     <div className="container nav-padding">
       <NavBar />
-      <div className="flex flex-row">
-        <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
+      <div className="split-screen" style={splitScreenStyle}>
+        <div style={childDivStyle}>
+          <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
+        </div>
+        
+        <div style={childDivStyle}>
+          <Blank/>
+       </div>
       </div>
     </div>
+  )
+  */
+
+  /*
+     <div className="split-screen" style={splitScreenStyle}>
+        <div style={childDivStyle}>
+          <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
+        </div>
+        
+        <div style={childDivStyle2}>
+          <Blank/>
+       </div>
+      </div>
+  */
+
+  const [leftPaneSize, setLeftPaneSize] = useState('50%');
+
+  const handleDrag = newSize => {
+    // The new size is greater than or equal to 50% of the window width
+    if (newSize >= window.innerWidth / 2) {
+      setLeftPaneSize(newSize);
+    }
+  };
+
+
+  return (
+      <div className="container nav-padding">
+        <NavBar />
+        <SplitPane
+        split="vertical"
+        minSize="50%"
+        maxSize={-1} // No maximum size restriction
+        defaultSize={leftPaneSize}
+        onChange={handleDrag}
+        pane1Style={{ minWidth: '50%'}}
+        >
+          <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
+          <Blank/>
+        </SplitPane>
+      </div>
   )
 }
