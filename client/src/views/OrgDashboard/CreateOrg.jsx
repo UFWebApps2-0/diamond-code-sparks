@@ -20,7 +20,9 @@ export default function CreateOrg() {
         <div id="create-form-container">
           <form onSubmit={handleSubmit}>
             <label>
+              {/* label for org name input */}
               Organization Name:
+              {/* Input field for Organization Name */}
               <input
                 type="text"
                 value={orgName}
@@ -29,12 +31,14 @@ export default function CreateOrg() {
             </label>
             <label>
               Description:
+              {/* text area for description */}
               <textarea
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
             </label>
+            {/* submit button for the form */}
             <input type="submit" value="Submit" />
           </form>
         </div>
