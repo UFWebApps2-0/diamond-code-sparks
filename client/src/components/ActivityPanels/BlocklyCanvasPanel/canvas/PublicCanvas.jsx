@@ -231,12 +231,14 @@ export default function PublicCanvas({ activity, isSandbox }) {
 
   const handleUndo = () => {
     if (workspaceRef.current.undoStack_.length > 0)
-      workspaceRef.current.undo(false);
+          workspaceRef.current.undo(false);
+      message.error("current stack length is " + workspaceRef.current.undoStack_.length);
   };
 
   const handleRedo = () => {
     if (workspaceRef.current.redoStack_.length > 0)
-      workspaceRef.current.undo(true);
+          workspaceRef.current.undo(true);
+      message.error("current stack length is " + workspaceRef.current.undoStack_.length);
   };
 
   const handleConsole = async () => {
