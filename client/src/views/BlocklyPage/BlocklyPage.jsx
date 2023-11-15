@@ -6,7 +6,6 @@ import NavBar from "../../components/NavBar/NavBar"
 import Blank from "./Blank";
 import SplitPane from 'react-split-pane';
 import './Blank.css'
-
 import {
   getAuthorizedWorkspaceToolbox,
   getActivityToolbox,
@@ -18,6 +17,7 @@ export default function BlocklyPage({ isSandbox }) {
   const [value] = useGlobalState("currUser")
   const [activity, setActivity] = useState({})
   const navigate = useNavigate()
+  const [splitOpen, setSplitOpen] = useState(false)
 
   useEffect(() => {
     const setup = async () => {
@@ -76,7 +76,6 @@ export default function BlocklyPage({ isSandbox }) {
 
     setup()
   }, [isSandbox, navigate, value.role])
-
   /*
     return (
     <div className="container nav-padding">
@@ -106,30 +105,39 @@ export default function BlocklyPage({ isSandbox }) {
       </div>
   */
 
-  const [leftPaneSize, setLeftPaneSize] = useState('50%');
+      const [leftPaneSize, setLeftPaneSize] = useState('50%');
 
-  const handleDrag = newSize => {
-    // The new size is greater than or equal to 50% of the window width
-    if (newSize >= window.innerWidth / 2) {
-      setLeftPaneSize(newSize);
-    }
-  };
+      const handleDrag = newSize => {
+        // The new size is greater than or equal to 50% of the window width
+        if (newSize >= window.innerWidth / 2) {
+          setLeftPaneSize(newSize);
+        }
+      };
 
+      const handleToggleSplit = () => {
+        setSplitOpen(!splitOpen);
+      };
 
-  return (
-      <div className="container nav-padding">
-        <NavBar />
-        <SplitPane
-        split="vertical"
-        minSize="50%"
-        maxSize={-1} // No maximum size restriction
-        defaultSize={leftPaneSize}
-        onChange={handleDrag}
-        pane1Style={{ minWidth: '50%'}}
-        >
-          <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
-          <Blank/>
-        </SplitPane>
-      </div>
-  )
-}
+      return (
+        <div className="container nav-padding">
+          <NavBar />
+          { splitOpen ? (
+            <SplitPane
+            split="vertical"
+            minSize="59%"
+            maxSize={-1} // No maxim um size restriction
+            defaultSize={leftPaneSize}
+            onChange={handleDrag}
+            pane1Style={{ minWidth: '59%'}}
+            >
+              <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} toggleSplit={handleToggleSplit}/>
+              {/* someone else implements this blank */}
+              <Blank/> 
+              
+            </SplitPane>
+          ) : (
+            <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} toggleSplit={handleToggleSplit} />
+          )}
+        </div>
+    )
+  }
