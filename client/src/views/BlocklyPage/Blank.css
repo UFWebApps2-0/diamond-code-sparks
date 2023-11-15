@@ -1,0 +1,42 @@
+/* Add this CSS to your stylesheet (e.g., App.css) */
+.Resizer {
+    background: #000;
+    /* Makes the resizer bar black */
+    opacity: 0.2;
+    /* Slightly transparent */
+    z-index: 1;
+    box-sizing: border-box;
+    background-clip: padding-box;
+}
+
+/* If you're using a vertical split */
+.Resizer.vertical {
+    width: 30px;
+    /* Width of the resizer bar */
+    margin: 0 -5px;
+    /* Space on the sides of the bar */
+    border-left: 5px solid rgba(255, 255, 255, 0);
+    /* Makes the handle "grab-able" */
+    border-right: 5px solid rgba(255, 255, 255, 0);
+    cursor: col-resize;
+    /* Changes the cursor to indicate resizing */
+}
+
+/* If you're using a horizontal split */
+.Resizer.horizontal {
+    height: 10px;
+    /* Height of the resizer bar */
+    margin: -5px 0;
+    /* Space above and below the bar */
+    border-top: 5px solid rgba(255, 255, 255, 0);
+    border-bottom: 5px solid rgba(255, 255, 255, 0);
+    cursor: row-resize;
+    /* Changes the cursor to indicate resizing */
+}
+
+/* Optional: hover effect to make the resizer more prominent when mouse over */
+.Resizer:hover {
+    transition: all 0.2s ease;
+    opacity: 0.5;
+    /* More visible on hover */
+}
