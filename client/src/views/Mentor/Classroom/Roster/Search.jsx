@@ -1,15 +1,5 @@
-
 import React, { useState } from "react";
-
-// 1. Roster should have a search bar to search by student names
-// 2. Include capability to update form dynamically with new inputs
-// 3. Should work after deleting, adding, and updating student accounts
-
-// 1. Create ability for teacher to click a button to sort students alphabetically and reverse alphabetically
-
-// 1. Teacher should be able to "pin" students to bring them to the top of the list
-// 2. While searching for a student, "pinned" students should only appear when names actually match
-//    If they do match, give the students priority and show them on top
+import './Roster.less';
 
 export default function Search({ filterText, setFilterText }) {
 
@@ -20,6 +10,7 @@ export default function Search({ filterText, setFilterText }) {
         event.preventDefault();
     }
 
+    // Checks for the input in the search bar with regex requirements
     const handleChange = (input) => {
         if (!input.match(/^[a-zA-Z]*$/)) {
             setValid(false);
@@ -32,23 +23,30 @@ export default function Search({ filterText, setFilterText }) {
     }
 
     return (
-        <div id="wrapper">
-            <form onSubmit={event => handleSubmit(event)} id="search-form-box">
-                <div id="search-label">
-                    Enter a student's name
-                </div>
-                <input
-                    id="search-input"
-                    type="text"
-                    placeholder="Search"
-                    value={filterText}
-                    onChange={event => handleChange(event.target.value)}
-                />
-            </form>
-
+        // <span id="search-label">Enter student name:
+        //     <input
+        //         id="search-input"
+        //         type="text"
+        //         placeholder="Search"
+        //         value={filterText}
+        //         onChange={event => handleChange(event.target.value)}
+        //     />
+        //     {/* Invalid input message will be rendered when regex is not satisfied */}
+        //     {!valid ? (
+        //         <label id="search-error">Invalid Name</label>
+        //     ) : null}
+        // </span>
+        <>
             {!valid ? (
-                <label id="search-error">Invalid Input</label>
+                <label id="search-error">Names can only include letters</label>
             ) : null}
-        </div>
+            <input
+                id="search-input"
+                type="text"
+                placeholder="Search student name"
+                value={filterText}
+                onChange={event => handleChange(event.target.value)}
+            />
+        </>
     )
 }

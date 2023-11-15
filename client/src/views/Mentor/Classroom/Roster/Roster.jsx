@@ -22,16 +22,10 @@ export default function Roster({ classroomId }) {
   const navigate = useNavigate();
   const [filterText, setFilterText] = useState('');
 
-  // Utilize classroom to get the grade
-
-  // The lesson editor requires props to be passed in check those and see if they exist in classroom
-  // 
-
   useEffect(() => {
     let data = [];
     getClassroom(classroomId).then((res) => {
       if (res.data) {
-        console.log(res.data);
         const classroom = res.data;
         setClassroom(classroom);
 
@@ -192,13 +186,24 @@ export default function Roster({ classroomId }) {
         cardViewActive={listView}
         listViewActive={!listView}
         setListView={setListView}
+
+        // New
+        filterText={filterText}
+        setFilterText={setFilterText}
+        searchActive={true}
       />
 
-      {/* New search functionality added */}
-      <Search
-        filtertext={filterText}
-        setFilterText={setFilterText}
-      />
+      {/* <div id="wrapper">
+        <h2>
+          <div id="search-label">
+            Enter a student's name
+          </div>
+          <Search
+            filtertext={filterText}
+            setFilterText={setFilterText}
+          />
+        </h2>
+      </div> */}
 
       {/* render the list view or the card view if one such exists */}
       {listView ? (

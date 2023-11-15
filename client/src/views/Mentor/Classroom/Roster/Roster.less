@@ -187,6 +187,8 @@
 }
 
 // Search box
+
+
 #h2 {
   margin-bottom: 0;
   float: left;
@@ -206,39 +208,37 @@
   z-index: 1;
 }
 
-#search-form-box {
-  border-radius: 50px;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 50px;
-  background: #colors[secondary];
-  width: auto;
-  height: auto;
-}
-
-// Creates a spacing and padding
+// Creates a spacing and padding for the search box
 #wrapper {
   width: auto;
   max-width: 31.25rem;
-  margin: 6rem auto;
+  margin: auto;
+  position: relative;
 }
 
+// Styles the text that appears above the search box
 #search-label {
   color: #colors[text-secondary];
   display: flex;
   justify-content: center;
-  padding: 10px;
+  padding: 1px;
+  position: relative;
 }
 
+// Positions and styles the search input text to be aligned with the current 
+// color scheme of the website
 #search-input {
   color: #colors[text-primary];
-  border-radius: 50px;
+  // border-radius: 50px;
   background: #colors[senary];
   border: none;
   outline: none;
   justify-content: center;
 }
 
+// Colors the message with red
 #search-error {
   color: red;
+  position: relative;
+  padding-right: 10px;
 }
