@@ -1,7 +1,7 @@
 import {React, useEffect} from 'react';
 import { Tabs } from 'antd';
 import './Classroom.less';
-
+import Grades from '../../../components/Tabs/Grades';
 import NavBar from '../../../components/NavBar/NavBar';
 import Roster from './Roster/Roster';
 import Home from './Home/Home';
@@ -10,12 +10,16 @@ import { useSearchParams, useParams } from 'react-router-dom';
 
 const { TabPane } = Tabs;
 
+
+
 export default function Classroom({
   handleLogout,
   selectedActivity,
   setSelectedActivity,
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  
 
   const { id } = useParams();
   const tab = searchParams.get('tab');
@@ -51,6 +55,12 @@ export default function Classroom({
             classroomId={id}
           />
         </TabPane>
+        <TabPane tab='Grades' key='grades'>
+        <Grades
+      searchParams={searchParams}
+      setSearchParams={setSearchParams}
+      classroomId={id}
+      /></TabPane>
       </Tabs>
     </div>
   );

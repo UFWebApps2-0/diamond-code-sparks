@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/submissions": {
+    "/student-grades/classroom/{classroomID}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,9 +10,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Submission"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,75 @@
         },
         "summary": "",
         "tags": [
-          "Submission"
+          "Student-grade"
+        ],
+        "parameters": [
+          {
+            "name": "classroomID",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/student-grades": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Student-grade"
         ],
         "parameters": [
           {
@@ -201,72 +270,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Submission"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Submission"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewSubmission"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/submissions/count": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,12 +312,22 @@
         },
         "summary": "",
         "tags": [
-          "Submission"
+          "Student-grade"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewStudent-grade"
+              }
+            }
+          }
+        }
       }
     },
-    "/submissions/{id}": {
+    "/student-grades/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -321,7 +337,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Submission"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -359,7 +379,64 @@
         },
         "summary": "",
         "tags": [
-          "Submission"
+          "Student-grade"
+        ],
+        "parameters": []
+      }
+    },
+    "/student-grades/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Student-grade"
         ],
         "parameters": [
           {
@@ -383,7 +460,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Submission"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -421,7 +502,7 @@
         },
         "summary": "",
         "tags": [
-          "Submission"
+          "Student-grade"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +510,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewSubmission"
+                "$ref": "#/components/schemas/NewStudent-grade"
               }
             }
           }
@@ -495,7 +576,7 @@
         },
         "summary": "",
         "tags": [
-          "Submission"
+          "Student-grade"
         ],
         "parameters": [
           {
@@ -514,179 +595,76 @@
   },
   "components": {
     "schemas": {
-      "Submission": {
+      "Student-grade": {
         "required": [
-          "id",
-          "status",
-          "workspace",
-          "board",
-          "sketch",
-          "sandbox"
+          "id"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "status": {
-            "type": "string",
-            "default": "WAITING"
-          },
-          "workspace": {
+          "Grade": {
             "type": "string"
           },
-          "success": {
-            "type": "boolean"
-          },
-          "hex": {
+          "Comments": {
             "type": "string"
           },
-          "stdout": {
-            "type": "string"
-          },
-          "stderr": {
-            "type": "string"
-          },
-          "board": {
-            "type": "string"
-          },
-          "sketch": {
-            "type": "string"
-          },
-          "sandbox": {
-            "type": "boolean",
-            "default": false
-          },
-          "session": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "classroom": {
-                "type": "string"
-              },
-              "students": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "submissions": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "saves": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "unit": {
-                "type": "string"
-              },
-              "grade": {
-                "type": "string"
-              },
-              "lesson_module": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "activity": {
+          "submission": {
             "required": [
               "id",
-              "number",
-              "template"
+              "status",
+              "workspace",
+              "board",
+              "sketch",
+              "sandbox"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "lesson_module": {
+              "status": {
                 "type": "string"
               },
-              "number": {
-                "type": "integer"
-              },
-              "template": {
+              "workspace": {
                 "type": "string"
               },
-              "blocks": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "description": {
-                "type": "string"
-              },
-              "StandardS": {
-                "type": "string"
-              },
-              "images": {
-                "type": "string"
-              },
-              "link": {
-                "type": "string"
-              },
-              "learning_components": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "activity_template": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "job_id": {
-            "type": "integer"
-          },
-          "student": {
-            "required": [
-              "id",
-              "enrolled"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "character": {
-                "type": "string"
-              },
-              "classroom": {
-                "type": "string"
-              },
-              "sessions": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "enrolled": {
+              "success": {
                 "type": "boolean"
               },
-              "last_logged_in": {
+              "hex": {
+                "type": "string"
+              },
+              "stdout": {
+                "type": "string"
+              },
+              "stderr": {
+                "type": "string"
+              },
+              "board": {
+                "type": "string"
+              },
+              "sketch": {
+                "type": "string"
+              },
+              "sandbox": {
+                "type": "boolean"
+              },
+              "session": {
+                "type": "string"
+              },
+              "activity": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "integer"
+              },
+              "student": {
+                "type": "string"
+              },
+              "classroom": {
+                "type": "string"
+              },
+              "student_grade": {
                 "type": "string"
               },
               "created_by": {
@@ -697,150 +675,26 @@
               }
             }
           },
-          "classroom": {
-            "required": [
-              "id",
-              "code"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "school": {
-                "type": "string"
-              },
-              "sessions": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "mentors": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "students": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "code": {
-                "type": "string"
-              },
-              "grade": {
-                "type": "string"
-              },
-              "selections": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "authorized_workspaces": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "student_grade": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "Grade": {
-                "type": "string"
-              },
-              "Comments": {
-                "type": "string"
-              },
-              "submission": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "NewSubmission": {
-        "required": [
-          "status",
-          "workspace",
-          "board",
-          "sketch",
-          "sandbox"
-        ],
+      "NewStudent-grade": {
         "properties": {
-          "status": {
+          "Grade": {
+            "type": "string"
+          },
+          "Comments": {
+            "type": "string"
+          },
+          "submission": {
+            "type": "string"
+          },
+          "published_at": {
             "type": "string",
-            "default": "WAITING"
-          },
-          "workspace": {
-            "type": "string"
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "hex": {
-            "type": "string"
-          },
-          "stdout": {
-            "type": "string"
-          },
-          "stderr": {
-            "type": "string"
-          },
-          "board": {
-            "type": "string"
-          },
-          "sketch": {
-            "type": "string"
-          },
-          "sandbox": {
-            "type": "boolean",
-            "default": false
-          },
-          "session": {
-            "type": "string"
-          },
-          "activity": {
-            "type": "string"
-          },
-          "job_id": {
-            "type": "integer"
-          },
-          "student": {
-            "type": "string"
-          },
-          "classroom": {
-            "type": "string"
-          },
-          "student_grade": {
-            "type": "string"
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"
@@ -852,9 +706,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Submission"
-    }
-  ]
+  "tags": []
 }

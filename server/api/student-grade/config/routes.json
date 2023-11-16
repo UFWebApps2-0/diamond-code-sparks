@@ -1,0 +1,61 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/student-grades/classroom/:classroomID",
+      "handler": "student-grade.findByClassroom",
+      "config": {
+        "policies": []
+      }
+    },
+  
+    {
+      "method": "GET",
+      "path": "/student-grades",
+      "handler": "student-grade.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/student-grades/count",
+      "handler": "student-grade.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/student-grades/:id",
+      "handler": "student-grade.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/student-grades",
+      "handler": "student-grade.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/student-grades/:id",
+      "handler": "student-grade.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/student-grades/:id",
+      "handler": "student-grade.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
