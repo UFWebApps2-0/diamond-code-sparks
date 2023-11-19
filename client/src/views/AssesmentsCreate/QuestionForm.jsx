@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { Button,Form, Input } from 'antd';
 import './CreateStyle.css';
 import { Select,Radio, Space } from 'antd';
-import { createAssessment, getAssessments } from '../../Utils/requests';
-import { addStudent } from '../../Utils/requests';
+import { createAssessment } from '../../Utils/requests';
 
+
+//Form to create the assessment
 function QuestionForm(id) {
+
+  //State variables to store the questions, options, and answers
   const [questions, setQuestions] = useState([]);
   const [multForm, setMultForm] = useState(false);
   const [frForm, setFrForm] = useState(false);
@@ -28,6 +31,8 @@ function QuestionForm(id) {
     setOption(updatedOption);
 
   }
+
+  //Checks if neccessary data there and if so it will add the question to the form 
   const submitMultQuestion = (e) => {
     if(question ==="")
     {
@@ -45,7 +50,6 @@ function QuestionForm(id) {
       return;
     }
     
-    console.log('clicked')
     setQuestions([...questions, { type: "Multiple Choice", question: question, option: option, answer: answer }]);
     setAnswer("");
     setQuestion("");
@@ -53,6 +57,7 @@ function QuestionForm(id) {
     resetMultForm();
   }
 
+  //If all the necessary data is present it will save the data to the questions array
   const submitFrQuestion = (e) => {
     if(frQuestion ==="")
     {
@@ -72,14 +77,14 @@ function QuestionForm(id) {
   }
 
   const resetFrForm = () => {
-    console.log("resetting");
+
     setfrAnswer("");
     setfrQuestion("");
     setFrForm(false);
   }
 
   const resetMultForm = () => {
-    console.log("resetting");
+
     setAnswer("");
     setQuestion("");
     setMultForm(false);
@@ -96,6 +101,7 @@ function QuestionForm(id) {
     }
   }
 
+  //Submit the assessment to the database by using the createAssessment function in requests.js
   const submitAssessment = async (e) => {
     if(name ==="")
     {
@@ -107,11 +113,11 @@ function QuestionForm(id) {
       alert("Please enter an assessment description")
       return;
     }
-    let listQ = questions;
-    let list1 = [id,name,description]
-    let subList = list1.concat(listQ);
-    console.log(subList);
-    const res = await createAssessment(name,1,description, questions);
+    
+    const res = await createAssessment(name,id.id,description, questions);
+    if (res.data) {
+      alert("Assessment created successfully");
+    }
     
     //Reset now
     setName("");
@@ -121,6 +127,8 @@ function QuestionForm(id) {
 
   }
 
+  //Code to allow the teacher to create multiple choice or free response questions
+  //Previews the assessment for the teacher as well
   return (
     <div>
 
