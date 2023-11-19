@@ -675,7 +675,7 @@ export const getClassroomWorkspace = async (id) =>
 
 
 
-export const createAssessment = async (name, classID, descript,questionSet) =>
+export const createAssessment = async (name, classID, descript,questionSet,makePublic=false) =>
 makeRequest({
   method: POST,
   path: `${server}/assessments`,
@@ -684,7 +684,8 @@ makeRequest({
     assessmentName: name,
     classroomID: classID,
     description: descript,
-    questions: questionSet
+    questions: questionSet,
+    isPublic: makePublic
   },
 
   error: 'Failed to create Assessment',
@@ -698,10 +699,29 @@ export const getAssessment = async (id) =>
     error: 'Unable to retrive assessment',
   });
 
-  export const getAssessments = async () =>
-  makeRequest({
-    method: GET,
-    path: `${server}/assessments`,
-    auth: true,
-    error: 'Unable to retrive assessments',
-  });
+export const getAssessments = async () =>
+makeRequest({
+  method: GET,
+  path: `${server}/assessments`,
+  auth: true,
+  error: 'Unable to retrive assessments',
+});
+
+export const deleteAssessment = async (id) =>
+makeRequest({
+  method: DELETE,
+  path: `${server}/assessments/${id}`,
+  auth: true,
+  error: 'Unable to delete assessments',
+});
+
+export const updateAssessmentPublic = async (id, currentValue) =>
+makeRequest({
+  method: PUT,
+  path: `${server}/assessments/${id}`,
+  auth: true,
+  data: {
+    makePublic: !currentValue
+  },
+  error: 'Unable to change assessments',
+});
