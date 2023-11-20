@@ -343,6 +343,7 @@ export default function StudentCanvas({ activity }) {
         <PlotterLogo />
         &nbsp; Show Serial Plotter
       </Menu.Item>
+      <Menu.Item>Import Template</Menu.Item>
       <Menu.Item>
         <CodeModal title={'Arduino Code'} workspaceRef={workspaceRef.current} />
       </Menu.Item>
