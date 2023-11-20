@@ -20,15 +20,18 @@ export const setLocalSandbox = (workspaceRef) => {
   localStorage.setItem('sandbox-activity', JSON.stringify(lastActivity));
 };
 
-// TODO finish exporting and importing workspace
-// Returns a string
+// Code by Yuliang (CEN3031 Fall 2023 Group 2G)
+// Returns a string if the workspace is passed in as the parameter.
+// Example: console.log(exportWorkspace(workspace.current));
 export const exportWorkspace = (workspaceRef) => {
 	return new XMLSerializer().serializeToString(window.Blockly.Xml.workspaceToDom(workspaceRef));
 }
 
-// serializedJson should be a string
-export const importWorkspace = (workspaceRef, serializedJson) => {
-	window.Blockly.Xml.domToWorkspace(new DOMParser().parseFromString(serializedJson, "application/xml"), workspaceRef);
+// Code by Yuliang (CEN3031 Fall 2023 Group 2G)
+// Does not return anything, but will import the string in the second parameter into the workspace in the first parameter.
+// Example: importWorkspace(workspace.current, <SERIALIZED_XML_STRING_HERE>);
+export const importWorkspace = (workspaceRef, serializedXml) => {
+	window.Blockly.Xml.domToWorkspace(window.Blockly.Xml.textToDom(serializedXml), workspaceRef);
 }
 
 // Generates xml from blockly canvas
