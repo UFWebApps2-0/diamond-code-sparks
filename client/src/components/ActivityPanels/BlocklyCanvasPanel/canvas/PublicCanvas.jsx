@@ -221,12 +221,13 @@ export default function PublicCanvas({ activity, isSandbox }) {
   }, [activity]);
   
   const handleImport = () => {
-    importWorkspace(workspaceRef.current, prompt("enter workspace serialization code here: "));
+    window.Blockly.mainWorkspace.clear();
+    importWorkspace(window.Blockly.mainWorkspace, prompt("enter workspace serialization code here: "));
     forceUpdate.x;
   }
 
   const handleExport = () => {
-    alert(exportWorkspace(workspaceRef.current));
+    alert(exportWorkspace(window.Blockly.mainWorkspace));
   }
 
   const handleUndo = () => {
