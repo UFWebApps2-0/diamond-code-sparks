@@ -1,9 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "assessments",
+  "collectionName": "questions",
   "info": {
-    "name": "Assessments",
-    "description": ""
+    "name": "Question"
   },
   "options": {
     "increments": true,
@@ -11,19 +10,16 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "assessmentName": {
+    "questionText": {
       "type": "string"
     },
-    "questions": {
-      "type": "json"
-    },
-    "description": {
-      "type": "string"
-    },
-    "classroomID": {
+    "ID": {
       "type": "integer"
     },
-    "isPublic": {
+    "answers": {
+      "type": "json"
+    },
+    "multipleChoice": {
       "type": "boolean"
     }
   }

@@ -2,7 +2,7 @@
 import { Table, Popconfirm, message } from 'antd';
 import {Modal,Button,Switch} from 'antd';
 import { useEffect, useState } from 'react';
-import { getAssessments, getClassroom } from '../../Utils/requests';
+import { deleteAssessment, getAssessments, getClassroom } from '../../Utils/requests';
 import StudentAssessmenmts from './StudentAssessments';
 import './assessmentStyle.css';
 import QuestionForm from '../AssesmentsCreate/QuestionForm';
@@ -73,6 +73,7 @@ function Assessments({ classroomId})
             </>
                 ,
                 delete:<Popconfirm title="Sure to delete?" onConfirm={() => {
+                  deleteAssessment(res.data[i].id);
                   message.success('Deleted');
                 }}>
                 <Button type="primary" danger>

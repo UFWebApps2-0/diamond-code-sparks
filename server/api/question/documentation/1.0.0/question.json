@@ -1,18 +1,18 @@
 {
   "paths": {
-    "/assessments": {
+    "/questions": {
       "get": {
         "deprecated": false,
-        "description": "Find all the assessments's records",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve assessments document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Assessments"
+                    "$ref": "#/components/schemas/Question"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Assessments"
+          "Question"
         ],
         "parameters": [
           {
@@ -194,14 +194,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new assessments record",
+        "description": "Create a new record",
         "responses": {
           "200": {
-            "description": "Retrieve assessments document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Assessments"
+                  "$ref": "#/components/schemas/Question"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Assessments"
+          "Question"
         ],
         "requestBody": {
           "description": "",
@@ -247,20 +247,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAssessments"
+                "$ref": "#/components/schemas/NewQuestion"
               }
             }
           }
         }
       }
     },
-    "/assessments/count": {
+    "/questions/count": {
       "get": {
         "deprecated": false,
-        "description": "Retrieve the number of assessments documents",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve assessments document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
@@ -306,22 +306,22 @@
         },
         "summary": "",
         "tags": [
-          "Assessments"
+          "Question"
         ],
         "parameters": []
       }
     },
-    "/assessments/{id}": {
+    "/questions/{id}": {
       "get": {
         "deprecated": false,
-        "description": "Find one assessments record",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve assessments document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Assessments"
+                  "$ref": "#/components/schemas/Question"
                 }
               }
             }
@@ -359,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Assessments"
+          "Question"
         ],
         "parameters": [
           {
@@ -376,14 +376,14 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a single assessments record",
+        "description": "Update a record",
         "responses": {
           "200": {
-            "description": "Retrieve assessments document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Assessments"
+                  "$ref": "#/components/schemas/Question"
                 }
               }
             }
@@ -421,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Assessments"
+          "Question"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAssessments"
+                "$ref": "#/components/schemas/NewQuestion"
               }
             }
           }
@@ -449,10 +449,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single assessments record",
+        "description": "Delete a record",
         "responses": {
           "200": {
-            "description": "deletes a single assessments based on the ID supplied",
+            "description": "deletes a single record based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Assessments"
+          "Question"
         ],
         "parameters": [
           {
@@ -514,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Assessments": {
+      "Question": {
         "required": [
           "id"
         ],
@@ -522,19 +522,16 @@
           "id": {
             "type": "string"
           },
-          "assessmentName": {
+          "questionText": {
             "type": "string"
           },
-          "questions": {
-            "type": "object"
-          },
-          "description": {
-            "type": "string"
-          },
-          "classroomID": {
+          "ID": {
             "type": "integer"
           },
-          "isPublic": {
+          "answers": {
+            "type": "object"
+          },
+          "multipleChoice": {
             "type": "boolean"
           },
           "published_at": {
@@ -543,21 +540,18 @@
           }
         }
       },
-      "NewAssessments": {
+      "NewQuestion": {
         "properties": {
-          "assessmentName": {
+          "questionText": {
             "type": "string"
           },
-          "questions": {
-            "type": "object"
-          },
-          "description": {
-            "type": "string"
-          },
-          "classroomID": {
+          "ID": {
             "type": "integer"
           },
-          "isPublic": {
+          "answers": {
+            "type": "object"
+          },
+          "multipleChoice": {
             "type": "boolean"
           },
           "published_at": {
@@ -576,7 +570,7 @@
   },
   "tags": [
     {
-      "name": "Assessments"
+      "name": "Question"
     }
   ]
 }

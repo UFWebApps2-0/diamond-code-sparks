@@ -124,6 +124,7 @@ function QuestionForm(id) {
     setDescription("");
     setQuestions([]);
 
+
   }
 
   //Code to allow the teacher to create multiple choice or free response questions
