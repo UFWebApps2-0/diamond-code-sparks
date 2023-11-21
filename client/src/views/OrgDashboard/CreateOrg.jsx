@@ -8,6 +8,7 @@ import { message } from "antd"
 export default function CreateOrg() {
   const [orgName, setOrgName] = useState("");
   const [description, setDescription] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,12 +18,14 @@ export default function CreateOrg() {
       orgName,
       description
     );
+
     if (res.data) {
       message.success(
         `${orgName} has been created.`
       );
       setOrgName("");
       setDescription("");
+      navigate('/orgdash');
     } else {
       message.error(res.err);
     }
