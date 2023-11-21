@@ -222,8 +222,6 @@ export default function PublicCanvas({ activity, isSandbox }) {
                         )}
                       </button>
 
-                      {/*Save*/}
-
                       {/*Arduino Upload button*/}
                       <ArduinoLogo
                         setHoverCompile={setHoverCompile}
@@ -248,7 +246,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
                         </div>
                       )}
 
-                      {/*elipse: menu w/ serial plotter and ardrino code*/}
+                      {/*Elipse: menu w/ serial plotter and ardrino code*/}
                       <Dropdown overlay={menu}>
                         <i className='fas fa-ellipsis-v'></i>
                       </Dropdown>
@@ -262,7 +260,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
 
 
             </Row>
-            <div id='blockly-canvas' />
+            <div id='blockly-canvas'/>
           </Spin>
         </div>
         <ConsoleModal

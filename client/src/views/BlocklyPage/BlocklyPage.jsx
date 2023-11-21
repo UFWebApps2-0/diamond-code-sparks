@@ -125,15 +125,15 @@ export default function BlocklyPage({ isSandbox }) {
             <SplitPane
             split="vertical"
             minSize="59%"
-            maxSize={-1} // No maxim um size restriction
+            maxSize={-1} // No maximum size restriction
             defaultSize={leftPaneSize}
             onChange={handleDrag}
             pane1Style={{ minWidth: '59%'}}
             >
               <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} toggleSplit={handleToggleSplit}/>
               {/* someone else implements this blank */}
-              <Blank/> 
-              
+              <Blank/>
+
             </SplitPane>
           ) : (
             <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} toggleSplit={handleToggleSplit} />
