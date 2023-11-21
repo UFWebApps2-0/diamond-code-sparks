@@ -376,6 +376,7 @@ export default function StudentCanvas({ activity, toggleSplit }) {
             >
               <Row id='icon-control-panel' style={{flexDirection: "column"}}>
                 <Row id={"row-flex-row"}>
+
                   {/* Lesson Name */}
                   <Col className={"control-col"} style={{justifyContent: "flex-start"}}>
                     <Col flex='none' id='section-header'>
@@ -603,6 +604,7 @@ export default function StudentCanvas({ activity, toggleSplit }) {
               <div className='popup ModalCompile4'> Split Screen </div>
           )}
         </button>
+
       </div>
     </div>
   );
