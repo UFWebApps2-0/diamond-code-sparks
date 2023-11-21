@@ -28,9 +28,11 @@
       "via": "school",
       "collection": "mentor"
     },
-    "Administrator": {
+    "administrators": {
+      "via": "organizations",
       "plugin": "users-permissions",
-      "model": "user"
+      "collection": "user",
+      "dominant": true
     }
   }
 }

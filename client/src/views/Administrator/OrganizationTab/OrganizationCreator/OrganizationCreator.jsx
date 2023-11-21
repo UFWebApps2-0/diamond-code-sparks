@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Input, message, Modal, Table } from "antd";
-import { addOrganization } from "../../../../Utils/requests";
+import { addOrganization, getAllSchools } from "../../../../Utils/requests";
 import { getUser } from "../../../../Utils/AuthRequests";
 import "./OrganizationCreator.less";
 
-export default function OrganizationCreator() {
+export default function OrganizationCreator({
+  OrganizationList, 
+  handleAddOrganization,
+}) {
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
   const [county, setCounty] = useState("");
@@ -21,15 +24,11 @@ export default function OrganizationCreator() {
   const handleCancel = () => {
     setVisible(false);
   };
-
-  const handleAddOrganization = async (e) => {
-    const res = await addOrganization(name, county, state, userData);
-    if (res.err) {
-      message.error("Fail to create a new organization");
-    } else {
-      message.success("Successfully created organization");
-      setVisible(false);
-    }
+  
+  
+  const handleAddOrganizationClick = async (e) => {
+    handleAddOrganization(name, county, state, userData);
+    setVisible(false);   
   };
 
   return (
@@ -52,7 +51,7 @@ export default function OrganizationCreator() {
           wrapperCol={{
             span: 14,
           }}
-          onFinish={handleAddOrganization}
+          onFinish={handleAddOrganizationClick}
           layout="horizontal"
           size="default"
         >

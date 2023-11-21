@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Button, Form, Input, message, Modal, Table } from "antd";
 import { addOrganization } from "../../../Utils/requests";
 import { getUser } from "../../../Utils/AuthRequests";
-import "./OrganizationCreator/OrganizationCreator"
-import OrganizationCreator from './OrganizationCreator/OrganizationCreator';
+import "./OrganizationCreator/OrganizationCreator";
+import OrganizationCreator from "./OrganizationCreator/OrganizationCreator";
 
-export default function OrganizationTab({ organizationList, page, setPage }) {
-
+export default function OrganizationTab({
+  organizationList,
+  page,
+  setPage,
+  handleAddOrganization,
+}) {
   const organizationColumns = [
     {
       title: "Organization Name",
@@ -48,7 +52,10 @@ export default function OrganizationTab({ organizationList, page, setPage }) {
       </div>
       <div id="content-creator-table-container">
         <div id="content-creator-btn-container">
-           <OrganizationCreator></OrganizationCreator>
+          <OrganizationCreator
+            OrganizationList={organizationList}
+            handleAddOrganization={handleAddOrganization}
+          ></OrganizationCreator>
         </div>
         <Table
           columns={organizationColumns}

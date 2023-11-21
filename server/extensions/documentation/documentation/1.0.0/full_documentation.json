@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/10/2023 7:32:22 PM"
+    "x-generation-date": "11/21/2023 4:14:56 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -12162,8 +12162,11 @@
                   "type": "string"
                 }
               },
-              "Administrator": {
-                "type": "string"
+              "administrators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -12973,8 +12976,11 @@
                   "type": "string"
                 }
               },
-              "Administrator": {
-                "type": "string"
+              "administrators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -13082,6 +13088,12 @@
               },
               "role": {
                 "type": "string"
+              },
+              "organizations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -13420,48 +13432,57 @@
               }
             }
           },
-          "Administrator": {
-            "required": [
-              "id",
-              "username",
-              "email"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "username": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "confirmationToken": {
-                "type": "string"
-              },
-              "confirmed": {
-                "type": "boolean"
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "role": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "administrators": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "username",
+                "email"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "resetPasswordToken": {
+                  "type": "string"
+                },
+                "confirmationToken": {
+                  "type": "string"
+                },
+                "confirmed": {
+                  "type": "boolean"
+                },
+                "blocked": {
+                  "type": "boolean"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "organizations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -13490,8 +13511,11 @@
               "type": "string"
             }
           },
-          "Administrator": {
-            "type": "string"
+          "administrators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"
@@ -14604,6 +14628,12 @@
                 "role": {
                   "type": "string"
                 },
+                "organizations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -14716,6 +14746,52 @@
                 "type": "string"
               }
             }
+          },
+          "organizations": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "county": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "classrooms": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "mentors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "administrators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -14757,6 +14833,12 @@
           },
           "role": {
             "type": "string"
+          },
+          "organizations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"
