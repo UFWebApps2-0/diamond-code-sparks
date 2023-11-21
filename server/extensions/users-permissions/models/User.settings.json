@@ -58,6 +58,10 @@
       "via": "users",
       "plugin": "users-permissions",
       "configurable": false
+    },
+    "organizations": {
+      "via": "administrators",
+      "collection": "school"
     }
   }
 }

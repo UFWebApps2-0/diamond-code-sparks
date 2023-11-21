@@ -1,8 +1,9 @@
 //List of imports
 import React, { useEffect, useState } from 'react';
+import { message } from 'antd';
 import { Tabs, Table } from 'antd';
 import { getUser } from '../../Utils/AuthRequests';
-import { getAllClassrooms, getAllSchools, getGrades, getLessonModuleAll, getTeachers } from '../../Utils/requests';
+import { getAllClassrooms, getAllSchools, getGrades, getLessonModuleAll, getTeachers, addOrganization} from '../../Utils/requests';
 import NavBar from '../../components/NavBar/NavBar';
 import './AdminDashboard.less'
 import { useSearchParams } from 'react-router-dom';
@@ -30,31 +31,47 @@ function AdminDashboard() {
   const [teacherList, setTeacherList] = useState([]);
   const [classroomList, setClassroomList] = useState([]);
   const [organizationList, setOrganizationList] = useState([]);
+  
+  const updateOrganizationList = async () => {
+    const organizationResponse = await getAllSchools();
+    setOrganizationList(organizationResponse.data);
+  };
+
+  const fetchData = async () => {
+    const [lsResponse, gradeResponse, teacherResponse, classroomResponse, organizationResponse] = await Promise.all([
+      getLessonModuleAll(),
+      getGrades(),
+      getTeachers(),
+      getAllClassrooms(),
+      getAllSchools()
+    ]);
+    setLessonModuleList(lsResponse.data);
+
+    const grades = gradeResponse.data;
+    grades.sort((a, b) => (a.id > b.id ? 1 : -1));
+    setGradeList(grades);
+    setOrganizationList(organizationResponse.data);
+    setTeacherList(teacherResponse.data);
+    setClassroomList(classroomResponse.data);
+   
+  };
+
+  const handleAddOrganization = async (name, county, state, userData) => {
+    const res = await addOrganization(name, county, state, [userData]);
+    if (res.err) {
+      message.error("Fail to create a new organization");
+    } else {
+      message.success("Successfully created organization");
+      fetchData(); // Call the function to update the organization list
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const [lsResponse, gradeResponse, teacherResponse, classroomResponse, organizationResponse] = await Promise.all([
-        getLessonModuleAll(),
-        getGrades(),
-        getTeachers(),
-        getAllClassrooms(),
-        getAllSchools()
-      ]);
-      setLessonModuleList(lsResponse.data);
-
-      const grades = gradeResponse.data;
-      grades.sort((a, b) => (a.id > b.id ? 1 : -1));
-      setGradeList(grades);
-      setOrganizationList(organizationResponse.data);
-      setTeacherList(teacherResponse.data);
-      setClassroomList(classroomResponse.data);
-     
-    };
     fetchData();
-    const intervalId = setInterval(fetchData, 1000); // 1 second in milliseconds
+    /*const intervalId = setInterval(fetchData, 1000); // 1 second in milliseconds
 
   // Clean up the interval when the component is unmounted
-    return () => clearInterval(intervalId);
+    return () => clearInterval(intervalId);*/
     
   }, []);
 
@@ -77,6 +94,7 @@ function AdminDashboard() {
             organizationList={organizationList}
             page={page}
             setPage={setPage}
+            handleAddOrganization={handleAddOrganization}
           />
         </TabPane>
 

@@ -321,7 +321,7 @@ export const addOrganization = async(name, county, state, administrator) =>
       name: name,
       county: county,
       state: state,
-      Administrator: administrator,
+      administrators: administrator,
     },
     auth: true,
     error: 'Failed to add organization',
