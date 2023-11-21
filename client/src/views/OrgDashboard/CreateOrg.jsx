@@ -2,14 +2,31 @@ import React, { useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import "./CreateOrg.less";
 import { useNavigate } from "react-router-dom";
+import { addOrganization } from "../../Utils/requests"
+import { message } from "antd"
 
 export default function CreateOrg() {
   const [orgName, setOrgName] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // Handle form submission here
+
+    const res = await addOrganization(
+      orgName,
+      description
+    );
+    if (res.data) {
+      message.success(
+        `${orgName} has been created.`
+      );
+      setOrgName("");
+      setDescription("");
+    } else {
+      message.error(res.err);
+    }
+
   };
 
   return (
