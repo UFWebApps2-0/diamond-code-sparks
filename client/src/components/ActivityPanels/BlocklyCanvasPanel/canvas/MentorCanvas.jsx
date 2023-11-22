@@ -460,7 +460,7 @@ export default function MentorCanvas({ activity, isSandbox, setActivity,  isMent
               </Row>
             </Row>
 
-            
+
             <div id='blockly-canvas' />
           </Spin>
           </div>
