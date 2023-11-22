@@ -4,6 +4,7 @@ import './OrgDashboard.less';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import DeleteOrgModal from './DeleteOrgModal';
+import { getOrganizations, getAllOrgs } from "../../Utils/requests"
 
 export default function OrgDashboard() {
 	const [orgs, setOrgs] = useState([]);
@@ -11,52 +12,22 @@ export default function OrgDashboard() {
 	const [isFlipped, setIsFlipped] = useState(new Set());
 	const [orgName, setOrgName] = useState('');
 
-	const sampleOrg = {
-		id: 1,
-		name: "Org 1",
-		school: {
-			name: "School Name"
-		},
-		classrooms: [
-			{id:1, name:"Class 1"},
-			{id:2, name:"Class 2"}
-		],
-		teachers: [
-			{id:1, name:"Teacher 1"}
-		],
-		students: [
-			{id:1, name:"Student 1"},
-			{id:2, name:"Student 2"},
-			{id:3, name:"Student 3"}
-		]
-	}
-
-	const sampleOrg2 = {
-		id: 2,
-		name: "Org 2",
-		school: {
-			name: "School Name"
-		},
-		classrooms: [
-			{id:1, name:"Class 1"},
-			{id:2, name:"Class 2"}
-		],
-		teachers: [
-			{id:1, name:"Teacher 1"}
-		],
-		students: [
-			{id:1, name:"Student 1"},
-			{id:2, name:"Student 2"},
-			{id:3, name:"Student 3"}
-		]
-	}
-
 	useEffect(() => {
-		let sampleOrgs = [];
-		sampleOrgs.push(sampleOrg);
-		sampleOrgs.push(sampleOrg2);
-		setOrgs(sampleOrgs);
-	}, []);
+    	let orgList = [];
+
+    	// TODO: update to be admin-specific orgs (use Mentor/Dashboard/Dashboard.jsx as a model)
+    	  
+    	getAllOrgs().then((res) => {
+    	   	if (res.data) {
+    	   		for (let i = 0; i < res.data.length; i++) {
+    	   			orgList.push(res.data[i]);
+    	   		}
+    	   		setOrgs(orgList);
+    	   	} else {
+    	   		message.error(res.error);
+    	   	}
+    	});
+  	}, []);
 
 	const handleFlip = (id) => {
 		// handleFlip code so that cards flip individually rather than all at the same time from 
@@ -112,7 +83,7 @@ export default function OrgDashboard() {
 								</button>
 			        			<div id='card-top-content-container'>
 				        			<h1 id='card-title'>{org.name}</h1>
-				        			<p>{org.classrooms.length} classrooms, {org.teachers.length} teachers, {org.students.length} students</p>
+				        			<p>{org.description}</p>
 				        		</div>
 				        		<div id='card-bottom-content-container'>
 				        			<button className='manage-btn' onClick={() => navigate('/admindashboard')}>
