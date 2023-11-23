@@ -618,6 +618,9 @@
                     "type": "string"
                   }
                 },
+                "submission": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -662,6 +665,9 @@
                 "type": "boolean"
               },
               "role": {
+                "type": "string"
+              },
+              "googleID": {
                 "type": "string"
               },
               "created_by": {

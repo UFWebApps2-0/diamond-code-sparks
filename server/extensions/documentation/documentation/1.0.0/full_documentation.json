@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/16/2023 6:28:32 AM"
+    "x-generation-date": "11/23/2023 6:32:54 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -12465,6 +12465,9 @@
           },
           "activity_template": {
             "type": "string"
+          },
+          "google_ID": {
+            "type": "string"
           }
         }
       },
@@ -12508,6 +12511,9 @@
             }
           },
           "activity_template": {
+            "type": "string"
+          },
+          "google_ID": {
             "type": "string"
           },
           "created_by": {
@@ -12952,6 +12958,72 @@
                 }
               }
             }
+          },
+          "submission": {
+            "required": [
+              "id",
+              "status",
+              "workspace",
+              "board",
+              "sketch",
+              "sandbox"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "workspace": {
+                "type": "string"
+              },
+              "success": {
+                "type": "boolean"
+              },
+              "hex": {
+                "type": "string"
+              },
+              "stdout": {
+                "type": "string"
+              },
+              "stderr": {
+                "type": "string"
+              },
+              "board": {
+                "type": "string"
+              },
+              "sketch": {
+                "type": "string"
+              },
+              "sandbox": {
+                "type": "boolean"
+              },
+              "session": {
+                "type": "string"
+              },
+              "activity": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "integer"
+              },
+              "student": {
+                "type": "string"
+              },
+              "classroom": {
+                "type": "string"
+              },
+              "student_grade": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -13001,6 +13073,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "submission": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -13074,6 +13149,9 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "submission": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -13289,6 +13367,9 @@
                 "activity_template": {
                   "type": "string"
                 },
+                "google_ID": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -13423,6 +13504,9 @@
                   }
                 },
                 "activity_template": {
+                  "type": "string"
+                },
+                "google_ID": {
                   "type": "string"
                 },
                 "created_by": {
@@ -13623,6 +13707,9 @@
                     "type": "string"
                   }
                 },
+                "submission": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -13667,6 +13754,9 @@
                 "type": "boolean"
               },
               "role": {
+                "type": "string"
+              },
+              "googleID": {
                 "type": "string"
               },
               "created_by": {
@@ -13760,6 +13850,9 @@
                 }
               },
               "activity_template": {
+                "type": "string"
+              },
+              "google_ID": {
                 "type": "string"
               },
               "created_by": {
@@ -13960,6 +14053,9 @@
                     "type": "string"
                   }
                 },
+                "submission": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -14099,6 +14195,9 @@
                   "type": "string"
                 }
               },
+              "submission": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -14236,6 +14335,9 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "submission": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -14720,6 +14822,9 @@
                   "type": "string"
                 }
               },
+              "submission": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -14957,6 +15062,9 @@
               "activity_template": {
                 "type": "string"
               },
+              "google_ID": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -15056,6 +15164,9 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "submission": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -15394,6 +15505,9 @@
                 "role": {
                   "type": "string"
                 },
+                "googleID": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -15506,6 +15620,9 @@
                 "type": "string"
               }
             }
+          },
+          "googleID": {
+            "type": "string"
           }
         }
       },
@@ -15546,6 +15663,9 @@
             "default": false
           },
           "role": {
+            "type": "string"
+          },
+          "googleID": {
             "type": "string"
           },
           "created_by": {

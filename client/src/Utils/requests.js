@@ -455,10 +455,6 @@ export const getGrades = async () =>
     });
   };
   
-
-
-
-
 export const getGrade = async (grade) =>
   makeRequest({
     method: GET,

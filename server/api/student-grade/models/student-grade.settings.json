@@ -18,8 +18,8 @@
       "type": "text"
     },
     "submission": {
-      "model": "submission",
-      "via": "student_grade"
+      "via": "student_grade",
+      "model": "submission"
     }
   }
 }

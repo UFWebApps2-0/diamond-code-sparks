@@ -1250,6 +1250,9 @@
                 "type": "string"
               }
             }
+          },
+          "googleID": {
+            "type": "string"
           }
         }
       },
@@ -1290,6 +1293,9 @@
             "default": false
           },
           "role": {
+            "type": "string"
+          },
+          "googleID": {
             "type": "string"
           },
           "created_by": {

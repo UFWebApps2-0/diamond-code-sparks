@@ -46,6 +46,9 @@
     "activity_template": {
       "type": "text",
       "required": false
+    },
+    "google_ID": {
+      "type": "string"
     }
   }
 }

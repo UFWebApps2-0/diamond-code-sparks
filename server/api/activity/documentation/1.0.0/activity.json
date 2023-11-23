@@ -886,6 +886,9 @@
           },
           "activity_template": {
             "type": "string"
+          },
+          "google_ID": {
+            "type": "string"
           }
         }
       },
@@ -929,6 +932,9 @@
             }
           },
           "activity_template": {
+            "type": "string"
+          },
+          "google_ID": {
             "type": "string"
           },
           "created_by": {
