@@ -1,5 +1,7 @@
 import {Modal, Button, message} from 'antd';
 import React, {useState} from "react";
+import { deleteOrganization } from "../../Utils/requests"
+
 
 export default function DeleteOrgModal(props) {
     const [visible, setVisible] = useState(false);
@@ -15,7 +17,7 @@ export default function DeleteOrgModal(props) {
         setConfirm('');
     }
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (confirm == orgName) {
             // TODO: update delete functionality when connected to back-end
 
@@ -25,7 +27,13 @@ export default function DeleteOrgModal(props) {
             });
             updatedOrgs.splice(index, 1);
             setOrgs(updatedOrgs);
-            message.info(orgName + ' has been deleted.');
+
+            const res = await deleteOrganization(orgId);
+            if (res.data) {
+                message.success(orgName + ' has been deleted.');
+            } else {
+                message.error(res.err);
+            }
         } else if (confirm == '') {
             message.error('Confirm deletion.');
         } else {

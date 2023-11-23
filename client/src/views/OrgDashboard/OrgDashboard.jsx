@@ -4,7 +4,7 @@ import './OrgDashboard.less';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import DeleteOrgModal from './DeleteOrgModal';
-import { getOrganizations, getAllOrgs, updateOrg } from "../../Utils/requests"
+import { getOrganizations, getAllOrgs, updateOrgName } from "../../Utils/requests"
 
 export default function OrgDashboard() {
 	const [orgs, setOrgs] = useState([]);
@@ -54,7 +54,7 @@ export default function OrgDashboard() {
 				return org['id'] == id
 			});
 			updatedOrgs[index]['name'] = orgName;
-			const res = await updateOrg(id, orgName);
+			const res = await updateOrgName(id, orgName);
 			if (res.data) {
 				message.success(
 					`Successfully renamed ${orgName}.`

@@ -180,17 +180,6 @@ export const setEnrollmentStatus = async (id, enrolled) =>
     error: 'Failed to change enrollment status.',
   });
 
-export const updateOrg = async (id, name) =>
-  makeRequest({
-    method: PUT,
-    path: `${server}/organizations/${id}`,
-    data: {
-      name: name,
-    },
-    auth: true,
-    error: 'Failed to change organization name.',
-  });
-
 export const updateStudent = async (id, student) =>
   makeRequest({
     method: PUT,
@@ -714,4 +703,23 @@ export const getAllOrgs = async () =>
     path: `${server}/organizations`,
     auth: true,
     error: 'Organizations could not be retrieved',
+  });
+
+export const updateOrgName = async (id, name) =>
+  makeRequest({
+    method: PUT,
+    path: `${server}/organizations/${id}`,
+    data: {
+      name: name,
+    },
+    auth: true,
+    error: 'Failed to change organization name.',
+  });
+
+export const deleteOrganization = async (id) =>
+  makeRequest({
+    method: DELETE,
+    path: `${server}/organizations/${id}`,
+    auth: true,
+    error: 'Failed to delete organization.',
   });
