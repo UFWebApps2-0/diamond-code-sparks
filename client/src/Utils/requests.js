@@ -180,6 +180,17 @@ export const setEnrollmentStatus = async (id, enrolled) =>
     error: 'Failed to change enrollment status.',
   });
 
+export const updateOrg = async (id, name) =>
+  makeRequest({
+    method: PUT,
+    path: `${server}/organizations/${id}`,
+    data: {
+      name: name,
+    },
+    auth: true,
+    error: 'Failed to change organization name.',
+  });
+
 export const updateStudent = async (id, student) =>
   makeRequest({
     method: PUT,

@@ -4,7 +4,7 @@ import './OrgDashboard.less';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import DeleteOrgModal from './DeleteOrgModal';
-import { getOrganizations, getAllOrgs } from "../../Utils/requests"
+import { getOrganizations, getAllOrgs, updateOrg } from "../../Utils/requests"
 
 export default function OrgDashboard() {
 	const [orgs, setOrgs] = useState([]);
@@ -44,7 +44,7 @@ export default function OrgDashboard() {
     	}
 	}
 
-	const handleEditOrg = (event, id) => {
+	const handleEditOrg = async (event, id) => {
 		event.preventDefault();
 
 		if (orgName != '') {
@@ -54,6 +54,14 @@ export default function OrgDashboard() {
 				return org['id'] == id
 			});
 			updatedOrgs[index]['name'] = orgName;
+			const res = await updateOrg(id, orgName);
+			if (res.data) {
+				message.success(
+					`Successfully renamed ${orgName}.`
+				);
+			} else {
+				message.error(res.err);
+			}
 			setOrgs(updatedOrgs);
 			setOrgName('');
 		} else {
