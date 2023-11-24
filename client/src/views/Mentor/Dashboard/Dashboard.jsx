@@ -8,6 +8,7 @@ import NavBar from '../../../components/NavBar/NavBar';
 import { useGlobalState } from '../../../Utils/userState';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function Dashboard() {
   const [classrooms, setClassrooms] = useState([]);
   const [value] = useGlobalState('currUser');
