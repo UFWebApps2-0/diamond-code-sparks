@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
 import { Tabs, Table } from 'antd';
 import { getUser } from '../../Utils/AuthRequests';
-import { getAllClassrooms, getAllSchools, getGrades, getLessonModuleAll, getTeachers, addOrganization} from '../../Utils/requests';
+import { getAllClassrooms, getAllSchools, getGrades, getLessonModuleAll, getTeachers, addOrganization, addClassroom} from '../../Utils/requests';
 import NavBar from '../../components/NavBar/NavBar';
 import './AdminDashboard.less'
 import { useSearchParams } from 'react-router-dom';
@@ -66,6 +66,26 @@ function AdminDashboard() {
     }
   };
 
+  const handleAddClassroom = async (name, organization, userData) => {
+    const res = await addClassroom(name, organization, [userData]);
+    if (res.err) {
+      message.error("Fail to create a new classroom");
+    } else {
+      message.success("Successfully created classroom");
+      fetchData(); // Call the function to update the classroom list
+    }
+  };
+
+  const handleAddTeacher = async (first_name, last_name, school, userData) => {
+    const res = await addClassroom(first_name, last_name, school, [userData]);
+    if (res.err) {
+      message.error("Fail to create a new teacher");
+    } else {
+      message.success("Successfully created teacher");
+      fetchData(); // Call the function to update the teacher list
+    }
+  };
+
   useEffect(() => {
     fetchData();
     /*const intervalId = setInterval(fetchData, 1000); // 1 second in milliseconds
@@ -103,6 +123,7 @@ function AdminDashboard() {
             classroomList={classroomList}
             page={page}
             setPage={setPage}
+            handleAddClassroom={handleAddClassroom}
           />
         </TabPane>
 
@@ -111,6 +132,7 @@ function AdminDashboard() {
             teacherList={teacherList}
             page={page}
             setPage={setPage}
+            handleAddTeacher={handleAddTeacher}
           />
         </TabPane>
 
@@ -120,6 +142,9 @@ function AdminDashboard() {
             gradeList={gradeList}
             page={page}
             setPage={setPage}
+            setLessonModuleList = {setLessonModuleList}
+            searchParams = {searchParams}
+            tab = {tab}
           />
         </TabPane>
 

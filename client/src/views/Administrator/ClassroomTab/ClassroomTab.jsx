@@ -1,6 +1,10 @@
-import { Table } from 'antd';
+import React, { useEffect, useState } from "react";
+import { Button, Form, Input, message, Modal, Table } from "antd";
+import { addClassroom } from "../../../Utils/requests";
+import { getUser } from "../../../Utils/AuthRequests";
+import ClassroomCreator from "./ClassroomCreator/ClassroomCreator";
 
-export default function ClassroomTab({classroomList, page, setPage}) {
+export default function ClassroomTab({classroomList, page, setPage, handleAddClassroom}) {
     const classroomColumns = [
         {
             title: 'Classroom Name',
@@ -54,9 +58,10 @@ export default function ClassroomTab({classroomList, page, setPage}) {
           </div>
           <div id='content-creator-table-container'>
             <div id='content-creator-btn-container'>
-            <button onClick = {null} id = "add-unit-btn">
-                + Add Classroom
-              </button>
+            <ClassroomCreator
+            classroomList={classroomList}
+            handleAddClassroom={handleAddClassroom}
+          ></ClassroomCreator>
             </div>
             <Table
               columns = {classroomColumns}

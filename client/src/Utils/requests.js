@@ -327,6 +327,18 @@ export const addOrganization = async(name, county, state, administrator) =>
     error: 'Failed to add organization',
   });
 
+  export const addClassroom = async(name, organization, administrator) => 
+  makeRequest({
+    method: POST, 
+    path: `${server}/classrooms`,
+    data: {
+      name: name,
+      organization: organization,
+    },
+    auth: true,
+    error: 'Failed to add classroom',
+  });
+
 export const addStudents = async (students, classroom) =>
   makeRequest({
     method: POST,
@@ -334,6 +346,19 @@ export const addStudents = async (students, classroom) =>
     data: { students: students, classroom: classroom },
     auth: true,
     error: 'Failed to add students.',
+  });
+
+  export const addTeacher = async (first_name, last_name, school) =>
+  makeRequest({
+    method: POST,
+    path: `${server}/mentors`,
+    data: { 
+      first_name: first_name,
+      last_name: last_name,
+      organization: school
+     },
+    auth: true,
+    error: 'Failed to add teacher.',
   });
 
 export const deleteStudent = async (student) =>

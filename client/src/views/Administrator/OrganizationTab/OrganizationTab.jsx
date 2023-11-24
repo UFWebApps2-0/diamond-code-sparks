@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Input, message, Modal, Table } from "antd";
 import { addOrganization } from "../../../Utils/requests";
 import { getUser } from "../../../Utils/AuthRequests";
-import "./OrganizationCreator/OrganizationCreator";
 import OrganizationCreator from "./OrganizationCreator/OrganizationCreator";
 
 export default function OrganizationTab({

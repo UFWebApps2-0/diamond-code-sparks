@@ -1,6 +1,10 @@
-import { Table } from 'antd';
+import React, { useEffect, useState } from "react";
+import { Button, Form, Input, message, Modal, Table } from "antd";
+import { addTeacher } from "../../../Utils/requests";
+import { getUser } from "../../../Utils/AuthRequests";
+import TeacherCreator from "./TeacherCreator/TeacherCreator";
 
-export default function TeacherTab({teacherList, page, setPage}) {
+export default function TeacherTab({teacherList, page, setPage, handleAddTeacher}) {
 
     const teacherColumns = [
         {
@@ -48,9 +52,10 @@ export default function TeacherTab({teacherList, page, setPage}) {
           </div>
           <div id='content-creator-table-container'>
             <div id='content-creator-btn-container'>
-            <button onClick = {null} id = "add-unit-btn">
-                + Add Teacher
-              </button>
+            <TeacherCreator
+            TeacherList={teacherList}
+            handleAddTeacher={handleAddTeacher}
+          ></TeacherCreator>
               <button onClick = {null} id = "add-unit-btn">
                 + Upload Faculty List
               </button>

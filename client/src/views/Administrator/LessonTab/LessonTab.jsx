@@ -1,9 +1,14 @@
 import { Table } from 'antd';
 import UnitCreator from '../../ContentCreator/UnitCreator/UnitCreator';
 import UnitEditor from '../../ContentCreator/UnitEditor/UnitEditor';
+import React, { useState, useEffect } from 'react';
+import LessonModuleActivityCreator from '../../ContentCreator/LessonModuleCreator/LessonModuleCreator';
+import '../../ContentCreator/ContentCreator.less';
 
-export default function LessonTab({learningStandardList, gradeList, page, setPage}) {
-    
+export default function LessonTab({learningStandardList, gradeList, page, setPage, setLessonModuleList, searchParams, tab}) {
+    const [viewing, setViewing] = useState(parseInt(searchParams.get('activity')));
+
+
     const lessonColumns = [
         {
             title: 'Unit',
@@ -52,10 +57,13 @@ export default function LessonTab({learningStandardList, gradeList, page, setPag
         <div id='content-creator-table-container'>
         <div id='content-creator-btn-container'>
             <UnitCreator gradeList = {gradeList} />
-            {/* unable to get other button to work, think its result from not getting table to load (so replacement button) */}
-            <button onClick = {null} id = "add-unit-btn">
-            + Add Lesson
-            </button>
+            <LessonModuleActivityCreator
+                setLessonModuleList={setLessonModuleList}
+                viewing={viewing}
+                setViewing={setViewing}
+                tab={tab}
+                page={page}
+              />
         </div>
         <Table
             columns = {lessonColumns}
