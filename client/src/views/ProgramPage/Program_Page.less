@@ -1,0 +1,118 @@
+.my-programs {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  font-family: Arial, sans-serif;
+  
+  color: #424242;
+  border-radius: 20px;
+  padding: 15px;
+  border: 4px solid #5BABDE;
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    font-size: 24px;
+    
+
+    .back-button {
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+  }
+
+  .programs-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+
+    .program {
+      background-color: #edd367;
+      border-radius: 12px;
+      padding: 10px;
+      position: relative;
+
+      .add-icon {
+        margin-top:12px;
+        font-size: 24px;
+      }
+
+      &.new-program {
+        text-align: center;
+        cursor: pointer;
+        
+      }
+      &.new-program:hover {
+          background-color: #5BABDE;
+      }
+
+      .program-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 5px 5px 20px 5px;
+      }
+
+      .edit-button,
+      .share-button {
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        display: inline-block;
+        padding: 8px 20px 8px 20px;
+        margin-right: 5px;
+        margin-left: 5px;
+        text-transform: uppercase;
+        color: #414141;
+      }
+      .edit-button:hover,
+      .share-button:hover {
+        background-color: #bfbfbf;
+      }
+
+      .edit-button,.share-button {
+        background-color: #f0f0f0;
+      }
+
+    }
+
+  }
+
+  .footer {
+    margin-top: auto;
+    padding: 10px;
+    
+    
+    .footer-title {
+      font-size: 24px;
+    }
+  }
+  .user-icons {
+    background-color: #3D5C82;
+  }
+}
+  
+  .program_page{
+    color: #3D5C82;
+
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      position: sticky;
+      z-index: 10;
+    }
+
+    .react-component {
+      margin-top: 60px;
+    }
+  }
