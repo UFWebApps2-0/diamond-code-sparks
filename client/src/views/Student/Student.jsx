@@ -63,6 +63,7 @@ function Student() {
   function viewProgram(status) {
     setPrograms(status);
     setMenu(false);
+    navigate('/program_page');
   }
 
   function viewShare(status) {

@@ -1,8 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MyCards from './MyCards';
+import { getCurrUser } from '../../Utils/userState';
+import { createGlobalState } from "/node_modules/.vite/deps/react-hooks-global-state.js?v=42b93bcb";
 //import './Program_Page.less';
+import { getSaves, getStudent, getSession, getSessions} from '../../Utils/requests';
+import Workspace from '../../views/Workspace/Workspace';
 
 function ProgramPage() {
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = getCurrUser();
+        console.log("Current User:", res);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+      const result = JSON.parse(sessionStorage.getItem('user'));
+      console.log("Result:", result);
+
+      const res1 = await getStudent("me");
+      console.log("Student.me: ", res1);
+
+      const res2 = await getSession(res1.data["session"]);
+      console.log("session: ", res2);
+
+      const res4 = await getSession(1745);
+      console.log("session: ", res4);
+
+      const res3 = await getSessions();
+      console.log("sessions", res3);
+
+    };
+    fetchData();
+  }, []);
+
+
   return (
     <div className="my-programs">
       <div className="header">

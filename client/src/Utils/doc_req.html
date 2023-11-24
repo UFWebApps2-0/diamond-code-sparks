@@ -1,0 +1,246 @@
+<p>import { server } from ‘./hosts’; import axios from ‘axios’; import {
+getToken } from ‘./AuthRequests’;</p>
+<p>const GET = ‘GET’; const PUT = ‘PUT’; const POST = ‘POST’; const
+DELETE = ‘DELETE’;</p>
+<p>// all request functions should utilize makeRequest and return an obj
+with structure {data, err} const makeRequest = async ({ method, path,
+data, auth = false, error }) =&gt; { let res = null; let err = null;
+const config = auth ? { headers: { Authorization:
+<code>Bearer ${getToken()}</code>, }, } : null;</p>
+<p>try { switch (method) { case GET: res = (await axios.get(path,
+config)).data; break; case POST: res = (await axios.post(path, data,
+config)).data; break; case PUT: res = (await axios.put(path, data,
+config)).data; break; case DELETE: res = (await axios.delete(path,
+config)).data; break; default: throw Error(‘Invalid method.’); } } catch
+(e) { console.error(e); err = error ? error : ‘An error occurred.’;
+}</p>
+<p>return { data: res, err: err }; };</p>
+<p>export const getActivities = async () =&gt; makeRequest({ method:
+GET, path: <code>${server}/activities</code>, auth: true, error:
+‘Activities could not be retrieved.’, });</p>
+<p>export const getTeachers = async () =&gt; makeRequest({ method: GET,
+path: <code>${server}/mentors</code>, auth: true, error: ‘Teachers could
+not be retrieved.’, });</p>
+<p>export const getAllClassrooms = async () =&gt; makeRequest({ method:
+GET, path: <code>${server}/classrooms</code>, auth: true, error:
+‘Classrooms could not be retrieved.’, });</p>
+<p>export const getAllStudents = async () =&gt; makeRequest({ method:
+GET, path: <code>${server}/students</code>, auth: true, error: ‘Students
+could not be retrieved.’, });</p>
+<p>export const getActivityToolboxAll = async () =&gt; makeRequest({
+method: GET, path: <code>${server}/sandbox/toolbox</code>, error:
+‘Toolbox could not be retrieved.’, });</p>
+<p>// export cost getActivityLevels = async () =&gt; // makeRequest({ //
+method: GET, // path: <code>${server}/activities/</code> // })</p>
+<p>// export const getLessonModuleActivities = async (lsId) =&gt; //
+makeRequest({ // method: GET, // path:
+<code>${server}/activities?lesson_module.id=${lsId}</code>, // auth:
+true, // error: ‘Activity cannot be retrived’, // }); export const
+getActivityToolbox = async (id) =&gt; makeRequest({ method: GET, path:
+<code>${server}/activities/toolbox/${id}</code>, auth: true, error:
+‘Toolbox could not be retrieved.’, });</p>
+<p>export const getMentor = async () =&gt; makeRequest({ method: GET,
+path: <code>${server}/classroom-managers/me</code>, auth: true, error:
+‘Your classroom manager information could not be retrieved.’, });</p>
+<p>export const getClassroom = async (id) =&gt; makeRequest({ method:
+GET, path: <code>${server}/classrooms/${id}</code>, auth: true, error:
+‘Classroom information could not be retrieved’, });</p>
+<p>export const getStudentClassroom = async () =&gt; makeRequest({
+method: GET, path: <code>${server}/classrooms/student</code>, auth:
+true, error: ‘Classroom information could not be retrieved’, });</p>
+<p>export const getClassrooms = async (ids) =&gt;
+Promise.all(ids.map(async (id) =&gt; (await
+getClassroom(id)).data));</p>
+<p>export const getStudents = async (code) =&gt; makeRequest({ method:
+GET, path: <code>${server}/classrooms/join/${code}</code>, error:
+‘Student info could not be retrieved.’, });</p>
+<p>export const getStudent = async (id) =&gt; makeRequest({ method: GET,
+path: <code>${server}/students/${id}</code>, auth: true, error: ‘Student
+info could not be retrieved.’, });</p>
+<p>export const postJoin = async (code, ids) =&gt; makeRequest({ method:
+POST, path: <code>${server}/classrooms/join/${code}</code>, data: {
+students: ids, }, error: ‘Login failed.’, });</p>
+<p>export const createActivity = async (activity, learningStandard)
+=&gt; makeRequest({ method: POST, path:
+<code>${server}/activities</code>, data: { lesson_module:
+learningStandard, number: activity, template:
+‘<xml xmlns="http://www.w3.org/1999/xhtml"></xml>)’, }, auth: true,
+error: ‘Login failed.’, });</p>
+<p>export const setEnrollmentStatus = async (id, enrolled) =&gt;
+makeRequest({ method: PUT, path:
+<code>${server}/students/enrolled/${id}</code>, data: { enrolled:
+enrolled, }, auth: true, error: ‘Failed to change enrollment status.’,
+});</p>
+<p>export const updateStudent = async (id, student) =&gt; makeRequest({
+method: PUT, path: <code>${server}/students/${id}</code>, data: student,
+auth: true, error: ‘Failed to update student.’, });</p>
+<p>export const getUnits = async (id) =&gt; makeRequest({ method: GET,
+path: <code>${server}/units?grade=${id}</code>, auth: true, error:
+‘Failed to retrieve units.’, });</p>
+<p>export const getLessonModule = async (id) =&gt; makeRequest({ method:
+GET, path: <code>${server}/lesson-modules/${id}</code>, auth: true,
+error: ‘Failed to retrieve learning standard.’, });</p>
+<p>export const getUnit = async (id) =&gt; makeRequest({ method: GET,
+path: <code>${server}/units/${id}</code>, auth: true, error: ‘Failed to
+retrieve learning standard.’, });</p>
+<p>export const getAllUnits = async () =&gt; makeRequest({ method: GET,
+path: <code>${server}/units</code>, auth: true, error: ‘Failed to
+retrieve learning standard.’, });</p>
+<p>export const getLessonModulecount = async () =&gt; makeRequest({
+method: GET, path: <code>${server}/lesson-modules/count</code>, auth:
+true, error: ‘Failed to retrieve learning standard.’, });</p>
+<p>export const getLessonModuleAll = async () =&gt; makeRequest({
+method: GET, path:
+<code>${server}/lesson-modules?_sort=unit.name:ASC,name:ASC</code>,
+auth: true, error: ‘Failed to retrieve learning standard.’, });</p>
+<p>export const setSelection = async (classroom, learningStandard) =&gt;
+makeRequest({ method: POST, path: <code>${server}/selections/</code>,
+data: { classroom: classroom, lesson_module: learningStandard, }, auth:
+true, error: ‘Failed to set active learning standard.’, });</p>
+<p>export const saveWorkspace = async (activity, workspace, replay)
+=&gt; makeRequest({ method: POST, path: <code>${server}/saves</code>,
+data: { activity, workspace, replay, }, auth: true, error: ‘Failed to
+save your workspace.’, });</p>
+<p>export const getSaves = async (activity) =&gt; makeRequest({ method:
+GET, path: <code>${server}/saves/activity/${activity}</code>, auth:
+true, error: ‘Past saves could not be retrieved.’, });</p>
+<p>export const getSave = async (id) =&gt; makeRequest({ method: GET,
+path: <code>${server}/saves/${id}</code>, auth: true, error: ‘Save could
+not be retrieved.’, });</p>
+<p>export const createSubmission = async (id, workspace, sketch, path,
+isAuth) =&gt; makeRequest({ method: POST, path:
+<code>${server}${path}</code>, data: { activity: id, workspace:
+workspace, board: ‘arduino:avr:uno’, sketch: sketch, }, auth: isAuth,
+error: ‘Failed to create submission.’, });</p>
+<p>export const getSubmission = async (submissionId, path, isAuth) =&gt;
+makeRequest({ method: GET, path:
+<code>${server}${path}/${submissionId}</code>, auth: isAuth, error:
+‘Failed to retrieve submission status’, });</p>
+<p>export const addStudent = async (name, character, classroom) =&gt;
+makeRequest({ method: POST, path: <code>${server}/students</code>, data:
+{ name: name, character: character, classroom: classroom, }, auth: true,
+error: ‘Failed to add student.’, });</p>
+<p>export const addStudents = async (students, classroom) =&gt;
+makeRequest({ method: POST, path: <code>${server}/students</code>, data:
+{ students: students, classroom: classroom }, auth: true, error: ‘Failed
+to add students.’, });</p>
+<p>export const deleteStudent = async (student) =&gt; makeRequest({
+method: DELETE, path: <code>${server}/students/${student}</code>, auth:
+true, error: ‘Failed to delete student.’, });</p>
+<p>export const updateActivityLevelTemplate = async (id, workspace,
+blocksList) =&gt; makeRequest({ method: PUT, path:
+<code>${server}/activities/template/${id}</code>, data: { template:
+workspace, blocks: blocksList, }, auth: true, error: ‘Failed to update
+the template for the activity’, });</p>
+<p>export const updateActivityTemplate = async (id, workspace) =&gt;
+makeRequest({ method: PUT, path:
+<code>${server}/activities/activity_template/${id}</code>, data: {
+activity_template: workspace, //blocks: blocksList, }, auth: true,
+error: ‘Failed to update the activity template for the activity’,
+});</p>
+<p>export const deleteActivity = async (id) =&gt; makeRequest({ method:
+DELETE, path: <code>${server}/activities/${id}</code>, auth: true,
+error: ‘Failed to delete activity.’, });</p>
+<p>export const deleteLessonModule = async (id) =&gt; makeRequest({
+method: DELETE, path: <code>${server}/lesson-modules/${id}</code>, auth:
+true, error: ‘Failed to delete student.’, });</p>
+<p>export const createLessonModule = async ( description, name, number,
+unit, standards, link ) =&gt; makeRequest({ method: POST, path:
+<code>${server}/lesson-modules</code>, data: { expectations:
+description, name, number, unit, standards, link, }, auth: true, error:
+‘Login failed.’, });</p>
+<p>export const createUnit = async (number, name, standardsID,
+standardsDescrip, grade) =&gt; makeRequest({ method: POST, path:
+<code>${server}/units</code>, data: { number: parseInt(number, 10),
+name: name, grade: parseInt(grade, 10), standards_id: standardsID,
+standards_description: standardsDescrip, }, auth: true, error: ‘Fail to
+create new unit.’, });</p>
+<p>export const updateUnit = async ( id, number, name, standardsID,
+standardsDescrip, grade ) =&gt; makeRequest({ method: PUT, path:
+<code>${server}/units/${id}</code>, data: { number: parseInt(number,
+10), name: name, grade: parseInt(grade, 10), standards_id: standardsID,
+standards_description: standardsDescrip, }, auth: true, error: ‘Failed
+to update unit’, });</p>
+<p>export const getGrades = async () =&gt; makeRequest({ method: GET,
+path: <code>${server}/grades</code>, auth: true, error: ‘Grades could
+not be retrieved’, });</p>
+<p>export const getGrade = async (grade) =&gt; makeRequest({ method:
+GET, path: <code>${server}/grades/${grade}</code>, auth: true, error:
+‘Grade could not be retrieved’, });</p>
+<p>export const updateLessonModule = async ( id, name, expectations,
+standards, link ) =&gt; makeRequest({ method: PUT, path:
+<code>${server}/lesson-modules/${id}</code>, data: { name, standards,
+expectations, link, }, auth: true, error: ‘Failed to update unit’,
+});</p>
+<p>export const updateActivityDetails = async ( id, description, //
+template, // activity_template, StandardS, images, link,
+scienceComponents, makingComponents, computationComponents ) =&gt;
+makeRequest({ method: PUT, path:
+<code>${server}/activities/${id}</code>, data: { description, //
+template, // activity_template, StandardS, images, link,
+scienceComponents, makingComponents, computationComponents, }, auth:
+true, error: ‘Failed to update unit’, });</p>
+<p>export const getLessonModuleActivities = async (lsId) =&gt;
+makeRequest({ method: GET, path:
+<code>${server}/activities?lesson_module.id=${lsId}</code>, auth: true,
+error: ‘Activity cannot be retrived’, });</p>
+<p>export const getActivityLevels = async (lsId) =&gt; makeRequest({
+method: GET, path:
+<code>${server}/authorized-workspaces?activities.id=${lsId}</code>,
+auth: true, error: ‘Activities cannot be retrieved’, });</p>
+<p>export const getActivity = async (id) =&gt; makeRequest({ method:
+GET, path: <code>${server}/activities/${id}</code>, auth: true, error:
+‘Activity cannot be retrived’, });</p>
+<p>export const forgetPassword = async (email) =&gt; makeRequest({
+method: POST, path: <code>${server}/auth/forgot-password</code>, data: {
+email, }, error: ‘cannot retrive data from the provided email’, });</p>
+<p>export const resetPassword = async (code, password,
+passwordConfirmation) =&gt; makeRequest({ method: POST, path:
+<code>${server}/auth/reset-password</code>, data: { code, password,
+passwordConfirmation, }, error: ‘Cannot update new password. Please try
+again or get a new link from the forgot password page.’, });</p>
+<p>export const getSessions = async () =&gt; makeRequest({ method: GET,
+path: <code>${server}/sessions</code>, auth: true, error: ‘Sessions
+could not be retrieved.’, });</p>
+<p>export const getSessionsWithFilter = async (filterOptions) =&gt;
+makeRequest({ method: GET, path:
+<code>${server}/sessions?${filterOptions}</code>, auth: true, error:
+‘Sessions could not be retrieved.’, });</p>
+<p>export const getSessionCount = async () =&gt; makeRequest({ method:
+GET, path: <code>${server}/sessions/count</code>, auth: true, error:
+‘Session count could not be retrieved.’, });</p>
+<p>export const getSessionCountWithFilter = async (filterOptions) =&gt;
+makeRequest({ method: GET, path:
+<code>${server}/sessions/count?${filterOptions}</code>, auth: true,
+error: ‘Session count could not be retrieved.’, });</p>
+<p>export const getSession = async (id) =&gt; makeRequest({ method: GET,
+path: <code>${server}/sessions/${id}</code>, auth: true, error:
+‘Sessions could not be retrieved.’, }); export const submitBugReport =
+async ( description, steps, name, email, systemInfo ) =&gt;
+makeRequest({ method: POST, path: <code>${server}/bug-report</code>,
+data: { description, steps, name, email, systemInfo, }, error: ‘Unable
+to submit bug-report’, });</p>
+<p>export const getAuthorizedWorkspaces = async () =&gt; makeRequest({
+method: GET, path: <code>${server}/authorized-workspaces</code>, auth:
+true, error: ‘Unable to retrive cc worksapces’, });</p>
+<p>export const getAuthorizedWorkspace = async (id) =&gt; makeRequest({
+method: GET, path: <code>${server}/authorized-workspaces/${id}</code>,
+auth: true, error: ‘Unable to retrive cc workspace’, });</p>
+<p>export const createAuthorizedWorkspace = async ( name, description,
+template, blocks, classroomId ) =&gt; makeRequest({ method: POST, path:
+<code>${server}/authorized-workspaces</code>, auth: true, data: { name,
+description, template, blocks, classroomId, }, error: ‘Unable to create
+cc workspace’, }); export const getAuthorizedWorkspaceToolbox = async
+(id) =&gt; makeRequest({ method: GET, path:
+<code>${server}/authorized-workspaces/toolbox/${id}</code>, auth: true,
+error: ‘Toolbox could not be retrieved.’, });</p>
+<p>export const updateAuthorizedWorkspace = async (id, template, blocks)
+=&gt; makeRequest({ method: PUT, path:
+<code>${server}/authorized-workspaces/${id}</code>, auth: true, data: {
+template, blocks, }, error: ‘Unable to create cc workspace’, }); export
+const deleteAuthorizedWorkspace = async (id) =&gt; makeRequest({ method:
+DELETE, path: <code>${server}/authorized-workspaces/${id}</code>, auth:
+true, error: ‘Unable to delete cc workspace’, });</p>
+<p>export const getClassroomWorkspace = async (id) =&gt; makeRequest({
+method: GET, path: <code>${server}/classroom/workspaces/${id}</code>,
+auth: true, error: ‘Unable to retrive classroom workspaces’, });</p>
