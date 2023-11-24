@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
 import { Tabs, Table } from 'antd';
 import { getUser } from '../../Utils/AuthRequests';
-import { getAllClassrooms, getAllSchools, getGrades, getLessonModuleAll, getTeachers, addOrganization} from '../../Utils/requests';
+import { getAllClassrooms, getAllSchools, getGrades, getLessonModuleAll, getTeachers, addOrganization, getAdminSchools} from '../../Utils/requests';
 import NavBar from '../../components/NavBar/NavBar';
 import './AdminDashboard.less'
 import { useSearchParams } from 'react-router-dom';
@@ -26,6 +26,7 @@ function AdminDashboard() {
     searchParams.has('page') ? parseInt(searchParams.get('page')) : 1
   );
   const userData = getUser();
+  console.log(userData);
   const [learningStandardList, setLessonModuleList] = useState([]);
   const [gradeList, setGradeList] = useState([]);
   const [teacherList, setTeacherList] = useState([]);
@@ -43,7 +44,7 @@ function AdminDashboard() {
       getGrades(),
       getTeachers(),
       getAllClassrooms(),
-      getAllSchools()
+      getAdminSchools(userData.username)
     ]);
     setLessonModuleList(lsResponse.data);
 

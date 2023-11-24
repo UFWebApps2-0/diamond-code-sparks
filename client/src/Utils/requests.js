@@ -694,3 +694,11 @@ export const getAllSchools = async () =>
     auth: true,
     error: 'Schools could not be retrieved.',
   });
+
+  export const getAdminSchools = async (administratorUsername) =>
+  makeRequest({
+    method: GET,
+    path: `${server}/schools?administrators.username=${administratorUsername}`,
+    auth: true,
+    error: 'Schools could not be retrieved.',
+  });
