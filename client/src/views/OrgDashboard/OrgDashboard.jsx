@@ -22,12 +22,22 @@ export default function OrgDashboard() {
     	   		for (let i = 0; i < res.data.length; i++) {
     	   			orgList.push(res.data[i]);
     	   		}
+    	   		orgList.sort(sortById);
     	   		setOrgs(orgList);
     	   	} else {
     	   		message.error(res.error);
     	   	}
     	});
-  	});
+  	}, [orgName]);
+
+  	const sortById = (a, b) => {
+  		if (a.id < b.id) {
+  			return -1;
+  		} else if (a.id > b.id) {
+  			return 1;
+  		}
+  		return 0;
+  	}
 
 	const handleFlip = (id) => {
 		// handleFlip code so that cards flip individually rather than all at the same time from 
@@ -61,8 +71,6 @@ export default function OrgDashboard() {
 		} else {
 			message.info('Name cannot be blank.');
 		}
-
-		// TODO: update when connected to backend to edit db rather than just locally
 	}
     
 	return (
