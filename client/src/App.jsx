@@ -19,7 +19,7 @@ import StudentLogin from './views/StudentLogin/StudentLogin';
 import ForgetPassword from './views/TeacherLogin/ForgetPassword';
 import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
-
+import TakeAssess from './views/StudentAssessment/TakeAssess';
 const App = () => {
   return (
     <div>
@@ -109,6 +109,14 @@ const App = () => {
           element={
             <PrivateRoute>
               <ContentCreator />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path = "/assessment"
+          element = {
+            <PrivateRoute>
+              <TakeAssess />
             </PrivateRoute>
           }
         />

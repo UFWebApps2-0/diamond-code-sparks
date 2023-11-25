@@ -65,7 +65,9 @@ function Student() {
   };
 
   const handleAssessment = (assessment) => {
-
+    localStorage.setItem('my-assessment', JSON.stringify(assessment));
+    console.log(localStorage.getItem('my-assessment'));
+    navigate('/assessment');
 
   };
 
@@ -114,7 +116,7 @@ function Student() {
                     <div
                       key={assessment.key}
                       id='list-item-wrapper'
-                      onClick={handleAssessment(assessment)}
+                      onClick={()=> handleAssessment(assessment)}
                     >
                       <li>{`${assessment.name}`}</li>
                     </div>
