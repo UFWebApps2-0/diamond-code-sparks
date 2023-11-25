@@ -44,7 +44,8 @@ function AdminDashboard() {
       getGrades(),
       getTeachers(),
       getAllClassrooms(),
-      getAdminSchools(userData.username)
+      getAllSchools(),
+      //getAdminSchools(userData.username)
     ]);
     setLessonModuleList(lsResponse.data);
 

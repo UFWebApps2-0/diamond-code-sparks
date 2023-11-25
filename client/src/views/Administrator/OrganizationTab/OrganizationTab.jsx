@@ -3,6 +3,8 @@ import { Button, Form, Input, message, Modal, Table } from "antd";
 import { addOrganization } from "../../../Utils/requests";
 import { getUser } from "../../../Utils/AuthRequests";
 import "./OrganizationCreator/OrganizationCreator";
+import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import OrganizationCreator from "./OrganizationCreator/OrganizationCreator";
 
 export default function OrganizationTab({
@@ -42,9 +44,20 @@ export default function OrganizationTab({
       key: "view",
       width: "22.5%",
       align: "left",
+      render: (_, organization) => (
+        <Button type="link" onClick={() => handleViewDetails(organization.id)}>
+          View Details
+        </Button>
+      ),
     },
   ];
 
+  const navigate = useNavigate();
+  
+  function handleViewDetails(organizationID){
+    console.log(organizationID);
+    navigate(`/OrganizationDashboard/${organizationID}`);
+  }
   return (
     <div>
       <div id="page-header">

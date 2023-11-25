@@ -702,3 +702,19 @@ export const getAllSchools = async () =>
     auth: true,
     error: 'Schools could not be retrieved.',
   });
+
+  export const getSchoolClassrooms = async (id) =>
+  makeRequest({
+    method: GET,
+    path: `${server}/classrooms?school.id=${id}`,
+    auth: true,
+    error: 'Classrooms could not be retrieved.',
+  });
+
+  export const getSchoolID = async (id) =>
+  makeRequest({
+    method: GET,
+    path: `${server}/schools/${id}`,
+    auth: true,
+    error: 'Schools could not be retrieved.',
+  });
