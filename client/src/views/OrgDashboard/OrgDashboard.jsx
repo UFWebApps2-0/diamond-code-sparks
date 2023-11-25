@@ -16,7 +16,7 @@ export default function OrgDashboard() {
     	let orgList = [];
 
     	// TODO: update to be admin-specific orgs (use Mentor/Dashboard/Dashboard.jsx as a model)
-    	  
+
     	getAllOrgs().then((res) => {
     	   	if (res.data) {
     	   		for (let i = 0; i < res.data.length; i++) {
@@ -57,7 +57,7 @@ export default function OrgDashboard() {
 	const handleEditOrg = async (event, id) => {
 		event.preventDefault();
 
-		if (orgName != '') {
+		if (orgName != '' && orgName != null) {
 			// update selected org name with the form input
 			const res = await updateOrgName(id, orgName);
 			if (res.data) {
@@ -122,7 +122,7 @@ export default function OrgDashboard() {
      										value={orgName}
      										onChange={(e) => setOrgName(e.target.value)}
      									/>
-     									<button type='submit' className='manage-btn save-btn' onClick={orgName != '' ? handleFlip(org.id) : null}>Save Changes</button>
+     									<button type='submit' className='manage-btn save-btn' onClick={orgName != '' && orgName != null ? handleFlip(org.id) : null}>Save Changes</button>
      								</form>
      								<div className='divider' />
      								<DeleteOrgModal 
@@ -130,6 +130,7 @@ export default function OrgDashboard() {
      									orgName={org.name}
      									orgs={orgs}
      									setOrgs={setOrgs}
+     									setOrgName={setOrgName}
      								/>
      							</div>
 				        	</div>
