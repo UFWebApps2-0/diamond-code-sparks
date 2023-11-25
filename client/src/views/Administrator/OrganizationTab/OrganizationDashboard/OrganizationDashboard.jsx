@@ -33,6 +33,7 @@ export default function OrganizationDashboard(props) {
         const classroomsResponse = await getSchoolClassrooms(id);
         const organizationResponse = await getSchoolID(id);
         setClassrooms(classroomsResponse.data);
+        console.log(classroomsResponse.data);
         console.log(organizationResponse);
         setOrganization(organizationResponse);
       } catch (error) {

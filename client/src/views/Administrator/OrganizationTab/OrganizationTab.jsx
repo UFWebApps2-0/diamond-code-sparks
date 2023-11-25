@@ -13,6 +13,7 @@ export default function OrganizationTab({
   setPage,
   handleAddOrganization,
 }) {
+
   const organizationColumns = [
     {
       title: "Organization Name",
@@ -21,6 +22,32 @@ export default function OrganizationTab({
       editable: true,
       width: "22.5%",
       align: "left",
+      // Apply filter directly on this column
+      onFilter: (value, record) =>
+        record.name.toLowerCase().includes(value.toLowerCase()),
+      // Add search functionality for this column
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+        <div style={{ padding: 8 }}>
+          <Input
+            placeholder="Search Organization Name"
+            value={selectedKeys[0]}
+            onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+            onPressEnter={() => confirm()}
+            style={{ width: 188, marginBottom: 8, display: 'block' }}
+          />
+          <Button
+            type="primary"
+            onClick={() => confirm()}
+            size="small"
+            style={{ width: 90, marginRight: 8 }}
+          >
+            Search
+          </Button>
+          <Button onClick={() => clearFilters()} size="small" style={{ width: 90 }}>
+            Reset
+          </Button>
+        </div>
+      ),
     },
     {
       title: "Number of Classrooms",
