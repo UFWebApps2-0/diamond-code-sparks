@@ -2,7 +2,7 @@
 import { Table, Popconfirm, message } from 'antd';
 import {Modal,Button,Switch} from 'antd';
 import { useEffect, useState } from 'react';
-import { deleteAssessment, getAssessments, getClassroom } from '../../Utils/requests';
+import { updateAssessmentPublic,deleteAssessment, getAssessments, getClassroom } from '../../Utils/requests';
 import StudentAssessmenmts from './StudentAssessments';
 import './assessmentStyle.css';
 import QuestionForm from '../AssesmentsCreate/QuestionForm';
@@ -29,6 +29,7 @@ function Assessments({ classroomId})
       temp[i] = false;
       setView(temp);
     }
+    
 
     //Upon rereendering, get the students and assessments
     useEffect(() => {
@@ -80,8 +81,7 @@ function Assessments({ classroomId})
                     Delete
                 </Button>
                 </Popconfirm>,
-                public:<Switch
-                />
+                public:<Switch  onChange={()=> {updateAssessmentPublic(res.data[i].id,res.data[i].isPublic); console.log(res.data[i].isPublic)}}/>,
               
               });
           }
@@ -133,10 +133,7 @@ function Assessments({ classroomId})
             dataIndex: 'public',
             key: 'public',
             width: '10%',
-            align: 'left',
-            render: () => (
-              <Switch
-              />)
+            align: 'left'
           }
 
     ]
