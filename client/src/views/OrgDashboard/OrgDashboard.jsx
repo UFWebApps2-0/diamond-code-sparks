@@ -11,6 +11,7 @@ export default function OrgDashboard() {
 	const navigate = useNavigate();
 	const [isFlipped, setIsFlipped] = useState(new Set());
 	const [orgName, setOrgName] = useState('');
+	const [sort, setSort] = useState('default');
 
 	useEffect(() => {
     	let orgList = [];
@@ -22,18 +23,42 @@ export default function OrgDashboard() {
     	   		for (let i = 0; i < res.data.length; i++) {
     	   			orgList.push(res.data[i]);
     	   		}
-    	   		orgList.sort(sortById);
+    	   		if (sort == 'aToZ') {
+    	   			orgList.sort(sortAtoZ);
+    	   		} else if (sort == 'zToA') {
+    	   			orgList.sort(sortZtoA);
+    	   		} else {
+    	   			orgList.sort(sortById);
+    	   		}
     	   		setOrgs(orgList);
     	   	} else {
     	   		message.error(res.error);
     	   	}
     	});
-  	}, [orgName]);
+  	}, [orgName, sort]);
 
   	const sortById = (a, b) => {
   		if (a.id < b.id) {
   			return -1;
   		} else if (a.id > b.id) {
+  			return 1;
+  		}
+  		return 0;
+  	}
+
+  	const sortAtoZ = (a, b) => {
+  		if (a.name < b.name) {
+  			return -1;
+  		} else if (a.name > b.name) {
+  			return 1;
+  		}
+  		return 0;
+  	}
+
+  	const sortZtoA = (a, b) => {
+  		if (a.name > b.name) {
+  			return -1;
+  		} else if (a.name < b.name) {
   			return 1;
   		}
   		return 0;
@@ -78,6 +103,21 @@ export default function OrgDashboard() {
 	        <NavBar />
 	        {/* Replace 'Admin' with username after admin accounts are created */}
 	        <div id='main-header'>Welcome Admin</div>
+	        <div id='org-dash-bar'>
+	        	<input
+	       			type='button'
+	       			onClick={() => navigate('/createorg')}
+	       			value='Create new organization'
+	        	/>
+	        	<select
+	        		value={sort}
+	        		onChange={e => setSort(e.target.value)}
+	        	>
+	        		<option value='default'>Default</option>
+	        		<option value='aToZ'>A to Z</option>
+	        		<option value='zToA'>Z to A</option>
+	        	</select>
+	        </div>
 	        <div id='page-header'>
 	        	<h1>Your Organizations</h1>
 	        </div>
@@ -137,11 +177,6 @@ export default function OrgDashboard() {
 		        		</div>
 		        	))}
 	        	</div>
-	        	<input
-	        		type='button'
-	        		onClick={() => navigate('/createorg')}
-	        		value='Create new organization'
-	        	/>
 	        </div>
 	    </div>
     );

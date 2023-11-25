@@ -2,6 +2,46 @@
 
 // duplicated from Dashboard.less to achieve consistency in design; edited for organization dashboard use
 
+#org-dash-bar {
+    margin-top: -10px;
+    
+    input[type='button'] {
+        width: 13em;
+        height: 35px;
+        font-size: 1em;
+        font-weight: 500;
+        border-radius: 5px;
+        background: #colors[quaternary];
+        border: none;
+        color: #colors[text-primary];
+        transition: 0.25s;
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
+        padding: 5px;
+        float: right;
+        margin-right: 12%;
+        margin-left: 15px;
+        &:hover {
+            background: #colors[quinary];
+        }
+    }  
+
+    select {
+        width: 13em;
+        height: 35px;
+        font-size: 1em;
+        font-weight: 500;
+        border-radius: 5px;
+        background: #colors[tertiary];
+        border: none;
+        color: #colors[text-primary];
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
+        padding: 5px;
+        float: right;
+    }
+}
+
 #orgs-container {
     margin: 6vh auto 4vh auto;
     padding-top: 40px;
@@ -11,27 +51,6 @@
     background: #colors[senary];
     border-radius: 5px;
     border: 2px solid #colors[secondary];
-
-    input[type='button'] {
-        width: 13em;
-        height: auto;
-        font-size: 1em;
-        font-weight: 500;
-        border-radius: 30px;
-        margin: 3% auto auto auto;
-        background: #colors[quaternary];
-        border: none;
-        color: #colors[text-primary];
-        transition: 0.25s;
-        cursor: pointer;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
-        padding: 5px;
-
-        &:hover {
-            width: 14vw;
-            background: #colors[quinary];
-        }
-    }
 }
 
 #dashboard-org-card {
@@ -45,7 +64,6 @@
     border-color: #colors[secondary];
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
-
     
     position: relative;
     transition: transform 0.8s;
