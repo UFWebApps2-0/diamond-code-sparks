@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/student-assessments",
+      "handler": "student-assessments.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/student-assessments/count",
+      "handler": "student-assessments.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/student-assessments/:id",
+      "handler": "student-assessments.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/student-assessments",
+      "handler": "student-assessments.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/student-assessments/:id",
+      "handler": "student-assessments.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/student-assessments/:id",
+      "handler": "student-assessments.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

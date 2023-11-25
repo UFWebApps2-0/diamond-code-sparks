@@ -71,7 +71,7 @@ export default function Classroom({
         </TabPane>
         <TabPane tab='Assessments' key='assessments'>
           <Assessments classroomId={id} />
-        </TabPane>
+        </TabPane>z
       </Tabs>
     </div>
   );
