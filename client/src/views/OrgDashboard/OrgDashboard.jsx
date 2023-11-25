@@ -27,7 +27,7 @@ export default function OrgDashboard() {
     	   		message.error(res.error);
     	   	}
     	});
-  	}, []);
+  	});
 
 	const handleFlip = (id) => {
 		// handleFlip code so that cards flip individually rather than all at the same time from 
@@ -48,12 +48,7 @@ export default function OrgDashboard() {
 		event.preventDefault();
 
 		if (orgName != '') {
-			// find the corresponding org and update its name with the form input
-			let updatedOrgs = [...orgs];
-			let index = updatedOrgs.findIndex(function (org) {
-				return org['id'] == id
-			});
-			updatedOrgs[index]['name'] = orgName;
+			// update selected org name with the form input
 			const res = await updateOrgName(id, orgName);
 			if (res.data) {
 				message.success(
@@ -62,7 +57,6 @@ export default function OrgDashboard() {
 			} else {
 				message.error(res.err);
 			}
-			setOrgs(updatedOrgs);
 			setOrgName('');
 		} else {
 			message.info('Name cannot be blank.');
