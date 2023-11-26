@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
 import { Tabs, Table } from 'antd';
 import { getUser } from '../../Utils/AuthRequests';
-import { getAllClassrooms, getAllSchools, getGrades, getLessonModuleAll, getTeachers, addOrganization, addClassroom} from '../../Utils/requests';
+import { getAllClassrooms, getAllSchools, getGrades, getLessonModuleAll, getTeachers, addOrganization, addClassroom, addTeacher} from '../../Utils/requests';
 import NavBar from '../../components/NavBar/NavBar';
 import './AdminDashboard.less'
 import { useSearchParams } from 'react-router-dom';
@@ -66,8 +66,8 @@ function AdminDashboard() {
     }
   };
 
-  const handleAddClassroom = async (name, organization, userData) => {
-    const res = await addClassroom(name, organization, [userData]);
+  const handleAddClassroom = async (name, organization, grade, userData) => {
+    const res = await addClassroom(name, organization, grade, [userData]);
     if (res.err) {
       message.error("Fail to create a new classroom");
     } else {
@@ -77,7 +77,7 @@ function AdminDashboard() {
   };
 
   const handleAddTeacher = async (first_name, last_name, school, userData) => {
-    const res = await addClassroom(first_name, last_name, school, [userData]);
+    const res = await addTeacher(first_name, last_name, school, [userData]);
     if (res.err) {
       message.error("Fail to create a new teacher");
     } else {
@@ -121,6 +121,8 @@ function AdminDashboard() {
         <TabPane tab='Classrooms' key='classrooms'>
           <ClassroomTab
             classroomList={classroomList}
+            gradeList={gradeList}
+            schoolList={organizationList}
             page={page}
             setPage={setPage}
             handleAddClassroom={handleAddClassroom}
@@ -130,6 +132,7 @@ function AdminDashboard() {
         <TabPane tab='Teachers' key='teacher'>
           <TeacherTab
             teacherList={teacherList}
+            schoolList={organizationList}
             page={page}
             setPage={setPage}
             handleAddTeacher={handleAddTeacher}

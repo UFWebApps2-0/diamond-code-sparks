@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, message, Modal, Table } from "antd";
+import { Button, Form, Input, message, Modal, Table, Select } from "antd";
 import { addClassroom, getAllSchools } from "../../../../Utils/requests";
 import { getUser } from "../../../../Utils/AuthRequests";
 import "./ClassroomCreator.less";
 
 export default function ClassroomCreator({
   classroomList, 
+  gradeList,
+  schoolList,
   handleAddClassroom,
 }) {
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
-  const [school, setSchool] = useState("");
+  const [school, setSchool] = useState(0);
+  const [grade, setGrade] = useState(0);
   const userData = getUser();
 
   const showModal = () => {
     setName("");
-    setSchool("");
     setVisible(true);
   };
 
@@ -25,9 +27,14 @@ export default function ClassroomCreator({
   
   
   const handleAddClassroomClick = async (e) => {
-    handleAddClassroom(name, school, userData);
+    if (school == 0 || grade == 0) {
+      return;
+    }
+    handleAddClassroom(name, school, grade, userData);
     setVisible(false);   
   };
+
+  const filterOption = (input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   return (
     <div>
@@ -62,12 +69,23 @@ export default function ClassroomCreator({
             />
           </Form.Item>
           <Form.Item id="form-label" label="School">
-            <Input
-              onChange={(e) => setSchool(e.target.value)}
-              value={school}
-              placeholder="Enter the School"
-              required
-              //Later will replace this with associated administrator's school
+            <Select
+              showSearch
+              placeholder="Select a school"
+              optionFilterProp="children"
+              onChange={(value)=>setSchool(value)}
+              filterOption={filterOption}
+              options={schoolList.map((value) => ({value: value.id, label: value.name}))}
+            />
+          </Form.Item>
+          <Form.Item id="form-label" label="Grade">
+            <Select
+              showSearch
+              placeholder="Select a school"
+              optionFilterProp="children"
+              onChange={(value)=>setGrade(value)}
+              filterOption={filterOption}
+              options={gradeList.map((value) => ({value: value.id, label: value.name}))}
             />
           </Form.Item>
           <Form.Item

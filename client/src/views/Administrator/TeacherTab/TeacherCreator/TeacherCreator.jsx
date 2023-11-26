@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Button, Form, Input, message, Modal, Table } from "antd";
-import { addTeacher, getAllSchools } from "../../../../Utils/requests";
+import React, { useState } from "react";
+import { Button, Form, Input, Modal, Select } from "antd";
 import { getUser } from "../../../../Utils/AuthRequests";
 import "./TeacherCreator.less";
 
 export default function TeacherCreator({
   TeacherList, 
+  schoolList,
   handleAddTeacher,
 }) {
   const [visible, setVisible] = useState(false);
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
-  const [school, setSchool] = useState("");
+  const [school, setSchool] = useState(0);
   const userData = getUser();
 
   const showModal = () => {
     setFirstName("");
     setLastName("");
-    setSchool("");
     setVisible(true);
   };
 
@@ -25,11 +24,16 @@ export default function TeacherCreator({
     setVisible(false);
   };
   
-  
   const handleAddTeacherClick = async (e) => {
+    if (school == 0) {
+      return
+    }
+
     handleAddTeacher(first_name, last_name, school, userData);
     setVisible(false);   
   };
+
+  const filterOption = (input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   return (
     <div>
@@ -72,12 +76,13 @@ export default function TeacherCreator({
             />
           </Form.Item>
           <Form.Item id="form-label" label="School">
-            <Input
-              onChange={(e) => setSchool(e.target.value)}
-              value={school}
-              placeholder="Enter the School"
-              required
-              //should be modified to take on administrator associated school
+            <Select
+              showSearch
+              placeholder="Select a school"
+              optionFilterProp="children"
+              onChange={(value)=>setSchool(value)}
+              filterOption={filterOption}
+              options={schoolList.map((value) => ({value: value.id, label: value.name}))}
             />
           </Form.Item>
           <Form.Item

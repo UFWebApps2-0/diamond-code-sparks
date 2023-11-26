@@ -4,7 +4,7 @@ import { addTeacher } from "../../../Utils/requests";
 import { getUser } from "../../../Utils/AuthRequests";
 import TeacherCreator from "./TeacherCreator/TeacherCreator";
 
-export default function TeacherTab({teacherList, page, setPage, handleAddTeacher}) {
+export default function TeacherTab({teacherList, schoolList, page, setPage, handleAddTeacher}) {
 
     const teacherColumns = [
         {
@@ -54,6 +54,7 @@ export default function TeacherTab({teacherList, page, setPage, handleAddTeacher
             <div id='content-creator-btn-container'>
             <TeacherCreator
             TeacherList={teacherList}
+            schoolList={schoolList}
             handleAddTeacher={handleAddTeacher}
           ></TeacherCreator>
               <button onClick = {null} id = "add-unit-btn">

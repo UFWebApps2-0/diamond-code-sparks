@@ -4,7 +4,7 @@ import { addClassroom } from "../../../Utils/requests";
 import { getUser } from "../../../Utils/AuthRequests";
 import ClassroomCreator from "./ClassroomCreator/ClassroomCreator";
 
-export default function ClassroomTab({classroomList, page, setPage, handleAddClassroom}) {
+export default function ClassroomTab({classroomList, gradeList, schoolList, page, setPage, handleAddClassroom}) {
     const classroomColumns = [
         {
             title: 'Classroom Name',
@@ -60,6 +60,8 @@ export default function ClassroomTab({classroomList, page, setPage, handleAddCla
             <div id='content-creator-btn-container'>
             <ClassroomCreator
             classroomList={classroomList}
+            gradeList={gradeList}
+            schoolList={schoolList}
             handleAddClassroom={handleAddClassroom}
           ></ClassroomCreator>
             </div>
