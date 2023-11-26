@@ -26,15 +26,17 @@ export default function OrganizationDashboard(props) {
   function handleBack() {
     navigate("/AdminDashboard");
   }
-
+  
+  function handleViewClassroom(classroomID){
+    
+    navigate(`/ClassroomAdmin/${classroomID}`);
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
         const classroomsResponse = await getSchoolClassrooms(id);
         const organizationResponse = await getSchoolID(id);
         setClassrooms(classroomsResponse.data);
-        console.log(classroomsResponse.data);
-        console.log(organizationResponse);
         setOrganization(organizationResponse);
       } catch (error) {
         console.error("Error fetching classrooms:", error);
@@ -52,7 +54,7 @@ export default function OrganizationDashboard(props) {
     <div className="container nav-padding">
       <NavBar />
 
-      {organization ? (
+      {organization?.data ? (
         <>
           <div id="main-header">{organization.data.name}</div>
           <button
@@ -90,7 +92,7 @@ export default function OrganizationDashboard(props) {
                   <div id="card-left-content-container">
                     <h1 id="card-title">{classroom.name}</h1>
                     <div id="card-button-container" className="flex flex-row">
-                      <button onClick={null}>View</button>
+                      <button onClick={() => handleViewClassroom(classroom.id)}>View</button>
                     </div>
                   </div>
                   <div id="card-right-content-container">
