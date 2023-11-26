@@ -721,7 +721,36 @@ makeRequest({
   path: `${server}/assessments/${id}`,
   auth: true,
   data: {
-    makePublic: !currentValue
+    isPublic: !currentValue
   },
   error: 'Unable to change assessments',
 });
+
+export const createStudentAssessments = async (name, id, assessmentAnswers) =>
+makeRequest({
+  method: POST,
+  path: `${server}/student-assessments`,
+  auth: true,
+  data: {
+    assessmentName: name,
+    studentID: id,
+    answers: assessmentAnswers
+  },
+});
+export const getStudentAssessments = async () =>
+makeRequest({
+  method: GET,
+  path: `${server}/student-assessments`,
+  auth: true,
+  error: 'Unable to retrive assessments',
+});
+
+export const getStudentAssessment= async (id,name) =>
+makeRequest({
+  method: GET,
+  path: `${server}/student-assessments?studentID=${id}&assessmentName=${name}`,
+
+  auth: true,
+  error: 'Unable to retrive assessments',
+});
+

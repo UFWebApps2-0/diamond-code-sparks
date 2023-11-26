@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "student_assessments",
+  "info": {
+    "name": "studentAssessments"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "studentID": {
+      "type": "integer"
+    },
+    "assessmentName": {
+      "type": "string"
+    },
+    "answers": {
+      "type": "json"
+    }
+  }
+}
