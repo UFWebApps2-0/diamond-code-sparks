@@ -81,7 +81,7 @@ function Assessments({ classroomId})
                     Delete
                 </Button>
                 </Popconfirm>,
-                public:<Switch  onChange={()=> {updateAssessmentPublic(res.data[i].id,res.data[i].isPublic); console.log(res.data[i].isPublic)}}/>,
+                public:<Switch defaultChecked={res.data[i].isPublic} onChange={()=> {updateAssessmentPublic(res.data[i].id,res.data[i].isPublic); res.data[i].isPublic = !res.data[i].isPublic}}/>,
               
               });
           }
