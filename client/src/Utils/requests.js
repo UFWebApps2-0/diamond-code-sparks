@@ -721,7 +721,7 @@ makeRequest({
   path: `${server}/assessments/${id}`,
   auth: true,
   data: {
-    makePublic: !currentValue
+    isPublic: !currentValue
   },
   error: 'Unable to change assessments',
 });
