@@ -2,6 +2,46 @@
 
 // duplicated from Dashboard.less to achieve consistency in design; edited for organization dashboard use
 
+#org-dash-bar {
+    margin-top: -10px;
+    
+    input[type='button'] {
+        width: 13em;
+        height: 35px;
+        font-size: 1em;
+        font-weight: 500;
+        border-radius: 5px;
+        background: #colors[quaternary];
+        border: none;
+        color: #colors[text-primary];
+        transition: 0.25s;
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
+        padding: 5px;
+        float: right;
+        margin-right: 12%;
+        margin-left: 15px;
+        &:hover {
+            background: #colors[quinary];
+        }
+    }  
+
+    select {
+        width: 13em;
+        height: 35px;
+        font-size: 1em;
+        font-weight: 500;
+        border-radius: 5px;
+        background: #colors[tertiary];
+        border: none;
+        color: #colors[text-primary];
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
+        padding: 5px;
+        float: right;
+    }
+}
+
 #orgs-container {
     margin: 6vh auto 4vh auto;
     padding-top: 40px;
@@ -12,25 +52,9 @@
     border-radius: 5px;
     border: 2px solid #colors[secondary];
 
-    input[type='button'] {
-        width: 13em;
-        height: auto;
-        font-size: 1em;
-        font-weight: 500;
-        border-radius: 30px;
-        margin: 3% auto auto auto;
-        background: #colors[quaternary];
-        border: none;
-        color: #colors[text-primary];
-        transition: 0.25s;
-        cursor: pointer;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
-        padding: 5px;
-
-        &:hover {
-            width: 14vw;
-            background: #colors[quinary];
-        }
+    #no-orgs-message {
+        font-size: 18px;
+        margin-top: 50px;
     }
 }
 
@@ -45,7 +69,6 @@
     border-color: #colors[secondary];
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
-
     
     position: relative;
     transition: transform 0.8s;
@@ -110,22 +133,33 @@
     }
 
     .save-btn {
-        background-color: #colors[secondary];
+        background-color: #colors[secondary]; // blue
         color: white;
-        margin-top: 75px;
+
+        width: 60%;
+        border-radius: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10%;
+
 
         &:hover {
-            background: #49a0d6;
+            background: #49a0d6; // darker blue
         }
     }
 
     .warning-btn {
-        background-color: #ed5151;
-        color: #FFFFFF;
-        border-radius: 0px 0px 10px 10px;
+        background-color: #ed5151; // red
+        color: white;
+
+        width: 60%;
+        border-radius: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1%;
 
         &:hover {
-            background: #e83535;
+            background: #e83535; // darker red
         }
     }
 
@@ -171,7 +205,6 @@
 
 .org-card-front, .org-card-back {
     backface-visibility: hidden;
-    background-color: white;
     border-radius: 10px;
 }
 

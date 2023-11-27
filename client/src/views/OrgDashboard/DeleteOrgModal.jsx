@@ -1,9 +1,11 @@
 import {Modal, Button, message} from 'antd';
 import React, {useState} from "react";
+import { deleteOrganization } from "../../Utils/requests"
+
 
 export default function DeleteOrgModal(props) {
     const [visible, setVisible] = useState(false);
-    const {orgId, orgName, orgs, setOrgs} = props;
+    const {orgId, orgName, orgs, setOrgs, deleteFlag, setDeleteFlag} = props;
     const [confirm, setConfirm] = useState('');
 
     const showModal = () => {
@@ -15,17 +17,15 @@ export default function DeleteOrgModal(props) {
         setConfirm('');
     }
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (confirm == orgName) {
-            // TODO: update delete functionality when connected to back-end
-
-            let updatedOrgs = [...orgs];
-            let index = updatedOrgs.findIndex(function (org) {
-                return org['id'] == orgId
-            });
-            updatedOrgs.splice(index, 1);
-            setOrgs(updatedOrgs);
-            message.info(orgName + ' has been deleted.');
+            const res = await deleteOrganization(orgId);
+            if (res.data) {
+                message.success(orgName + ' has been deleted.');
+            } else {
+                message.error(res.err);
+            }
+            setDeleteFlag(!deleteFlag); // trigger re-render
         } else if (confirm == '') {
             message.error('Confirm deletion.');
         } else {

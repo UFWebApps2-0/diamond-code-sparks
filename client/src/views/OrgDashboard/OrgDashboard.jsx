@@ -4,59 +4,66 @@ import './OrgDashboard.less';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import DeleteOrgModal from './DeleteOrgModal';
+import { getOrganizations, getAllOrgs, updateOrgName } from "../../Utils/requests"
 
 export default function OrgDashboard() {
 	const [orgs, setOrgs] = useState([]);
 	const navigate = useNavigate();
 	const [isFlipped, setIsFlipped] = useState(new Set());
 	const [orgName, setOrgName] = useState('');
-
-	const sampleOrg = {
-		id: 1,
-		name: "Org 1",
-		school: {
-			name: "School Name"
-		},
-		classrooms: [
-			{id:1, name:"Class 1"},
-			{id:2, name:"Class 2"}
-		],
-		teachers: [
-			{id:1, name:"Teacher 1"}
-		],
-		students: [
-			{id:1, name:"Student 1"},
-			{id:2, name:"Student 2"},
-			{id:3, name:"Student 3"}
-		]
-	}
-
-	const sampleOrg2 = {
-		id: 2,
-		name: "Org 2",
-		school: {
-			name: "School Name"
-		},
-		classrooms: [
-			{id:1, name:"Class 1"},
-			{id:2, name:"Class 2"}
-		],
-		teachers: [
-			{id:1, name:"Teacher 1"}
-		],
-		students: [
-			{id:1, name:"Student 1"},
-			{id:2, name:"Student 2"},
-			{id:3, name:"Student 3"}
-		]
-	}
+	const [sort, setSort] = useState('default');
+	const [deleteFlag, setDeleteFlag] = useState(false); // used to trigger re-render upon org deletion
 
 	useEffect(() => {
-		let sampleOrgs = [];
-		sampleOrgs.push(sampleOrg);
-		sampleOrgs.push(sampleOrg2);
-		setOrgs(sampleOrgs);
-	}, []);
+    	let orgList = [];
+
+    	// TODO: update to be admin-specific orgs (use Mentor/Dashboard/Dashboard.jsx as a model)
+
+    	getAllOrgs().then((res) => {
+    	   	if (res.data) {
+    	   		for (let i = 0; i < res.data.length; i++) {
+    	   			orgList.push(res.data[i]);
+    	   		}
+    	   		if (sort == 'aToZ') {
+    	   			orgList.sort(sortAtoZ);
+    	   		} else if (sort == 'zToA') {
+    	   			orgList.sort(sortZtoA);
+    	   		} else {
+    	   			orgList.sort(sortById);
+    	   		}
+    	   		setOrgs(orgList);
+    	   	} else {
+    	   		message.error(res.error);
+    	   	}
+    	});
+  	}, [orgName, sort, deleteFlag]);
+
+  	const sortById = (a, b) => {
+  		if (a.id < b.id) {
+  			return -1;
+  		} else if (a.id > b.id) {
+  			return 1;
+  		}
+  		return 0;
+  	}
+
+  	const sortAtoZ = (a, b) => {
+  		if (a.name < b.name) {
+  			return -1;
+  		} else if (a.name > b.name) {
+  			return 1;
+  		}
+  		return 0;
+  	}
+
+  	const sortZtoA = (a, b) => {
+  		if (a.name > b.name) {
+  			return -1;
+  		} else if (a.name < b.name) {
+  			return 1;
+  		}
+  		return 0;
+  	}
 
 	const handleFlip = (id) => {
 		// handleFlip code so that cards flip individually rather than all at the same time from 
@@ -73,23 +80,23 @@ export default function OrgDashboard() {
     	}
 	}
 
-	const handleEditOrg = (event, id) => {
+	const handleEditOrg = async (event, id) => {
 		event.preventDefault();
 
-		if (orgName != '') {
-			// find the corresponding org and update its name with the form input
-			let updatedOrgs = [...orgs];
-			let index = updatedOrgs.findIndex(function (org) {
-				return org['id'] == id
-			});
-			updatedOrgs[index]['name'] = orgName;
-			setOrgs(updatedOrgs);
+		if (orgName != '' && orgName != null) {
+			// update selected org name with the form input
+			const res = await updateOrgName(id, orgName);
+			if (res.data) {
+				message.success(
+					`Successfully renamed ${orgName}.`
+				);
+			} else {
+				message.error(res.err);
+			}
 			setOrgName('');
 		} else {
 			message.info('Name cannot be blank.');
 		}
-
-		// TODO: update when connected to backend to edit db rather than just locally
 	}
     
 	return (
@@ -97,10 +104,28 @@ export default function OrgDashboard() {
 	        <NavBar />
 	        {/* Replace 'Admin' with username after admin accounts are created */}
 	        <div id='main-header'>Welcome Admin</div>
+	        <div id='org-dash-bar'>
+	        	<input
+	       			type='button'
+	       			onClick={() => navigate('/createorg')}
+	       			value='Create new organization'
+	        	/>
+	        	<select
+	        		value={sort}
+	        		onChange={e => setSort(e.target.value)}
+	        	>
+	        		<option value='default'>Default</option>
+	        		<option value='aToZ'>A to Z</option>
+	        		<option value='zToA'>Z to A</option>
+	        	</select>
+	        </div>
 	        <div id='page-header'>
 	        	<h1>Your Organizations</h1>
 	        </div>
 	        <div id='orgs-container'>
+	        	<div id='no-orgs-message'>
+	        		{orgs.length == 0 && <p>Looks like you don't have any organizations yet.</p>}
+	        	</div>
 	        	<div id='dashboard-card-container'>
 	        		{orgs.map((org) => (
 		        		<div key={org.id} id='dashboard-org-card' className={isFlipped.has(org.id) ? 'flipped' : ''}>
@@ -112,7 +137,7 @@ export default function OrgDashboard() {
 								</button>
 			        			<div id='card-top-content-container'>
 				        			<h1 id='card-title'>{org.name}</h1>
-				        			<p>{org.classrooms.length} classrooms, {org.teachers.length} teachers, {org.students.length} students</p>
+				        			<p>{org.description}</p>
 				        		</div>
 				        		<div id='card-bottom-content-container'>
 				        			<button className='manage-btn' onClick={() => navigate('/admindashboard')}>
@@ -141,7 +166,7 @@ export default function OrgDashboard() {
      										value={orgName}
      										onChange={(e) => setOrgName(e.target.value)}
      									/>
-     									<button type='submit' className='manage-btn save-btn' onClick={orgName != '' ? handleFlip(org.id) : null}>Save Changes</button>
+     									<button type='submit' className='manage-btn save-btn' onClick={orgName != '' && orgName != null ? handleFlip(org.id) : null}>Save Changes</button>
      								</form>
      								<div className='divider' />
      								<DeleteOrgModal 
@@ -149,17 +174,14 @@ export default function OrgDashboard() {
      									orgName={org.name}
      									orgs={orgs}
      									setOrgs={setOrgs}
+     									deleteFlag={deleteFlag}
+     									setDeleteFlag={setDeleteFlag}
      								/>
      							</div>
 				        	</div>
 		        		</div>
 		        	))}
 	        	</div>
-	        	<input
-	        		type='button'
-	        		onClick={() => navigate('/createorg')}
-	        		value='Create new organization'
-	        	/>
 	        </div>
 	    </div>
     );
