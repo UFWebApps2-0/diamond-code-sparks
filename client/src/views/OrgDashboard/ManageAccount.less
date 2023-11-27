@@ -3,7 +3,7 @@
 #manage-account {
     margin: 6vh auto 4vh auto;
     margin-top: 70px;
-    padding-top: 40px;
+
     padding-bottom: 40px;
     width: 80vw;
     height: auto;
@@ -12,7 +12,8 @@
     border: 2px solid #colors[secondary];
 
     input[type='text'], select {
-        width: 13vw;
+        width: 14vw;
+        min-width: 150px;
         height: auto;
         font-size: 1vw;
         font-weight: 500;
@@ -25,6 +26,36 @@
         cursor: pointer;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
         padding: 5px;
+    }
+
+    #add-teacher-btn {
+        border-radius: 30px;
+        width: 6vw;
+        height: auto;
+        background-color: #35e31e; /* Red */
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1vw;
+
+        cursor: pointer;
+    }
+
+    #remove-teacher-btn {
+        border-radius: 30px;
+        width: 6vw;
+        height: auto;
+        background-color: #e31e1e; /* Red */
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1vw;
+
+        cursor: pointer;
     }
 
     table {

@@ -14,12 +14,14 @@ export default function ManageAccount() {
       <NavBar />
       <div id="manage-account">
         {" "}
+        {/* search bar for teachers */}
         <input
           type="text"
           placeholder="Search teachers..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        {/* sort option */}
         <select
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
@@ -28,6 +30,8 @@ export default function ManageAccount() {
           <option value="email">Email</option>
           {/* // Add more options as needed */}
         </select>
+        <button id="add-teacher-btn">Add</button>
+        <button id="remove-teacher-btn">Remove</button>
         <table>
           <thead>
             <tr>

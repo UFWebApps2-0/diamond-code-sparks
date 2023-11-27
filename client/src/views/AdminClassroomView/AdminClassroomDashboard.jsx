@@ -1,39 +1,46 @@
 import React, { useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import "./AdminClassroomDashboard.less";
-import DashboardDisplayCodeModal from "../Mentor/Dashboard/DashboardDisplayCodeModal";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminClassroomDashboard() {
     const [classrooms, setClassrooms] = useState([]);
-    // const user = getUser();
     const navigate = useNavigate();
 
     const sampleClassroom1 = {
         id: 1,
         name: "Classroom 1",
-        teacher: "Teacher 1",
+        teachers: [
+            {teachername: "teachername1"}
+        ],
         code: "9999",
         school: {
          name: "School Name"
         },
         students: [
             {studentname: "name1"},
-            {studentname: "name2"}
+            {studentname: "name2"},
+            {studentname: "name3"}
         ]
         
     }
     const sampleClassroom2 = {
         id: 2,
         name: "Classroom 2",
-        teacher: "Teacher 2",
+        teachers: [
+            {teachername: "teachername1"},
+            {teachername: "teachername2"}
+        ],
         code: "1111",
         school: {
          name: "School Name 1"
         },
         students: [
             {studentname: "name1"},
-            {studentname: "name2"}
+            {studentname: "name2"},
+            {studentname: "name3"},
+            {studentname: "name4"},
+            {studentname: "name5"}
         ]
     }
 
@@ -52,11 +59,11 @@ export default function AdminClassroomDashboard() {
                 <h1>Classrooms</h1> 
             </div>
             
-            <div id='classrooms-container'>
+            <div id='admin-classrooms-container'>
 
             <input 
                 type = 'button'
-                onClick = {() => alert("Add a new classroom")}
+                onClick = {() => navigate('/createclassroom')}
                 value = '(+) Create Classroom'
             />
                 <div id='dashboard-card-container'>
@@ -71,12 +78,25 @@ export default function AdminClassroomDashboard() {
                         </div>
                     </div>
                             <div id='card-right-content-container'>
-                            <DashboardDisplayCodeModal code={classroom.code} />
-                                <div id='divider' />
-                                <div id='student-number-container'>
+                            
+                            <div id='admin-teacher-number-container'>
+                                    <h1 id='number'>{classroom.teachers.length}</h1>
+                                    <p id='label'>Teachers</p>
+                            </div>
+
+                            <div id='divider' />
+
+                            <div id='admin-student-number-container'>
                                     <h1 id='number'>{classroom.students.length}</h1>
                                     <p id='label'>Students</p>
                             </div>
+                            <div id='divider' />
+                            <div id='admin-code-container'>
+                                <h1 id='number'>{classroom.code}</h1>
+                                <p id='label'>Join Code</p>
+                            </div>
+                            
+                            
                         </div>
                     </div>
                     ))}

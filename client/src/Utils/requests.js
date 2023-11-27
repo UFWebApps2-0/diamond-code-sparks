@@ -681,3 +681,54 @@ export const getClassroomWorkspace = async (id) =>
     auth: true,
     error: 'Unable to retrive classroom workspaces',
   });
+
+export const addOrganization = async (name, desc) =>
+  makeRequest({
+    method: POST,
+    path: `${server}/organizations`,
+    data: {
+      name: name,
+      description: desc,
+    },
+    auth: true,
+    error: 'Failed to add organization.',
+  });
+
+// getOrganizations and getOrganization get orgs with specified ids, getAllOrgs is not id-determined
+export const getOrganizations = async (ids) =>
+  Promise.all(ids.map(async (id) => (await getOrganization(id)).data));
+
+export const getOrganization = async (id) =>
+  makeRequest({
+    method: GET,
+    path: `${server}/organizations/${id}`,
+    auth: true,
+    error: 'Organization information could not be retrieved',
+  });
+
+export const getAllOrgs = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/organizations`,
+    auth: true,
+    error: 'Organizations could not be retrieved',
+  });
+
+export const updateOrgName = async (id, name) =>
+  makeRequest({
+    method: PUT,
+    path: `${server}/organizations/${id}`,
+    data: {
+      name: name,
+    },
+    auth: true,
+    error: 'Failed to change organization name.',
+  });
+
+export const deleteOrganization = async (id) =>
+  makeRequest({
+    method: DELETE,
+    path: `${server}/organizations/${id}`,
+    auth: true,
+    error: 'Failed to delete organization.',
+  });
