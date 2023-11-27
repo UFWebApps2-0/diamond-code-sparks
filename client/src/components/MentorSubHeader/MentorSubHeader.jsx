@@ -20,11 +20,17 @@ export default function MentorSubHeader(props) {
     filterText,
     setFilterText,
     searchActive,
+
+    // Group
+    setGroupView,
+    groupViewActive,
+    studentViewActive,
   } = props;
 
   // Provides default props for the mentorsubheader if a value is not provided
   MentorSubHeader.defaultProps = {
-    searchActive: false
+    groupButtonActive: false,
+    searchActive: false,
   }
 
   return (
@@ -39,38 +45,52 @@ export default function MentorSubHeader(props) {
             setFilterText={setFilterText}
           />
         ) : null}
-        {addActivityActive ? (
+
+        {/* New user story to create groups */}
+        {groupViewActive ? (
+          <span>
+            <button onClick={() => setGroupView(false)}>
+              View Roster
+            </button>
+          </span>
+        ) : null}
+
+        {studentViewActive ? (
+          <button onClick={() => setGroupView(true)}>
+            View Groups
+          </button>
+        ) : null}
+
+        {/* {addActivityActive && groupViewActive ? (
           <button id='link'>
             <i className='fa fa-plus-square' />
           </button>
-        ) : null}
-        {addUserActive ? (
+        ) : null} */}
+        {addUserActive && !groupViewActive ? (
           <AddStudentsModal
             addStudentsToTable={addStudentsToTable}
             classroomId={classroomId}
           />
         ) : null}
 
-        {/* Add Search filter here? */}
-        {cardViewActive ? (
+        {cardViewActive && !groupViewActive ? (
           <button onClick={() => setListView(false)} id='link'>
             <i className='fa fa-th' />
           </button>
-          // What is the use of this class name?
         ) : null}
-        {listViewActive ? (
+
+        {listViewActive && !groupViewActive ? (
           <button onClick={() => setListView(true)} id='link'>
             <i className='fa fa-list-alt' />
           </button>
         ) : null}
+
         {checkoutActive ? (
           <Link id='link' to={'/dashboard'}>
             <i className='fa fa-shopping-cart' />
           </Link>
         ) : null}
-
-        {/* Add a searchViewActive check */}
       </span>
-    </div>
+    </div >
   );
 }
