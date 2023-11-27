@@ -756,7 +756,7 @@ makeRequest({
 });
 
 
-export const getStudentClassAssessment= async (id,classId) =>
+export const getStudentClassAssessments= async (id,classId) =>
 makeRequest({
   method: GET,
   path: `${server}/student-assessments?studentID=${id}&classroomID=${classId}`,

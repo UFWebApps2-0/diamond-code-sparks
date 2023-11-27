@@ -5,3 +5,5 @@ function CompletedAssessment(){
         </div>
     );
 }
+
+export default CompletedAssessment;
