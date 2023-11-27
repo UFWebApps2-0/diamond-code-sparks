@@ -72,14 +72,14 @@ export default function TeacherTab({teacherList, page, setPage}) {
       ),
     },
     {
-      title: 'View Classes',
+      title: 'Edit Students',
       dataIndex: 'view',
       key: 'view',
       width: '22.5%',
       align: 'left',
       render: (_, teacher) => (
         <Button type="link" onClick={() => handleViewClasses(teacher.id)}>
-          View Classes
+          Edit Students
         </Button>
       ),
     },

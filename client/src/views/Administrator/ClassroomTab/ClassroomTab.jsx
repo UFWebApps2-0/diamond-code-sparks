@@ -65,14 +65,14 @@ export default function ClassroomTab({classroomList, page, setPage}) {
       ),
     },
     {
-      title: 'View Details',
+      title: 'Edit Students',
       dataIndex: 'view',
       key: 'view',
       width: '22.5%',
       align: 'left',
       render: (_, classroom) => (
         <Button type="link" onClick={() => handleViewDetails(classroom.id)}>
-          View Details
+          Edit Students
         </Button>
       ),
     },

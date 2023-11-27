@@ -66,14 +66,14 @@ export default function OrganizationTab({
       render: (_, key) => <p>{key.mentors.length}</p>,
     },
     {
-      title: "View Details",
+      title: "Edit Students",
       dataIndex: "view",
       key: "view",
       width: "22.5%",
       align: "left",
       render: (_, organization) => (
         <Button type="link" onClick={() => handleViewDetails(organization.id)}>
-          View Details
+          Edit Students
         </Button>
       ),
     },
