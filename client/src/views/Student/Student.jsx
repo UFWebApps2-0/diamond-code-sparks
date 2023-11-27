@@ -36,7 +36,7 @@ function Student() {
         res = await getAssessments();
         if (res.data) {
           for(let i=0;i<res.data.length;i++){ 
-            if(res.data[i].classroomID==id && res.data[i].isPublic==true){
+            if(res.data[i].classroomID==id){ //&& res.data[i].isPublic==true
               temp.push({
                 key:res.data[i].id,
                 name:res.data[i].assessmentName,
