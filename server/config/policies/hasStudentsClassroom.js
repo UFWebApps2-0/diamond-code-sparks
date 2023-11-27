@@ -3,6 +3,10 @@
 //
 module.exports = async (ctx, next) => {
 
+    if (ctx.state.user.role.name === 'Administrator') {
+        return await next()
+    }
+
     // get the target student from either the
     // request body or the query params
     let { student } = ctx.request.body
