@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/25/2023 4:24:23 PM"
+    "x-generation-date": "11/27/2023 2:21:04 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -15617,6 +15617,9 @@
           "answers": {
             "type": "object"
           },
+          "classroomID": {
+            "type": "integer"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -15633,6 +15636,9 @@
           },
           "answers": {
             "type": "object"
+          },
+          "classroomID": {
+            "type": "integer"
           },
           "published_at": {
             "type": "string",

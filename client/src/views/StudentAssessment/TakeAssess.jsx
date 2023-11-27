@@ -3,16 +3,38 @@ import { Button,Form, Input } from 'antd';
 import { Card } from 'antd';
 import React, { useEffect, useState } from 'react';
 import NavBar from "../../components/NavBar/NavBar"
+import { getStudentClassroom,createStudentAssessments } from '../../Utils/requests';
 function TakeAssess(){
+    const data  = JSON.parse(localStorage.getItem('my-assessment'));
+    const [answers,setAnswers] = useState(new Array(data["questions"].length).fill(false));
 
-    function SubmitAssessment(){
+    async function SubmitAssessment(){
+        for(let i=0;i<answers.length;i++)
+        {
+            if(answers[i]==false)
+            {
+                alert("You must enter an answer for question "+(i+1));
+                return;
+            }
+        }
+        let res = await getStudentClassroom();
+        const classID =res.data.classroom.id;
+        let id = JSON.parse(localStorage.getItem("studentsID"))[0];
+        console.log(classID);
+        createStudentAssessments(data["name"],id,classID,answers);
 
     }
-    const data  = JSON.parse(localStorage.getItem('my-assessment'));
+
+
+    function onChange(index,e){
+        let temp = [...answers];
+        temp[index]=e.target.value;
+        setAnswers(temp);
+        console.log(answers);
+    }
     return (
         <div className="container nav-padding">
             <NavBar />
-
             <h1>{data["name"]}</h1>
             <h2>Description: {data["description"]}</h2>
             <div>
@@ -22,7 +44,7 @@ function TakeAssess(){
                         {question.type === "Multiple Choice" ? (
                         <div>
                         <Card title={`Question ${index + 1}.${question.question}`} style={{ width: 300 }}>
-                            <Radio.Group>
+                            <Radio.Group onChange={(e) => onChange(index, e)}>
                             <Space direction="vertical">
                                 {question.option.map((option, optionIndex) => (
                                 <Radio value={optionIndex}>{option}</Radio>
@@ -41,7 +63,7 @@ function TakeAssess(){
                                 wrapperCol={{
                                 span: 14,
                                 }}>
-                            <Form.Item labelAlign='left'>
+                            <Form.Item labelAlign='left' onChange={(e) => onChange(index, e)}>
                                 <Input.TextArea />
                             </Form.Item>
                             </Form>
