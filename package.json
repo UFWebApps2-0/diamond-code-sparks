@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "google-auth-library": "^9.2.0",
     "jwt-decode": "^4.0.0"
   }
 }
