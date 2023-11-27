@@ -5,7 +5,7 @@ import { deleteOrganization } from "../../Utils/requests"
 
 export default function DeleteOrgModal(props) {
     const [visible, setVisible] = useState(false);
-    const {orgId, orgName, orgs, setOrgs, setOrgName} = props;
+    const {orgId, orgName, orgs, setOrgs, deleteFlag, setDeleteFlag} = props;
     const [confirm, setConfirm] = useState('');
 
     const showModal = () => {
@@ -25,7 +25,7 @@ export default function DeleteOrgModal(props) {
             } else {
                 message.error(res.err);
             }
-            setOrgName(null); // trigger re-render
+            setDeleteFlag(!deleteFlag); // trigger re-render
         } else if (confirm == '') {
             message.error('Confirm deletion.');
         } else {

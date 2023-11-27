@@ -12,6 +12,7 @@ export default function OrgDashboard() {
 	const [isFlipped, setIsFlipped] = useState(new Set());
 	const [orgName, setOrgName] = useState('');
 	const [sort, setSort] = useState('default');
+	const [deleteFlag, setDeleteFlag] = useState(false); // used to trigger re-render upon org deletion
 
 	useEffect(() => {
     	let orgList = [];
@@ -35,7 +36,7 @@ export default function OrgDashboard() {
     	   		message.error(res.error);
     	   	}
     	});
-  	}, [orgName, sort]);
+  	}, [orgName, sort, deleteFlag]);
 
   	const sortById = (a, b) => {
   		if (a.id < b.id) {
@@ -170,7 +171,8 @@ export default function OrgDashboard() {
      									orgName={org.name}
      									orgs={orgs}
      									setOrgs={setOrgs}
-     									setOrgName={setOrgName}
+     									deleteFlag={deleteFlag}
+     									setDeleteFlag={setDeleteFlag}
      								/>
      							</div>
 				        	</div>
