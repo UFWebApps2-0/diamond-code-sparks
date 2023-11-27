@@ -544,6 +544,9 @@
           "answers": {
             "type": "object"
           },
+          "classroomID": {
+            "type": "integer"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -560,6 +563,9 @@
           },
           "answers": {
             "type": "object"
+          },
+          "classroomID": {
+            "type": "integer"
           },
           "published_at": {
             "type": "string",

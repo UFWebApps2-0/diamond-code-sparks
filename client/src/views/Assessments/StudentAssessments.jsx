@@ -1,14 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Modal,Button,Table} from 'antd';
-
+import { getStudentClassAssessments } from '../../Utils/requests';
+import CompletedAssessment from './CompletedAssessment';
 //Page to view the assessments a student has taken and to view their completed assessments
-function StudentAssessmenmts()
+function StudentAssessments({stuId,classId})
 {
-    const [visible,setVisible]=useState(false);
-    const showModal=()=>{
-        setVisible(true);
-    };
-    let data=[];
+    const [assessments,setAssessments]=useState([]);
+    
     const columns=[
         {
             title: 'Assessment Name',
@@ -24,10 +22,7 @@ function StudentAssessmenmts()
             dataIndex: 'assessments',
             keyIndex: 'assessments',  
             width: '30%',
-            render: () => (
-              <StudentAssessmenmts/>
-            ),
-            
+
           },
           {
             title:'Grade',
@@ -37,18 +32,44 @@ function StudentAssessmenmts()
             width:'20%'
           }
     ]
+
+
+    useEffect(() => {
+ 
+      getStudentClassAssessments(stuId,classId).then((res) => {
+        if (res.data) {
+          const data = [];
+          res.data.forEach((assessment) => {
+            data.push({
+              key: assessment.id,
+              name: assessment.assessmentName,
+              assessments: (
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    showModal();
+                  }}
+                >
+                  View
+                </Button>
+              ),
+              grade: "N/A",
+            });
+          });
+
+          setAssessments(data);
+        } else {
+          console.log("error"); 
+        }
+      });
+
+
+    }, []);
     return (
         <div>
-            <button onClick={showModal}>View</button>
-            <Modal visible={visible} 
-                onCancel={()=>setVisible(false)} 
-                footer={[<Button key='ok' type='primary' onClick={()=>setVisible(false)}>OK</Button>]}>
-                
-                <Table columns={columns} dataSource={data} />
-
-            </Modal>
+            <Table columns={columns} dataSource={assessments} />
         </div>
     );
 }
 
-export default StudentAssessmenmts;
+export default StudentAssessments;
