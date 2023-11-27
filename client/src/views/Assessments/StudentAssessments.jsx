@@ -1,54 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Modal,Button,Table} from 'antd';
-
+import { getStudentAssessments } from '../../Utils/requests';
 //Page to view the assessments a student has taken and to view their completed assessments
-function StudentAssessmenmts()
+function StudentAssessments({stuId,classId})
 {
-    const [visible,setVisible]=useState(false);
-    const showModal=()=>{
-        setVisible(true);
-    };
-    let data=[];
-    const columns=[
-        {
-            title: 'Assessment Name',
-            dataIndex: 'name',
-            key: 'name',
-            width: '30%',
-            sorter: {
-              compare: (a, b) => (a.name < b.name ? -1 : 1),
-            },
-          },
-          {
-            title: 'View Assessments',
-            dataIndex: 'assessments',
-            keyIndex: 'assessments',  
-            width: '30%',
-            render: () => (
-              <StudentAssessmenmts/>
-            ),
-            
-          },
-          {
-            title:'Grade',
-            dataIndex:'grade',
-            keyIndex:'grade',
-            editable:true, 
-            width:'20%'
-          }
-    ]
+    const [assessments,setAssessments]=useState([]);
+    useEffect(() => {
+ 
+      getStudentAssessments().then((res) => {
+        if (res.data) {
+          console.log(res.data);
+          setAssessments(res.data);
+        } else {
+          console.log("error"); 
+        }
+      });
+
+
+    }, []);
     return (
         <div>
-            <button onClick={showModal}>View</button>
-            <Modal visible={visible} 
-                onCancel={()=>setVisible(false)} 
-                footer={[<Button key='ok' type='primary' onClick={()=>setVisible(false)}>OK</Button>]}>
-                
-                <Table columns={columns} dataSource={data} />
-
-            </Modal>
+            <p>Hello World</p>
         </div>
     );
 }
 
-export default StudentAssessmenmts;
+export default StudentAssessments;

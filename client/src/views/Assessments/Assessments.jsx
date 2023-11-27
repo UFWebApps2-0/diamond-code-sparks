@@ -3,7 +3,7 @@ import { Table, Popconfirm, message } from 'antd';
 import {Modal,Button,Switch} from 'antd';
 import { useEffect, useState } from 'react';
 import { updateAssessmentPublic,deleteAssessment, getAssessments, getClassroom } from '../../Utils/requests';
-import StudentAssessmenmts from './StudentAssessments';
+import StudentAssessments from './StudentAssessments';
 import './assessmentStyle.css';
 import QuestionForm from '../AssesmentsCreate/QuestionForm';
 import ViewAssessment from './ViewAssessment';
@@ -17,6 +17,7 @@ function Assessments({ classroomId})
     const [assessments,setAssessments]=useState([]);
     const [visible, setVisible] = useState(false);
     const [view,setView] = useState(new Array(getAssessments().then((res)=>res.data.length)).fill(false));
+    const [stView,setStView] = useState(new Array(getClassroom(classroomId).then((res) => res.data.students.length)).fill(false));
 
     const viewWork = (i) => {
       let temp = [...view];
@@ -29,6 +30,19 @@ function Assessments({ classroomId})
       temp[i] = false;
       setView(temp);
     }
+
+    const viewStWork = (i) => {
+      let temp = [...stView];
+      temp[i] = true;
+      setStView(temp);
+    }
+
+    const leaveStWork = (i) => {
+      let temp = [...stView];
+      temp[i] = false;
+      setStView(temp);
+    }
+
     
 
     //Upon rereendering, get the students and assessments
@@ -36,8 +50,28 @@ function Assessments({ classroomId})
       getClassroom(classroomId).then((res) => {
         if (res.data) {
           let newNames=[];
+          console.log(res.data.students);
+          res.data.students.forEach((student,i) => newNames.push({key: student.id,name:student.name,assessments:
+            <>
+                  <Button type="sucess" onClick={()=>viewStWork(i)}>
+                    View
+                  </Button>
+                  <Modal
+                    title={"View Assessment"}
+                    visible={stView[i]} // Change 'open' to 'visible'
+                    onCancel={leaveStWork}
+                    width={'75vw'}
+                    footer={[
+                      <Button key="ok" type="primary" onClick={()=>leaveStWork(i)}>
+                        Cancel
+                      </Button>,
+                    ]}
+                  >
+                    <StudentAssessments stuId={student.id} classId={classroomId}/>
+                </Modal>
+            </>
+            ,grade:"N/A"}));
 
-          res.data.students.forEach((student) => newNames.push({key: student.id,name:student.name,assessments:"view",grade:"N/A"}));
           setNames([...newNames]);
         } else {
           message.error(res.err);
@@ -89,7 +123,7 @@ function Assessments({ classroomId})
         setAssessments([...temp]);
 
       });
-    }, [classroomId,visible,view]);
+    }, [classroomId,visible,view,stView]);
 
     //Create the column headers for the table displaying all assessments
     const wsColumn = [
@@ -154,10 +188,6 @@ function Assessments({ classroomId})
         dataIndex: 'assessments',
         keyIndex: 'assessments',  
         width: '30%',
-        render: () => (
-          <StudentAssessmenmts/>
-        ),
-        
       },
       {
         title:'Grade',

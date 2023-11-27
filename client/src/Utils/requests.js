@@ -726,7 +726,7 @@ makeRequest({
   error: 'Unable to change assessments',
 });
 
-export const createStudentAssessments = async (name, id, assessmentAnswers) =>
+export const createStudentAssessments = async (name, id,classID,assessmentAnswers) =>
 makeRequest({
   method: POST,
   path: `${server}/student-assessments`,
@@ -734,6 +734,7 @@ makeRequest({
   data: {
     assessmentName: name,
     studentID: id,
+    classroomID: classID,
     answers: assessmentAnswers
   },
 });
@@ -754,3 +755,12 @@ makeRequest({
   error: 'Unable to retrive assessments',
 });
 
+
+export const getStudentClassAssessment= async (id,classId) =>
+makeRequest({
+  method: GET,
+  path: `${server}/student-assessments?studentID=${id}&classroomID=${classId}`,
+
+  auth: true,
+  error: 'Unable to retrive assessments',
+});
