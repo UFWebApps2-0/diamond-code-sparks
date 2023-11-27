@@ -1,12 +1,14 @@
 import { Table } from 'antd';
 import UnitCreator from '../../ContentCreator/UnitCreator/UnitCreator';
 import UnitEditor from '../../ContentCreator/UnitEditor/UnitEditor';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import LessonModuleActivityCreator from '../../ContentCreator/LessonModuleCreator/LessonModuleCreator';
 import '../../ContentCreator/ContentCreator.less';
+import LessonEditor from '../../ContentCreator/LessonEditor/LessonEditor';
 
-export default function LessonTab({learningStandardList, gradeList, page, setPage, setLessonModuleList, searchParams, tab}) {
-    const [viewing, setViewing] = useState(parseInt(searchParams.get('activity')));
+export default function LessonTab({learningStandardList, gradeList, setLessonModuleList, searchParams, tab}) {
+    const [viewing, setViewing] = useState(null);
+    const [page, setPage] = useState(1);
 
 
     const lessonColumns = [
@@ -28,6 +30,13 @@ export default function LessonTab({learningStandardList, gradeList, page, setPag
             editable: true,
             width: '22.5%',
             align: 'left',
+            render: (_, key) => (
+                <LessonEditor 
+                    learningStandard={key}
+                    viewing={viewing}
+                    setViewing={setViewing}
+                />
+            )
         },
         {
             title: 'Description',
