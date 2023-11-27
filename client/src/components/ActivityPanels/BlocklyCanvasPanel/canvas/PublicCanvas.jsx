@@ -19,6 +19,30 @@ import PlotterLogo from '../Icons/PlotterLogo';
 // ashley: added usenav
 import { useNavigate } from 'react-router-dom';
 
+//kevin added this variable
+var xmlString = "";
+//kevin added this function from https://stackoverflow.com/questions/47572536/how-to-generate-blocks-from-code-in-blockly
+function saveBlocks() {
+    var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+    var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+    message.error("saveBlocks used kevin");
+    // do whatever you want to this xml
+}
+function loadBlock(xml) { // xml is the same block xml you stored added by kevin from same stack overflow
+    if (typeof xml != "string" || xml.length < 5) {
+        return false;
+    }
+    try {
+        var dom = Blockly.Xml.textToDom(xml);
+        Blockly.mainWorkspace.clear();
+        Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, dom);
+        message.error("loadBlocks used kevin");
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 let plotId = 1;
 
 export default function PublicCanvas({ activity, isSandbox }) {
@@ -189,25 +213,35 @@ export default function PublicCanvas({ activity, isSandbox }) {
 
   useEffect(() => {
     // once the activity state is set, set the workspace and save
+      message.error("useEffect triggered Kevin"); //kevin
     const setUp = async () => {
       activityRef.current = activity;
-      if (!workspaceRef.current && activity && Object.keys(activity).length !== 0) {
+        if (!workspaceRef.current && activity && Object.keys(activity).length !== 0) {
+            message.error("setWorkspace triggered Kevin"); //kevin
         setWorkspace();
 
         let onLoadSave = null;
         const res = await getSaves(activity.id);
-        if (res.data) {
-          if (res.data.current) onLoadSave = res.data.current;
-          setSaves(res.data);
-        } else {
+         if (res.data) {
+                message.error("Kevin test if entered"); //kevin
+            if (res.data.current) onLoadSave = res.data.current;
+            setSaves(res.data);
+         }
+         else {
+             message.error("Kevin test else entered"); //kevin
           console.log(res.err);
         }
 
-        if (onLoadSave) {
+          if (onLoadSave) {
+            //kevin
+              message.error("onLoadSave triggered Kevin");
+              //kevin is below what sets XML
           let xml = window.Blockly.Xml.textToDom(onLoadSave.workspace);
           window.Blockly.Xml.domToWorkspace(xml, workspaceRef.current);
           replayRef.current = onLoadSave.replay;
-          setLastSavedTime(getFormattedDate(onLoadSave.updated_at));
+              setLastSavedTime(getFormattedDate(onLoadSave.updated_at));
+              //kevin 
+              message.error("Kevin last saved time is at " + getFormattedDate(onLoadSave.updated_at));
         } else if (activity.template) {
           let xml = window.Blockly.Xml.textToDom(activity.template);
           window.Blockly.Xml.domToWorkspace(xml, workspaceRef.current);
@@ -221,24 +255,29 @@ export default function PublicCanvas({ activity, isSandbox }) {
   }, [activity]);
   
   const handleImport = () => {
-    importWorkspace(workspaceRef.current, prompt("enter workspace serialization code here: "));
-    forceUpdate.x;
+    importWorkspace(workspaceRef.current, prompt("enter XML code here: ")); //kevin text for enter xml
+      //forceUpdate.x; commented out by kevin
+      loadBlock(xmlString); //kevin adde
   }
-
+  
   const handleExport = () => {
-    alert(exportWorkspace(workspaceRef.current));
+      alert(exportWorkspace(workspaceRef.current));
+      xmlString = exportWorkspace(workspaceRef.current); 
+      saveBlocks();
+      //kevin
   }
 
   const handleUndo = () => {
     if (workspaceRef.current.undoStack_.length > 0)
           workspaceRef.current.undo(false);
-      message.error("current stack length is " + workspaceRef.current.undoStack_.length);
+      message.error("current stack length is " + workspaceRef.current.undoStack_.length); //kevin 
   };
 
   const handleRedo = () => {
     if (workspaceRef.current.redoStack_.length > 0)
           workspaceRef.current.undo(true);
-      message.error("current stack length is " + workspaceRef.current.undoStack_.length);
+      message.error("current stack length is " + workspaceRef.current.undoStack_.length); //kevin
+
   };
 
   const handleConsole = async () => {
