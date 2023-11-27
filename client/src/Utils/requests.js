@@ -322,6 +322,15 @@ export const addStudents = async (students, classroom) =>
     error: 'Failed to add students.',
   });
 
+export const addClassroom = async (name) =>
+  makeRequest({
+    method: POST,
+    path: `${server}/classrooms`,
+    data: { name: name, },
+    auth: true,
+    error: 'Failed to add classroom.',
+  });
+
 export const deleteStudent = async (student) =>
   makeRequest({
     method: DELETE,
