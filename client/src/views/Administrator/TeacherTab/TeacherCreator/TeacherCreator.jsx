@@ -76,14 +76,22 @@ export default function TeacherCreator({
             />
           </Form.Item>
           <Form.Item id="form-label" label="School">
-            <Select
-              showSearch
-              placeholder="Select a school"
-              optionFilterProp="children"
-              onChange={(value)=>setSchool(value)}
-              filterOption={filterOption}
-              options={schoolList.map((value) => ({value: value.id, label: value.name}))}
-            />
+            <select
+              id = "school-dropdown"
+              required
+              name="school"
+              defaultValue = {school}
+              onChange={e => setSchool(e.target.value)}
+            >
+               <option key={0} value={school} disabled id="disabled-option">
+                School
+              </option>
+              {schoolList.map(school_ => (
+                <option key={school_.id} value={school_.id}>
+                  {school_.name}
+                </option>
+              ))}
+            </select>
           </Form.Item>
           <Form.Item
             wrapperCol={{

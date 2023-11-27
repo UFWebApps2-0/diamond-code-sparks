@@ -79,14 +79,21 @@ export default function ClassroomCreator({
             />
           </Form.Item>
           <Form.Item id="form-label" label="Grade">
-            <Select
-              showSearch
-              placeholder="Select a school"
-              optionFilterProp="children"
-              onChange={(value)=>setGrade(value)}
-              filterOption={filterOption}
-              options={gradeList.map((value) => ({value: value.id, label: value.name}))}
-            />
+            <select
+              id = "school-grade-dropdown"
+              name="grade"
+              defaultValue = {grade}
+              onChange={e => setGrade(e.target.value)}
+            >
+               <option key={0} value={grade} disabled id="disabled-option">
+                Grade
+              </option>
+              {gradeList.map(grade_ => (
+                <option key={grade_.id} value={grade_.id}>
+                  {grade_.name}
+                </option>
+              ))}
+            </select>
           </Form.Item>
           <Form.Item
             wrapperCol={{
