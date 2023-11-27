@@ -699,6 +699,13 @@ export const getAssessment = async (id) =>
     error: 'Unable to retrive assessment',
   });
 
+  export const getClassAssessment = async (name,classID) =>
+  makeRequest({
+    method: GET,
+    path: `${server}/assessments?assessmentName=${name}&classroomID=${classID}`,
+    auth: true,
+    error: 'Unable to retrive assessment',
+  });
 export const getAssessments = async () =>
 makeRequest({
   method: GET,

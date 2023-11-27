@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Modal,Button,Table} from 'antd';
-import { getStudentClassAssessments } from '../../Utils/requests';
+import { getClassAssessment,getStudentClassAssessments } from '../../Utils/requests';
 import CompletedAssessment from './CompletedAssessment';
 //Page to view the assessments a student has taken and to view their completed assessments
 function StudentAssessments({stuId,classId})
 {
     const [assessments,setAssessments]=useState([]);
-    
+    const [view,setView] = useState(new Array(getStudentClassAssessments(stuId,classId).then((res)=>res.data.length)).fill(false));
     const columns=[
         {
             title: 'Assessment Name',
@@ -33,25 +33,53 @@ function StudentAssessments({stuId,classId})
           }
     ]
 
+    function viewWork(i){
+      let temp = [...view];
+      temp[i] = true;
+      setView(temp);
+    }
 
+    function leaveWork(i){
+      let temp = [...view];
+      temp[i] = false;
+      setView(temp);
+    }
     useEffect(() => {
  
       getStudentClassAssessments(stuId,classId).then((res) => {
         if (res.data) {
           const data = [];
-          res.data.forEach((assessment) => {
+          res.data.forEach((assessment,i) => {
+
+            let questions = getClassAssessment(assessment.name,classId).then((res)=>res.data.questions);
+            console.log(questions);
             data.push({
               key: assessment.id,
               name: assessment.assessmentName,
               assessments: (
+                <>
                 <Button
                   type="primary"
                   onClick={() => {
-                    showModal();
+                    viewWork(i);
                   }}
                 >
                   View
                 </Button>
+                <Modal
+                    title={"View Assessment"}
+                    visible={view[i]} // Change 'open' to 'visible'
+                    onCancel={()=>leaveWork(i)}
+                    width={'75vw'}
+                    footer={[
+                      <Button key="ok" type="primary" onClick={()=>leaveWork(i)}>
+                        Cancel
+                      </Button>,
+                    ]}
+                  >
+                    <CompletedAssessment name={assessment.assessmentName} answers={assessment.answers} questions={questions}/>
+                </Modal>
+              </>
               ),
               grade: "N/A",
             });
@@ -64,7 +92,7 @@ function StudentAssessments({stuId,classId})
       });
 
 
-    }, []);
+    }, [view]);
     return (
         <div>
             <Table columns={columns} dataSource={assessments} />
