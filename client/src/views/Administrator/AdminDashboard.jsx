@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
 import { Tabs, Table } from 'antd';
 import { getUser } from '../../Utils/AuthRequests';
-import { getAllClassrooms, getAllSchools, getGrades, getLessonModuleAll, getTeachers, addOrganization, addClassroom, addTeacher} from '../../Utils/requests';
+import { getAllClassrooms, getAllSchools, getGrades, getLessonModuleAll, getTeachers, addOrganization, addClassroom, addTeacher, updateSchool, updateTeacher, getAllStudents, updateClassroom} from '../../Utils/requests';
 import NavBar from '../../components/NavBar/NavBar';
 import './AdminDashboard.less'
 import { useSearchParams } from 'react-router-dom';
@@ -31,6 +31,7 @@ function AdminDashboard() {
   const [teacherList, setTeacherList] = useState([]);
   const [classroomList, setClassroomList] = useState([]);
   const [organizationList, setOrganizationList] = useState([]);
+  const [studentList, setStudentList] = useState([]);
   
   const updateOrganizationList = async () => {
     const organizationResponse = await getAllSchools();
@@ -38,12 +39,13 @@ function AdminDashboard() {
   };
 
   const fetchData = async () => {
-    const [lsResponse, gradeResponse, teacherResponse, classroomResponse, organizationResponse] = await Promise.all([
+    const [lsResponse, gradeResponse, teacherResponse, classroomResponse, organizationResponse, studentResponse] = await Promise.all([
       getLessonModuleAll(),
       getGrades(),
       getTeachers(),
       getAllClassrooms(),
-      getAllSchools()
+      getAllSchools(),
+      getAllStudents()
     ]);
     setLessonModuleList(lsResponse.data);
 
@@ -53,7 +55,7 @@ function AdminDashboard() {
     setOrganizationList(organizationResponse.data);
     setTeacherList(teacherResponse.data);
     setClassroomList(classroomResponse.data);
-   
+    setStudentList(studentResponse.data);
   };
 
   const handleAddOrganization = async (name, county, state, userData) => {
@@ -62,6 +64,16 @@ function AdminDashboard() {
       message.error("Fail to create a new organization");
     } else {
       message.success("Successfully created organization");
+      fetchData(); // Call the function to update the organization list
+    }
+  };
+
+  const handleEditOrganization = async (id, name, county, state, classrooms, mentors) => {
+    const res = await updateSchool(id, name, county, state, classrooms, mentors);
+    if (res.err) {
+      message.error("Failed to edit organization");
+    } else {
+      message.success("Successfully edited organization");
       fetchData(); // Call the function to update the organization list
     }
   };
@@ -76,6 +88,16 @@ function AdminDashboard() {
     }
   };
 
+  const handleEditClassroom = async (id, name, school, mentors, students, code, grade, currentLesson) => {
+    const res = await updateClassroom(id, name, school, mentors, students, code, grade, currentLesson);
+    if (res.err) {
+      message.error("Failed to edit classroom");
+    } else {
+      message.success("Successfully edited classroom");
+      fetchData(); // Call the function to update the classroom list
+    }
+  }
+
   const handleAddTeacher = async (first_name, last_name, school, userData) => {
     const res = await addTeacher(first_name, last_name, school, [userData]);
     if (res.err) {
@@ -86,13 +108,18 @@ function AdminDashboard() {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-    /*const intervalId = setInterval(fetchData, 1000); // 1 second in milliseconds
+  const handleEditTeacher = async (id, firstName, lastName, school, classrooms) => {
+    const res = await updateTeacher(id, firstName, lastName, school, classrooms);
+    if (res.err) {
+      message.error("Failed to edit teacher");
+    } else {
+      message.success("Successfully edited teacher");
+      fetchData(); // Call the function to update the teacher list
+    }
+  };
 
-  // Clean up the interval when the component is unmounted
-    return () => clearInterval(intervalId);*/
-    
+  useEffect(() => {
+    fetchData();    
   }, []);
 
   //Dashboard View
@@ -112,9 +139,12 @@ function AdminDashboard() {
         <TabPane tab='Organizations' key='organizations'>
           <OrganizationTab
             organizationList={organizationList}
+            classroomList={classroomList}
+            mentorList={teacherList}
             page={page}
             setPage={setPage}
             handleAddOrganization={handleAddOrganization}
+            handleEditOrganization={handleEditOrganization}
           />
         </TabPane>
 
@@ -123,9 +153,12 @@ function AdminDashboard() {
             classroomList={classroomList}
             gradeList={gradeList}
             schoolList={organizationList}
+            mentorList={teacherList}
+            studentList={studentList}
             page={page}
             setPage={setPage}
             handleAddClassroom={handleAddClassroom}
+            handleEditClassroom={handleEditClassroom}
           />
         </TabPane>
 
@@ -133,9 +166,11 @@ function AdminDashboard() {
           <TeacherTab
             teacherList={teacherList}
             schoolList={organizationList}
+            classroomList={classroomList}
             page={page}
             setPage={setPage}
             handleAddTeacher={handleAddTeacher}
+            handleEditTeacher={handleEditTeacher}
           />
         </TabPane>
 

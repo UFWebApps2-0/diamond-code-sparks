@@ -333,8 +333,8 @@ export const addOrganization = async(name, county, state, administrator) =>
     path: `${server}/classrooms`,
     data: {
       name: name,
-      school: organization,
-      grade: grade
+      school: parseInt(organization),
+      grade: parseInt(grade)
     },
     auth: true,
     error: 'Failed to add classroom',
@@ -719,4 +719,88 @@ export const getAllSchools = async () =>
     path: `${server}/schools`,
     auth: true,
     error: 'Schools could not be retrieved.',
+  });
+
+export const getSchool = async (id) =>
+  makeRequest({
+    method: GET,
+    path: `${server}/schools/${id}`,
+    auth: true,
+    error: 'School could not be retrieved.',
+  });
+
+export const updateSchool = async (
+    id,
+    name,
+    county,
+    state,
+    classrooms,
+    mentors
+  ) =>
+    makeRequest({
+      method: PUT,
+      path: `${server}/schools/${id}`,
+      data: {
+        name: name,
+        county: county,
+        state: state,
+        classrooms: classrooms,
+        mentors: mentors
+      },
+      auth: true,
+      error: 'Failed to update school',
+    });
+
+
+export const getTeacher = async (id) =>
+  makeRequest({
+    method: GET,
+    path: `${server}/mentors/${id}`,
+    auth: true,
+    error: 'Teacher could not be retrieved.',
+  });
+
+export const updateTeacher = async (
+    id, 
+    firstName, 
+    lastName, 
+    school, 
+    classrooms
+  ) =>
+    makeRequest({
+      method: PUT,
+      path: `${server}/mentors/${id}`,
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+        school: school,
+        classrooms: classrooms
+      },
+      auth: true,
+      error: 'Failed to update school',
+    });
+
+export const updateClassroom = async (
+    id, 
+    name, 
+    school, 
+    mentors, 
+    students, 
+    code, 
+    grade, 
+    currentLesson
+  ) =>
+  makeRequest({
+    method: PUT,
+    path: `${server}/classrooms/${id}`,
+    data: {
+      name: name,
+      school: school,
+      mentors: mentors,
+      students: students,
+      grade: grade,
+      code: code
+    },
+    auth: true,
+    error: 'Failed to update school',
   });

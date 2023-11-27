@@ -36,15 +36,7 @@ export default function LessonTab({learningStandardList, gradeList, page, setPag
             editable: true,
             width: '22.5%',
             align: 'left',
-        },
-        {
-            title: 'View',
-            key: 'view',
-            editable: true,
-            width: '10%',
-            align: 'left',
-        },
-    
+        }    
     ];
 
   return (

@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Button, Form, Input, message, Modal, Table } from "antd";
-import { addTeacher } from "../../../Utils/requests";
-import { getUser } from "../../../Utils/AuthRequests";
+import React from "react";
+import { Table } from "antd";
 import TeacherCreator from "./TeacherCreator/TeacherCreator";
 import FacultyUpload from "./TeacherCreator/FacultyUpload";
+import TeacherEditor from "./TeacherEditor";
 
-export default function TeacherTab({teacherList, schoolList, page, setPage, handleAddTeacher}) {
+export default function TeacherTab({teacherList, schoolList, classroomList, page, setPage, handleAddTeacher, handleEditTeacher}) {
 
     const teacherColumns = [
         {
-            title: 'First Name',
-            dataIndex: 'first_name',
+            title: 'Name',
             key: 'firstName',
             editable: true,
             width: '22.5%',
             align: 'left',
-        },
-        {
-            title: 'Last Name',
-            dataIndex: 'last_name',
-            key: 'lastName',
-            editable: true,
-            width: '22.5%',
-            align: 'left',
+            defaultSortOrder: 'ascend',
+            sorter: (a, b) => {
+              let a_name = a.first_name + " " + a.last_name;
+              let b_name = b.first_name + " " + b.last_name;
+              return a_name.toLowerCase().localeCompare(b_name.toLowerCase());
+            },
+            render: (_, key) => (<p>{key.first_name + " " + key.last_name}</p>)
         },
         {
             title: 'School',
@@ -32,7 +29,9 @@ export default function TeacherTab({teacherList, schoolList, page, setPage, hand
             width: '22.5%',
             align: 'left',
             render: (_, key) => (
-                <span>{key.school != null ? key.school.name : <i>No school provided</i>}</span>
+                <span>
+                  {key.school != null && Object.keys(key.school) != 0 ? key.school.name : <i>No school provided</i>}
+                </span>
             ),
         },
         {
@@ -41,6 +40,13 @@ export default function TeacherTab({teacherList, schoolList, page, setPage, hand
             key: 'view',
             width: '22.5%',
             align: 'left',
+            render: (_, key) => (
+              <TeacherEditor
+                id={key.id}
+                schoolList={schoolList}
+                classroomList={classroomList}
+                handleEditTeacher={handleEditTeacher}
+              />)
         },
     ];
 

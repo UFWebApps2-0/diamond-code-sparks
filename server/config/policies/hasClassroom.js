@@ -2,7 +2,7 @@
 // Check if the current user belongs to this classroom
 //
 module.exports = async (ctx, next) => {
-  if (ctx.state.user && ctx.state.user.role.name === 'Researcher') {
+  if (ctx.state.user && (ctx.state.user.role.name === 'Researcher' || ctx.state.user.role.name === 'Administrator')) {
     return await next();
   }
   // get the target classroom from either the

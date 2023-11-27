@@ -3,46 +3,65 @@ import { Button, Form, Input, message, Modal, Table } from "antd";
 import { addOrganization } from "../../../Utils/requests";
 import { getUser } from "../../../Utils/AuthRequests";
 import OrganizationCreator from "./OrganizationCreator/OrganizationCreator";
+import OrganizationEditor from "./OrganizationEditor";
 
 export default function OrganizationTab({
   organizationList,
+  classroomList,
+  mentorList,
   page,
   setPage,
   handleAddOrganization,
+  handleEditOrganization
 }) {
-  const organizationColumns = [
-    {
-      title: "Organization Name",
-      dataIndex: "name",
-      key: "name",
-      editable: true,
-      width: "22.5%",
-      align: "left",
-    },
-    {
-      title: "Number of Classrooms",
-      key: "num_classrooms",
-      editable: true,
-      width: "22.5%",
-      align: "left",
-      render: (_, key) => <p>{key.classrooms.length}</p>,
-    },
-    {
-      title: "Number of Teachers",
-      key: "num_mentors",
-      editable: true,
-      width: "22.5%",
-      align: "left",
-      render: (_, key) => <p>{key.mentors.length}</p>,
-    },
-    {
-      title: "View Details",
-      dataIndex: "view",
-      key: "view",
-      width: "22.5%",
-      align: "left",
-    },
-  ];
+  const [organizationColumns, setOrganizationColumns] = useState([])
+
+  useEffect(() => {
+    setOrganizationColumns(
+      [
+        {
+          title: "Organization Name",
+          dataIndex: "name",
+          key: "name",
+          editable: true,
+          width: "22.5%",
+          align: "left",
+          defaultSortOrder: 'ascend',
+          sorter: (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+        },
+        {
+          title: "Number of Classrooms",
+          key: "num_classrooms",
+          editable: true,
+          width: "22.5%",
+          align: "left",
+          render: (_, key) => <p>{key.classrooms.length}</p>,
+        },
+        {
+          title: "Number of Teachers",
+          key: "num_mentors",
+          editable: true,
+          width: "22.5%",
+          align: "left",
+          render: (_, key) => <p>{key.mentors.length}</p>,
+        },
+        {
+          title: "View Details",
+          dataIndex: "view",
+          key: "view",
+          width: "22.5%",
+          align: "left",
+          render: (_, key) => <OrganizationEditor 
+              id={key.id} 
+              schoolName={key.name} 
+              classroomList={classroomList} 
+              mentorList={mentorList}
+              handleEditOrganization={handleEditOrganization}
+            />
+        },
+      ]
+    )
+  }, [organizationList])
 
   return (
     <div>
