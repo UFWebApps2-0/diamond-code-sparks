@@ -41,7 +41,7 @@ export default function TeacherEditor({ id, schoolList, classroomList, handleEdi
   return (
     <div>
       <button id='link-btn' onClick={showModal}>
-        Edit Teacher
+        Edit Details
       </button>
       <Modal
         title='Teacher Editor'

@@ -43,7 +43,7 @@ export default function OrganizationEditor({ id, classroomList, mentorList, hand
   return (
     <div>
       <button id='link-btn' onClick={showModal}>
-        Edit School
+        Edit Details
       </button>
       <Modal
         title='School Editor'

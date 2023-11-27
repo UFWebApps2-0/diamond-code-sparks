@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Modal, Select } from 'antd';
 import { getClassroom, getSchool } from '../../../Utils/requests';
 
-export default function ClassroomEditor({ id, schoolList, mentorList, studentList, gradeList, handleEditClassroom}) {
+export default function ClassroomEditor({ id, schoolList, mentorList, gradeList, handleEditClassroom}) {
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
   const [school, setSchool] = useState(0);
@@ -49,7 +49,7 @@ export default function ClassroomEditor({ id, schoolList, mentorList, studentLis
   return (
     <div>
       <button id='link-btn' onClick={showModal}>
-        Edit Classroom
+        Edit Details
       </button>
       <Modal
         title='Classroom Editor'
@@ -97,18 +97,6 @@ export default function ClassroomEditor({ id, schoolList, mentorList, studentLis
                 filterOption={filterOption}
                 options={mentorList.map((value) => ({value: value.id, label: value.first_name+" "+value.last_name}))}
                 value={mentors}
-            />
-          </Form.Item>
-          <Form.Item label='Students'>
-            <Select 
-                showSearch
-                mode='multiple'
-                placeholder="Select students"
-                optionFilterProp="children"
-                onChange={(value)=> {setStudents(value)}}
-                filterOption={filterOption}
-                options={studentList.map((value) => ({value: value.id, label: value.name}))}
-                value={students}
             />
           </Form.Item>
           <Form.Item id='form-label' label='Login Code'>

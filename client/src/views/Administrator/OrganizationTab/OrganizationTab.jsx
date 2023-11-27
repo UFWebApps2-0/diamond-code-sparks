@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, message, Modal, Table } from "antd";
-import { addOrganization } from "../../../Utils/requests";
-import { getUser } from "../../../Utils/AuthRequests";
+import { Table } from "antd";
 import OrganizationCreator from "./OrganizationCreator/OrganizationCreator";
 import OrganizationEditor from "./OrganizationEditor";
 
@@ -46,7 +44,7 @@ export default function OrganizationTab({
           render: (_, key) => <p>{key.mentors.length}</p>,
         },
         {
-          title: "View Details",
+          title: "Edit School Details",
           dataIndex: "view",
           key: "view",
           width: "22.5%",

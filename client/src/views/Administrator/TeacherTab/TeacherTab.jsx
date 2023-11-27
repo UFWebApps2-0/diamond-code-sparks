@@ -35,7 +35,7 @@ export default function TeacherTab({teacherList, schoolList, classroomList, page
             ),
         },
         {
-            title: 'View Classes',
+            title: 'Edit Teacher Details',
             dataIndex: 'view',
             key: 'view',
             width: '22.5%',

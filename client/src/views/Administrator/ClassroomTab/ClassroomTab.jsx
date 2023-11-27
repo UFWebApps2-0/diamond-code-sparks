@@ -43,7 +43,7 @@ export default function ClassroomTab({classroomList, gradeList, schoolList, ment
             ),
         },
         {
-            title: 'View Details',
+            title: 'Edit Classroom Details',
             dataIndex: 'view',
             key: 'view',
             width: '22.5%',
@@ -53,7 +53,6 @@ export default function ClassroomTab({classroomList, gradeList, schoolList, ment
                     id={key.id}
                     schoolList={schoolList}
                     mentorList={mentorList}
-                    studentList={studentList}
                     gradeList={gradeList}
                     handleEditClassroom={handleEditClassroom}
                 />

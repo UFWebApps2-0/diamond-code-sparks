@@ -31,21 +31,14 @@ function AdminDashboard() {
   const [teacherList, setTeacherList] = useState([]);
   const [classroomList, setClassroomList] = useState([]);
   const [organizationList, setOrganizationList] = useState([]);
-  const [studentList, setStudentList] = useState([]);
-  
-  const updateOrganizationList = async () => {
-    const organizationResponse = await getAllSchools();
-    setOrganizationList(organizationResponse.data);
-  };
 
   const fetchData = async () => {
-    const [lsResponse, gradeResponse, teacherResponse, classroomResponse, organizationResponse, studentResponse] = await Promise.all([
+    const [lsResponse, gradeResponse, teacherResponse, classroomResponse, organizationResponse] = await Promise.all([
       getLessonModuleAll(),
       getGrades(),
       getTeachers(),
       getAllClassrooms(),
       getAllSchools(),
-      getAllStudents()
     ]);
     setLessonModuleList(lsResponse.data);
 
@@ -55,7 +48,6 @@ function AdminDashboard() {
     setOrganizationList(organizationResponse.data);
     setTeacherList(teacherResponse.data);
     setClassroomList(classroomResponse.data);
-    setStudentList(studentResponse.data);
   };
 
   const handleAddOrganization = async (name, county, state, userData) => {
@@ -154,7 +146,6 @@ function AdminDashboard() {
             gradeList={gradeList}
             schoolList={organizationList}
             mentorList={teacherList}
-            studentList={studentList}
             page={page}
             setPage={setPage}
             handleAddClassroom={handleAddClassroom}
