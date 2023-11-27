@@ -82,7 +82,6 @@ export default function OrganizationTab({
   const navigate = useNavigate();
   
   function handleViewDetails(organizationID){
-    console.log(organizationID);
     navigate(`/OrganizationDashboard/${organizationID}`);
   }
   return (

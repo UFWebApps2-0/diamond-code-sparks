@@ -5,15 +5,15 @@ import {
   getAllClassrooms,
   setEnrollmentStatus,
   updateStudent,
-} from '../../../../../Utils/requests';
-import '../../../../Mentor/Classroom/Roster/Roster.less';
-import MentorSubHeader from '../../../../../components/MentorSubHeader/MentorSubHeader';
-import ListView from '../../../../Mentor/Classroom/Roster/ListView';
-import CardView from '../../../../Mentor/Classroom/Roster/CardView';
+} from '../../../Utils/requests';
+import '../../Mentor/Classroom/Roster/Roster.less';
+import MentorSubHeader from '../../../components/MentorSubHeader/MentorSubHeader';
+import ListView from '../../Mentor/Classroom/Roster/ListView';
+import CardView from '../../Mentor/Classroom/Roster/CardView';
 import { Form, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-export default function Roster({ classroomId }) {
+export default function Roster({ classroomId, value, teacherID}) {
   const [form] = Form.useForm();
   const [studentData, setStudentData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
@@ -26,13 +26,10 @@ export default function Roster({ classroomId }) {
     getAllClassrooms().then((res) => {
       if (res.data) {
         const allClassrooms = res.data;
-        console.log(allClassrooms);
        
         const numericClassroomId = parseInt(classroomId, 10);
-
       // Find the classroom with the correct ID
       const selectedClassroom = allClassrooms.find((classroom) => classroom.id === numericClassroomId);
-        console.log(selectedClassroom);
         if (selectedClassroom) {
           setClassroom(selectedClassroom);
           selectedClassroom.students.forEach((student) => {
@@ -175,7 +172,15 @@ export default function Roster({ classroomId }) {
   };
 
   const handleBack = () => {
-    navigate(`/OrganizationDashboard/${classroom.school.id}`);
+    if(value == '0'){
+         navigate(`/OrganizationDashboard/${classroom.school.id}`);
+    }
+    else if(value == '1'){
+      navigate("/AdminDashboard");
+    }
+    else if(value == '2'){
+      navigate(`/TeacherDashboard/${teacherID}`);
+    }
   };
 
   return (

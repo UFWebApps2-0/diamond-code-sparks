@@ -4,6 +4,8 @@ import {
   getClassrooms,
   getSchoolClassrooms,
   getSchoolID,
+  getMentorID,
+  getAllClassrooms,
 } from "../../../../Utils/requests";
 import { message } from "antd";
 import "../../../Mentor/Dashboard/Dashboard.less";
@@ -13,9 +15,9 @@ import NavBar from "../../../../components/NavBar/NavBar";
 import { useGlobalState } from "../../../../Utils/userState";
 import { useNavigate, Link, useLocation, useParams } from "react-router-dom";
 
-export default function OrganizationDashboard(props) {
-  const [classrooms, setClassrooms] = useState([]);
-  const [organization, setOrganization] = useState();
+export default function TeacherDashboard(props) {
+  const [mentor, setMentor] = useState();
+  const [filteredClassrooms, setFilteredClassrooms] = useState();
   const [value] = useGlobalState("currUser");
   const navigate = useNavigate();
   const { id } = useParams();
@@ -25,20 +27,36 @@ export default function OrganizationDashboard(props) {
   function handleBack() {
     navigate("/AdminDashboard");
   }
-  
-  function handleViewClassroom(classroomID){
-  
-    navigate(`/ClassroomAdmin/${classroomID}`, { state: { value: 0 } });
-    
+
+  function handleViewClassroom(classroomID) {
+    navigate(`/ClassroomAdmin/${classroomID}`, {
+      state: {
+        value: 2,
+        teacherID: mentor.data.id,
+      },
+    });
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const classroomsResponse = await getSchoolClassrooms(id);
-        const organizationResponse = await getSchoolID(id);
-        setClassrooms(classroomsResponse.data);
-        setOrganization(organizationResponse);
+        console.log(id);
+        const mentorResponse = await getMentorID(id);
+        const classroomsResponse = await getAllClassrooms();
+
+        const mentorClassroomIDs = mentorResponse.data.classrooms.map(
+          (classroom) => classroom.id
+        );
+
+        // Filter classrooms based on whether their IDs are in the mentorClassroomIDs array
+        setFilteredClassrooms(
+          classroomsResponse.data.filter((classroom) =>
+            mentorClassroomIDs.includes(classroom.id)
+          )
+        );
+        console.log("test");
+        console.log(filteredClassrooms);
+        setMentor(mentorResponse);
       } catch (error) {
         console.error("Error fetching classrooms:", error);
       }
@@ -47,14 +65,19 @@ export default function OrganizationDashboard(props) {
     fetchData();
   }, [id]);
 
-
+  /*const handleViewClassroom = (classroomId) => {
+    navigate(`/classroom/${classroomId}`);
+  };*/
+  console.log(mentor);
   return (
     <div className="container nav-padding">
       <NavBar />
 
-      {organization?.data ? (
+      {mentor?.data ? (
         <>
-          <div id="main-header">{organization.data.name}</div>
+          <div id="main-header">
+            {mentor.data.first_name} {mentor.data.last_name}
+          </div>
           <button
             id="home-back-btn"
             onClick={handleBack}
@@ -67,30 +90,25 @@ export default function OrganizationDashboard(props) {
               <div id="label">Details:</div>
 
               <div id="location-teachers-container">
-                <div id="location">Location: {organization.data.county}, {organization.data.state}</div>
-                <div id="teachers">
-                   Teachers: {organization.data.mentors.map((mentor, index) => (
-                     <span key={mentor.id}>{mentor.first_name} {mentor.last_name}
-                     {index !== organization.data.mentors.length - 1 ? ', ' : ''}
-                     </span>
-                   ))}
-                </div>
+                {mentor.data.school?.name && (
+                  <div id="location">School: {mentor.data.school.name}</div>
+                )}
               </div>
             </div>
-
-            {/* Existing card content */}
           </div>
           <MentorSubHeader
-            title={`${organization.data.name}'s Classrooms`}
+            title={`${mentor.data.first_name} ${mentor.data.last_name}'s Classrooms`}
           ></MentorSubHeader>
           <div id="classrooms-container">
             <div id="dashboard-card-container">
-              {classrooms.map((classroom) => (
+              {filteredClassrooms.map((classroom) => (
                 <div key={classroom.id} id="dashboard-class-card">
                   <div id="card-left-content-container">
                     <h1 id="card-title">{classroom.name}</h1>
                     <div id="card-button-container" className="flex flex-row">
-                      <button onClick={() => handleViewClassroom(classroom.id)}>View</button>
+                      <button onClick={() => handleViewClassroom(classroom.id)}>
+                        View
+                      </button>
                     </div>
                   </div>
                   <div id="card-right-content-container">

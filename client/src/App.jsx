@@ -21,7 +21,8 @@ import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
 import AdminDashboard from "./views/Administrator/AdminDashboard";
 import OrganizationDashboard from "./views/Administrator/OrganizationTab/OrganizationDashboard/OrganizationDashboard";
-import ClassroomAdmin from "./views/Administrator/OrganizationTab/OrganizationDashboard/ClassroomAdmin/ClassroomAdmin";
+import TeacherDashboard from "./views/Administrator/TeacherTab/TeacherDashboard/TeacherDashboard";
+import ClassroomAdmin from "./views/Administrator/ClassroomAdmin/ClassroomAdmin";
 const App = () => {
   return (
     <div>
@@ -39,6 +40,12 @@ const App = () => {
           element={
             <PrivateRoute>
                <AdminDashboard />
+            </PrivateRoute>}/>
+        <Route 
+          path='/TeacherDashboard/:id' 
+          element={
+            <PrivateRoute>
+               <TeacherDashboard />
             </PrivateRoute>}/>
         <Route 
           path='/OrganizationDashboard/:id' 

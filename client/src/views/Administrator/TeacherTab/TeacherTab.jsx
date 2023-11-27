@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Table, Input, Button } from 'antd';
-
+import { useNavigate } from 'react-router-dom';
 export default function TeacherTab({teacherList, page, setPage}) {
 
   const teacherColumns = [
@@ -77,9 +77,21 @@ export default function TeacherTab({teacherList, page, setPage}) {
       key: 'view',
       width: '22.5%',
       align: 'left',
+      render: (_, teacher) => (
+        <Button type="link" onClick={() => handleViewClasses(teacher.id)}>
+          View Classes
+        </Button>
+      ),
     },
   ];
 
+  function handleViewClasses(teacherID){
+    navigate(`/TeacherDashboard/${teacherID}`);
+  }
+
+  const navigate = useNavigate();
+
+  
     return (
         <div>
             <div id='page-header'>

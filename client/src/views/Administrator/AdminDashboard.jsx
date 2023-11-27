@@ -26,7 +26,6 @@ function AdminDashboard() {
     searchParams.has('page') ? parseInt(searchParams.get('page')) : 1
   );
   const userData = getUser();
-  console.log(userData);
   const [learningStandardList, setLessonModuleList] = useState([]);
   const [gradeList, setGradeList] = useState([]);
   const [teacherList, setTeacherList] = useState([]);

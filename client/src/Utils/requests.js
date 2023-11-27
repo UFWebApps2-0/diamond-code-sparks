@@ -716,5 +716,16 @@ export const getAllSchools = async () =>
     method: GET,
     path: `${server}/schools/${id}`,
     auth: true,
-    error: 'Schools could not be retrieved.',
+    error: 'School could not be retrieved.',
   });
+
+  
+  export const getMentorID = async (id) =>
+  makeRequest({
+    method: GET,
+    path: `${server}/mentors/${id}`,
+    auth: true,
+    error: 'Mentor could not be retrieved.',
+  });
+
+  
