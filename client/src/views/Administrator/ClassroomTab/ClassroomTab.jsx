@@ -3,6 +3,7 @@ import { Button, Form, Input, message, Modal, Table } from "antd";
 import { addClassroom } from "../../../Utils/requests";
 import { getUser } from "../../../Utils/AuthRequests";
 import ClassroomCreator from "./ClassroomCreator/ClassroomCreator";
+import RosterUpload from "./ClassroomCreator/RosterUpload";
 
 export default function ClassroomTab({classroomList, gradeList, schoolList, page, setPage, handleAddClassroom}) {
     const classroomColumns = [
@@ -64,6 +65,12 @@ export default function ClassroomTab({classroomList, gradeList, schoolList, page
             schoolList={schoolList}
             handleAddClassroom={handleAddClassroom}
           ></ClassroomCreator>
+          <RosterUpload
+             classroomList={classroomList}
+             gradeList={gradeList}
+             schoolList={schoolList}
+             handleAddClassroom={handleAddClassroom}
+             ></RosterUpload>
             </div>
             <Table
               columns = {classroomColumns}

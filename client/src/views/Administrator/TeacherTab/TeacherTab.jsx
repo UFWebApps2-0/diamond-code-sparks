@@ -3,6 +3,7 @@ import { Button, Form, Input, message, Modal, Table } from "antd";
 import { addTeacher } from "../../../Utils/requests";
 import { getUser } from "../../../Utils/AuthRequests";
 import TeacherCreator from "./TeacherCreator/TeacherCreator";
+import FacultyUpload from "./TeacherCreator/FacultyUpload";
 
 export default function TeacherTab({teacherList, schoolList, page, setPage, handleAddTeacher}) {
 
@@ -57,9 +58,9 @@ export default function TeacherTab({teacherList, schoolList, page, setPage, hand
             schoolList={schoolList}
             handleAddTeacher={handleAddTeacher}
           ></TeacherCreator>
-              <button onClick = {null} id = "add-unit-btn">
-                + Upload Faculty List
-              </button>
+             <FacultyUpload
+             schoolList = {schoolList}
+             ></FacultyUpload>
             </div>
             <Table
               columns = {teacherColumns}
