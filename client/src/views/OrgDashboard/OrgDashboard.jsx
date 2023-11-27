@@ -123,6 +123,9 @@ export default function OrgDashboard() {
 	        	<h1>Your Organizations</h1>
 	        </div>
 	        <div id='orgs-container'>
+	        	<div id='no-orgs-message'>
+	        		{orgs.length == 0 && <p>Looks like you don't have any organizations yet.</p>}
+	        	</div>
 	        	<div id='dashboard-card-container'>
 	        		{orgs.map((org) => (
 		        		<div key={org.id} id='dashboard-org-card' className={isFlipped.has(org.id) ? 'flipped' : ''}>
