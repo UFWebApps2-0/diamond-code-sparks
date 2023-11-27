@@ -34,6 +34,8 @@ export default function Dashboard() {
     navigate(`/classroom/${classroomId}`);
   };
 
+  
+
   return (
     <div className='container nav-padding'>
       <NavBar />
@@ -62,6 +64,9 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
+        <button onClick={() => navigate(`/moderation`)}>
+                    Moderation
+                  </button>
       </div>
     </div>
   );
