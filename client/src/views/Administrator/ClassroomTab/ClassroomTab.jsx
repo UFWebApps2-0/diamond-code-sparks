@@ -1,6 +1,5 @@
 import { Table } from "antd";
 import ClassroomCreator from "./ClassroomCreator/ClassroomCreator";
-import RosterUpload from "./ClassroomCreator/RosterUpload";
 import ClassroomEditor from "./ClassroomEditor";
 
 export default function ClassroomTab({classroomList, gradeList, schoolList, mentorList, studentList, page, setPage, handleAddClassroom, handleEditClassroom}) {
@@ -75,12 +74,6 @@ export default function ClassroomTab({classroomList, gradeList, schoolList, ment
             schoolList={schoolList}
             handleAddClassroom={handleAddClassroom}
           ></ClassroomCreator>
-          <RosterUpload
-             classroomList={classroomList}
-             gradeList={gradeList}
-             schoolList={schoolList}
-             handleAddClassroom={handleAddClassroom}
-             ></RosterUpload>
             </div>
             <Table
               columns = {classroomColumns}

@@ -66,6 +66,7 @@ export default function TeacherTab({teacherList, schoolList, classroomList, page
           ></TeacherCreator>
              <FacultyUpload
              schoolList = {schoolList}
+             handleAddTeacher={handleAddTeacher}
              ></FacultyUpload>
             </div>
             <Table
