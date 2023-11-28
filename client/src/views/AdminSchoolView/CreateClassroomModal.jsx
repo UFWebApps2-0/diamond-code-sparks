@@ -42,8 +42,8 @@ export default function CreateClassroomModal() {
             <Form>
             <Form.Item id="form-label" label="Name">
           <Input
-            onChange={e => setName(e.target.value)}
-            value={name}
+            onChange={e => setClassroomName(e.target.value)}
+            value={classroomName}
             className="input"
             required
             placeholder={"Classroom Name"}
