@@ -98,6 +98,15 @@ export default function OrgDashboard() {
 			message.info('Name cannot be blank.');
 		}
 	}
+
+	const printSchools = (school, i, arr) => {
+		// if last item in the list, don't print with comma
+		if (i == arr.length - 1) {
+			return (<span>{school.name}</span>);
+		} else {
+			return (<span>{school.name}, </span>);
+		}
+	}
     
 	return (
 	    <div className='container nav-padding'>
@@ -137,7 +146,7 @@ export default function OrgDashboard() {
 								</button>
 			        			<div id='card-top-content-container'>
 				        			<h1 id='card-title'>{org.name}</h1>
-				        			<p>{org.description}</p>
+				        			<p>{org.schools.map(printSchools)}</p>
 				        		</div>
 				        		<div id='card-bottom-content-container'>
 				        			<button className='manage-btn' onClick={() => navigate('/admindashboard')}>
