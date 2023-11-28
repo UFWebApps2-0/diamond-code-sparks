@@ -11,6 +11,7 @@ export default function CreateOrg() {
   const navigate = useNavigate();
   const [schools, setSchools] = useState([]);
   const [selectedSchools, setSelectedSchools] = useState([]);
+  const [isError, setIsError] = useState("");
 
   useEffect(() => {
     let schoolList = [];
@@ -29,27 +30,34 @@ export default function CreateOrg() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const res = await addOrganization(
-      orgName,
-      description,
-      selectedSchools
-    );
-
-    if (res.data) {
-      message.success(
-        `${orgName} has been created.`
+    // validate if at least one school is selected
+    if (selectedSchools.length > 0) {
+      const res = await addOrganization(
+        orgName,
+        description,
+        selectedSchools
       );
-      setOrgName("");
-      setDescription("");
-      navigate('/orgdash');
+  
+      if (res.data) {
+        message.success(
+          `${orgName} has been created.`
+        );
+        setOrgName("");
+        setDescription("");
+        navigate('/orgdash');
+      } else {
+        message.error(res.err);
+      }
     } else {
-      message.error(res.err);
+      setIsError("error");
+      message.error("You must select at least one school.");
     }
 
   };
 
   const handleSelectSchool = (id) => {
-    setSelectedSchools([...selectedSchools, id])
+    setSelectedSchools([...selectedSchools, id]);
+    setIsError("");
   }
 
   const handleDeselectSchool = (id) => {
@@ -86,10 +94,11 @@ export default function CreateOrg() {
               Add Schools:
               <Select 
                 style={{width: '100%'}}
-                placeholder="Please select"
+                placeholder="Please select at least one"
                 mode="multiple"
                 onSelect={handleSelectSchool}
                 onDeselect={handleDeselectSchool}
+                status={isError}
               >
                 {schools.map((school) => <option value={school.id}>{school.name}</option>)}
               </Select>
