@@ -733,3 +733,14 @@ export const getSchools = async () =>
     auth: true,
     error: 'Schools could not be retrieved',
   });
+
+export const addSchool = async (name) =>
+  makeRequest({
+    method: POST,
+    path: `${server}/schools`,
+    data: {
+      name: name,
+    },
+    auth: true,
+    error: 'Failed to add school.',
+  });

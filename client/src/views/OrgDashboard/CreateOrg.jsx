@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import "./CreateOrg.less";
 import { useNavigate } from "react-router-dom";
-import { addOrganization, getSchools } from "../../Utils/requests"
-import { message, Select } from "antd"
+import { addOrganization, getSchools, addSchool } from "../../Utils/requests"
+import { message, Select, Divider, Input, Button, Space } from "antd"
 
 export default function CreateOrg() {
   const [orgName, setOrgName] = useState("");
@@ -12,13 +12,17 @@ export default function CreateOrg() {
   const [schools, setSchools] = useState([]);
   const [selectedSchools, setSelectedSchools] = useState([]);
   const [isError, setIsError] = useState("");
+  const [newSchoolName, setNewSchoolName] = useState("");
 
   useEffect(() => {
     let schoolList = [];
     getSchools().then((res) => {
       if (res.data) {
         for (let i = 0; i < res.data.length; i++) {
-          schoolList.push(res.data[i]);
+          // only allow users to select schools that aren't already connected to an org
+          if(res.data[i].organization == null) {
+              schoolList.push(res.data[i]);
+          }
         }
       } else {
         message.error(res.err);
@@ -64,6 +68,30 @@ export default function CreateOrg() {
     setSelectedSchools(selectedSchools.filter((school) => school != id));
   }
 
+  const newSchoolNameChange = (event) => {
+    setNewSchoolName(event.target.value);
+  }
+
+  const addNewSchool = async (e) => {
+    e.preventDefault();
+
+    // add new school to db
+    if (newSchoolName != "") {
+      const res = await addSchool(
+        newSchoolName
+      );
+  
+      if (res.data) {
+          setSchools([...schools, res.data]);
+          setNewSchoolName("");
+      } else {
+          message.error(res.err);
+      }
+    } else {
+      message.error("New school must have a name.");
+    }
+  }
+
   return (
     <div className="container nav-padding">
       <NavBar />
@@ -93,6 +121,7 @@ export default function CreateOrg() {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </label>
+            {/* customized dropdown code adapted from https://ant.design/components/select */}
             <label>
               Add Schools:
               <Select 
@@ -102,6 +131,26 @@ export default function CreateOrg() {
                 onSelect={handleSelectSchool}
                 onDeselect={handleDeselectSchool}
                 status={isError}
+                dropdownRender={(menu) => (
+                  <>
+                    {menu}
+                    <Divider
+                      style={{margin: "8px 0"}}
+                    />
+                    <Space
+                      style={{padding: "0 8px 4px"}}
+                    >
+                      <Input
+                        placeholder="Please enter school"
+                        value={newSchoolName}
+                        onChange={newSchoolNameChange}
+                      />
+                      <Button type="text" onClick={addNewSchool}>
+                        Add School
+                      </Button>
+                    </Space>
+                  </>
+                )}
               >
                 {schools.map((school) => <option value={school.id}>{school.name}</option>)}
               </Select>
