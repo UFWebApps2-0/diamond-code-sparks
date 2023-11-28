@@ -167,6 +167,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
             size='large'
             spinning={selectedCompile}
           >
+            {/*Natalie*/}
             <Row id='icon-control-panel'>
               <Col flex='none' id='section-header'>
                 Program your Arduino...
