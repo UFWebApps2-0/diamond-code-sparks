@@ -16,7 +16,7 @@ export default function CreateClassroom() {
           <div id="create-form-container">
             <form onSubmit={handleSubmit}>
               <label>
-                Classroom Name: {' '}
+                School Name: {' '}
                 <input
                   type="text"
                   value={classroomName}
