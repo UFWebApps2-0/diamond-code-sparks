@@ -19,6 +19,7 @@ export default function BlocklyPage({ isSandbox }) {
   const [value] = useGlobalState("currUser")
   const [activity, setActivity] = useState({})
   const navigate = useNavigate()
+  const [splitOpen, setSplitOpen] = useState(false)
 
   useEffect(() => {
     const setup = async () => {
@@ -77,7 +78,6 @@ export default function BlocklyPage({ isSandbox }) {
 
     setup()
   }, [isSandbox, navigate, value.role])
-
   /*
     return (
     <div className="container nav-padding">
@@ -107,39 +107,43 @@ export default function BlocklyPage({ isSandbox }) {
       </div>
   */
 
-  const [leftPaneSize, setLeftPaneSize] = useState('50%');
+    const [leftPaneSize, setLeftPaneSize] = useState('50%');
+    
+    const handleDrag = newSize => {
+      // The new size is greater than or equal to 50% of the window width
+      if (newSize >= window.innerWidth / 2) {
+        setLeftPaneSize(newSize);
+      }
+    };
 
-  const handleDrag = newSize => {
-    // The new size is greater than or equal to 50% of the window width
-    if (newSize >= window.innerWidth / 2) {
-      setLeftPaneSize(newSize);
-    }
-  };
+    const handleToggleSplit = () => {
+      setSplitOpen(!splitOpen);
+    };
 
 
-  return (
-      <div className="container nav-padding">
-        <NavBar />
-        <SplitPane
-        split="vertical"
-        minSize="50%"
-        maxSize={-1} // No maximum size restriction
-        defaultSize={leftPaneSize}
-        onChange={handleDrag}
-        pane1Style={{ minWidth: '50%'}}
-        className="flex flex-row"
-        >
-          <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
-          <SplitPane
-            split="horizontal"
-            minSize={50} // Minimum size in pixels for the top pane
-            defaultSize={'50%'} // Starting at a 50-50 split
+    return (
+        <div className="container nav-padding">
+          <NavBar />
+          {splitOpen ? (
+            <SplitPane
+            split="vertical"
+            minSize="50%"
+            maxSize={-1} // No maximum size restriction
+            defaultSize={leftPaneSize}
+            onChange={handleDrag}
+            pane1Style={{ minWidth: '50%'}}
+            className="flex flex-row"
             >
-            <Blank/>
-            <CodeReplay/>
+                <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} toggleSplit={handleToggleSplit}/>
+                <SplitPane split="vertical">
+                    <Blank />
+                    <CodeReplay />
+                </SplitPane>
             </SplitPane>
-
-        </SplitPane>
-      </div>
-  )
+          ) :
+          (
+            <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} toggleSplit={handleToggleSplit} />
+          )}
+        </div>
+    )
 }

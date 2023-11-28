@@ -16,14 +16,9 @@
     cursor: col-resize; /* Changes the cursor to indicate resizing */
   }
   
+  
   /* If you're using a horizontal split */
-  .Resizer.horizontal {
-    height: 10px;      /* Height of the resizer bar */
-    margin: -5px 0;    /* Space above and below the bar */
-    border-top: 5px solid rgba(255, 255, 255, 0);
-    border-bottom: 5px solid rgba(255, 255, 255, 0);
-    cursor: row-resize; /* Changes the cursor to indicate resizing */
-  }
+
   
   /* Optional: hover effect to make the resizer more prominent when mouse over */
   .Resizer:hover {

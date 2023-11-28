@@ -28,6 +28,23 @@ p {
   white-space: pre-line;
 }
 
+#split-screen-dragger {
+  width: max-content;
+  height: 100%;
+  min-height: 92vh;
+  max-height: 92vh;
+  background: #F5F5F5;
+}
+
+.Resizer {
+  width: max-content;
+  min-width: 30px;
+  height: 100%;
+  min-height: 92vh;
+  max-height: 92vh;
+  background: #F5F5F5;
+}
+
 .compilePop {
   margin-top: 12px !important;
 }
@@ -77,6 +94,27 @@ p {
 #icon-control-panel {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+#row-flex-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.control-col {
+  display: flex;
+  width: 50%;
+  //flex-wrap: wrap;
+}
+
+#controls-container {
+  flex-direction: row;
+  justify-self: flex-end;
+  padding: 0.5rem;
+  flex-wrap: wrap;
+
 }
 
 #save-icon-btn {
@@ -84,17 +122,29 @@ p {
   color: #colors[primary];
 }
 
+#arrow-icon-btn {
+  width: 80%;
+  height: 80%;
+  fill: #colors[primary];
+  color: #414141;
+}
+
 #icon-btn {
   font-size: 24px;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
 }
 
 #action-btn-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   float: right;
-  margin-left: 8px;
-  margin-right: 30px;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+
 
   i {
     color: #colors[primary];
@@ -132,9 +182,11 @@ p {
   display: flex;
   height: auto;
   align-items: center;
+  justify-content: flex-end;
   flex: 1;
   max-height: 8vh;
   width: 100%;
+  padding: 1rem;
 
   #logo {
     max-width: 145px;
@@ -153,6 +205,13 @@ p {
 
 #lastsave-container {
   min-width: 50%;
+  margin: 0;
+  padding-right: 1rem;
+  text-align: right;
+}
+
+#version-control {
+
 }
 
 #side-container {
@@ -179,12 +238,12 @@ p {
 
 #bottom-container {
   flex: 6;
-  margin-top: 1vh;
-  margin-bottom: 1vh;
+  margin: 1rem;
   background-color: #colors[tertiary];
   border-radius: 10px;
-  height: 100%;
-  max-height: 78vh;
+  height: max-content;
+  //max-height: 78vh;
+  //overflow: scroll;
   position: relative;
 }
 
@@ -192,6 +251,7 @@ p {
   margin: auto;
   width: 95%;
   height: 72vh;
+  overflow: clip;
 }
 
 #console-container {
@@ -236,7 +296,8 @@ p {
   align-items: center;
   background-color: #colors[secondary];
   border-radius: 80px;
-  width: 40%;
+  width: 40vw;
+  height: 1.25rem;
   min-height: 50px;
   color: #colors[text-secondary];
   font-size: 1.2em;
@@ -309,7 +370,7 @@ p {
   padding: 0 !important;
   color: #colors[primary];
   text-align: center;
-  margin: 0 0 0 12px;
+  margin: 0;
 
   &:focus {
     outline: none;
@@ -318,6 +379,13 @@ p {
   &:hover {
     color: #colors[secondary];
   }
+}
+
+.display-split-screen {
+  display: flex;
+  max-width: 40px;
+  height: 100%;
+  align-items: flex-start;
 }
 
 #save-select {
