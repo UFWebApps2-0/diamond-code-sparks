@@ -23,9 +23,9 @@ import OrgDashboard from './views/OrgDashboard/OrgDashboard';
 import CreateOrg from './views/OrgDashboard/CreateOrg';
 import ManageAccount from './views/OrgDashboard/ManageAccount';
 // import ManageAccount from './views/OrgDashboard/ManageAccount';
-import AdminClassroomDashboard from './views/AdminClassroomView/AdminClassroomDashboard';
+import AdminSchoolDashboard from './views/AdminSchoolView/AdminSchoolDashboard';
 import AdminGalleryDashboard from './views/AdminGalleryView/AdminGalleryDashboard';
-import CreateClassroom from './views/AdminClassroomView/CreateClassroom';
+import CreateSchool from './views/AdminSchoolView/CreateSchool';
 
 const App = () => {
   return (
@@ -43,9 +43,9 @@ const App = () => {
         <Route path='/orgdash' element={<OrgDashboard />} />
         <Route path='/createorg' element={<CreateOrg />} />
         <Route path='/manageaccount' element={<ManageAccount />} />
-        <Route path='/admindashboard' element={<AdminClassroomDashboard />} />
+        <Route path='/admindashboard' element={<AdminSchoolDashboard />} />
         <Route path='/managegalleries' element={<AdminGalleryDashboard />} />
-        <Route path='/createclassroom' element={<CreateClassroom/>} />
+        <Route path='/createschool' element={<CreateSchool/>} />
         {/* <Route path='/manageaccount' element={<ManageAccount />} /> */}
         
       
