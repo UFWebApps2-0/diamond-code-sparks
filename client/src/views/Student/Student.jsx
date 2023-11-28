@@ -9,11 +9,13 @@ function Student() {
   const [learningStandard, setLessonModule] = useState({});
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await getStudentClassroom();
         if (res.data) {
+          console.log("Get Student Classroom", res)
           if (res.data.lesson_module) {
             setLessonModule(res.data.lesson_module);
           }

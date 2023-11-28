@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 let plotId = 1;
 
 export default function StudentCanvas({ activity }) {
+  
   const [hoverSave, setHoverSave] = useState(false);
   const [hoverUndo, setHoverUndo] = useState(false);
   const [hoverRedo, setHoverRedo] = useState(false);

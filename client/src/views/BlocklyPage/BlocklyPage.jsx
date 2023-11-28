@@ -5,6 +5,7 @@ import BlocklyCanvasPanel from "../../components/ActivityPanels/BlocklyCanvasPan
 import NavBar from "../../components/NavBar/NavBar"
 import Blank from "./Blank";
 import SplitPane from 'react-split-pane';
+import CodeReplay from './CodeReplay'
 import './Blank.css'
 
 import {
@@ -126,9 +127,18 @@ export default function BlocklyPage({ isSandbox }) {
         defaultSize={leftPaneSize}
         onChange={handleDrag}
         pane1Style={{ minWidth: '50%'}}
+        className="flex flex-row"
         >
           <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
-          <Blank/>
+          <SplitPane
+            split="horizontal"
+            minSize={50} // Minimum size in pixels for the top pane
+            defaultSize={'50%'} // Starting at a 50-50 split
+            >
+            <Blank/>
+            <CodeReplay/>
+            </SplitPane>
+
         </SplitPane>
       </div>
   )
