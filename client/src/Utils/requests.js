@@ -673,17 +673,19 @@ export const getClassroomWorkspace = async (id) =>
     error: 'Unable to retrive classroom workspaces',
   });
 
-export const addOrganization = async (name, desc) =>
+export const addOrganization = async (name, desc, schools) =>
   makeRequest({
     method: POST,
     path: `${server}/organizations`,
     data: {
       name: name,
       description: desc,
+      schools: schools,
     },
     auth: true,
     error: 'Failed to add organization.',
   });
+
 
 // getOrganizations and getOrganization get orgs with specified ids, getAllOrgs is not id-determined
 export const getOrganizations = async (ids) =>
@@ -722,4 +724,12 @@ export const deleteOrganization = async (id) =>
     path: `${server}/organizations/${id}`,
     auth: true,
     error: 'Failed to delete organization.',
+  });
+
+export const getSchools = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/schools`,
+    auth: true,
+    error: 'Schools could not be retrieved',
   });

@@ -1,22 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import "./CreateOrg.less";
 import { useNavigate } from "react-router-dom";
-import { addOrganization } from "../../Utils/requests"
-import { message } from "antd"
+import { addOrganization, getSchools } from "../../Utils/requests"
+import { message, Select } from "antd"
 
 export default function CreateOrg() {
   const [orgName, setOrgName] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
+  const [schools, setSchools] = useState([]);
+  const [selectedSchools, setSelectedSchools] = useState([]);
+
+  useEffect(() => {
+    let schoolList = [];
+    getSchools().then((res) => {
+      if (res.data) {
+        for (let i = 0; i < res.data.length; i++) {
+          schoolList.push(res.data[i]);
+        }
+      } else {
+        message.error(res.err);
+      }
+      setSchools(schoolList);
+    });
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission here
 
     const res = await addOrganization(
       orgName,
-      description
+      description,
+      selectedSchools
     );
 
     if (res.data) {
@@ -31,6 +47,14 @@ export default function CreateOrg() {
     }
 
   };
+
+  const handleSelectSchool = (id) => {
+    setSelectedSchools([...selectedSchools, id])
+  }
+
+  const handleDeselectSchool = (id) => {
+    setSelectedSchools(selectedSchools.filter((school) => school != id));
+  }
 
   return (
     <div className="container nav-padding">
@@ -57,6 +81,18 @@ export default function CreateOrg() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
+            </label>
+            <label>
+              Add Schools:
+              <Select 
+                style={{width: '100%'}}
+                placeholder="Please select"
+                mode="multiple"
+                onSelect={handleSelectSchool}
+                onDeselect={handleDeselectSchool}
+              >
+                {schools.map((school) => <option value={school.id}>{school.name}</option>)}
+              </Select>
             </label>
             {/* submit button for the form */}
             <input type="submit" value="Submit" />
