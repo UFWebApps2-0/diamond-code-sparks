@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useReducer } from 'react';
 import '../../ActivityLevels.less';
 import { compileArduinoCode, handleSave } from '../../Utils/helpers';
 import { message, Spin, Row, Col, Alert, Dropdown, Menu } from 'antd';
-import { getSaves } from '../../../../Utils/requests';
+import { getSaves, getActivity, getStudentClassroom } from '../../../../Utils/requests';
 import CodeModal from '../modals/CodeModal';
 import ConsoleModal from '../modals/ConsoleModal';
 import PlotterModal from '../modals/PlotterModal';
@@ -16,6 +16,7 @@ import {
 import ArduinoLogo from '../Icons/ArduinoLogo';
 import PlotterLogo from '../Icons/PlotterLogo';
 import { useNavigate } from 'react-router-dom';
+//import { getLessonModule } from '../../../../Util/requests'
 
 let plotId = 1;
 
@@ -36,6 +37,7 @@ export default function StudentCanvas({ activity }) {
   const [lastSavedTime, setLastSavedTime] = useState(null);
   const [lastAutoSave, setLastAutoSave] = useState(null);
   const [codeSubmitted, setCodeSubmitted] = useState(false);
+  const [isLast, setIsLast] = useState(false);
 
   const [forceUpdate] = useReducer((x) => x + 1, 0);
   const navigate = useNavigate();
@@ -339,6 +341,33 @@ export default function StudentCanvas({ activity }) {
     return output + ' ' + new Date(value).toLocaleTimeString(locale);
   };
 
+  const handleActivityChange = async() => {
+
+    const res = await getStudentClassroom(); //Gets the data of the current classroom.
+    if(res.data){
+      const acts = res.data.lesson_module.activities
+        .sort((activity1, activity2) => activity1.number - activity2.number) //Sorts the activities.
+        .find(activity =>
+          activity.number > activityRef.current.number //Finds the next activity.
+        );
+
+      if(acts != null){
+        localStorage.setItem('my-activity', JSON.stringify(acts)); //Changing the activity.
+        location.reload()
+
+        const temp = res.data.lesson_module.activities
+          .find(activity => activity.number > acts.number);
+
+        if(temp == null){
+          setIsLast(true);
+        }
+      }
+    }
+    else{
+      message.error(res.err)
+    }
+  }
+
   const menu = (
     <Menu>
       <Menu.Item onClick={handlePlotter}>
@@ -498,7 +527,7 @@ export default function StudentCanvas({ activity }) {
               </Col>
             </Row>
             <div id='blockly-canvas' /> {/*This updates the page to show the next activity button when code is compiled.*/}
-            {codeSubmitted && (
+            {codeSubmitted && !isLast && (
               <button 
                 id="next-activity-button"
                 onClick={handleActivityChange}
