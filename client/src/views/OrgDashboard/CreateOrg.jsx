@@ -68,6 +68,9 @@ export default function CreateOrg() {
     <div className="container nav-padding">
       <NavBar />
       <div id="create-container">
+        <button id="back-btn" onClick={() => navigate('/orgdash')}>
+          <i className='fa fa-arrow-left' aria-hidden='true' />
+        </button>
         <div id="create-header">Create Organization</div>
         <div id="create-form-container">
           <form onSubmit={handleSubmit}>
