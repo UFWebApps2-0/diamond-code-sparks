@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/27/2023 1:10:25 PM"
+    "x-generation-date": "11/28/2023 10:38:10 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -13029,72 +13029,6 @@
                 }
               }
             }
-          },
-          "submission": {
-            "required": [
-              "id",
-              "status",
-              "workspace",
-              "board",
-              "sketch",
-              "sandbox"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "status": {
-                "type": "string"
-              },
-              "workspace": {
-                "type": "string"
-              },
-              "success": {
-                "type": "boolean"
-              },
-              "hex": {
-                "type": "string"
-              },
-              "stdout": {
-                "type": "string"
-              },
-              "stderr": {
-                "type": "string"
-              },
-              "board": {
-                "type": "string"
-              },
-              "sketch": {
-                "type": "string"
-              },
-              "sandbox": {
-                "type": "boolean"
-              },
-              "session": {
-                "type": "string"
-              },
-              "activity": {
-                "type": "string"
-              },
-              "job_id": {
-                "type": "integer"
-              },
-              "student": {
-                "type": "string"
-              },
-              "classroom": {
-                "type": "string"
-              },
-              "student_grade": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
           }
         }
       },
@@ -13144,9 +13078,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "submission": {
-            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -13220,9 +13151,6 @@
                   "items": {
                     "type": "string"
                   }
-                },
-                "submission": {
-                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -13778,9 +13706,6 @@
                     "type": "string"
                   }
                 },
-                "submission": {
-                  "type": "string"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -14124,9 +14049,6 @@
                     "type": "string"
                   }
                 },
-                "submission": {
-                  "type": "string"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -14266,9 +14188,6 @@
                   "type": "string"
                 }
               },
-              "submission": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -14407,9 +14326,6 @@
                   "type": "string"
                 }
               },
-              "submission": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -14514,9 +14430,6 @@
                   "type": "string"
                 },
                 "classroom": {
-                  "type": "string"
-                },
-                "student_grade": {
                   "type": "string"
                 },
                 "created_by": {
@@ -14787,9 +14700,6 @@
               "classroom": {
                 "type": "string"
               },
-              "student_grade": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -14892,9 +14802,6 @@
                 "items": {
                   "type": "string"
                 }
-              },
-              "submission": {
-                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -15236,37 +15143,6 @@
                   "type": "string"
                 }
               },
-              "submission": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "student_grade": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "Grade": {
-                "type": "string"
-              },
-              "Comments": {
-                "type": "string"
-              },
-              "submission": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -15328,9 +15204,6 @@
             "type": "string"
           },
           "classroom": {
-            "type": "string"
-          },
-          "student_grade": {
             "type": "string"
           },
           "created_by": {

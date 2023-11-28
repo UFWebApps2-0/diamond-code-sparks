@@ -18,7 +18,6 @@
       "type": "text"
     },
     "submission": {
-      "via": "student_grade",
       "model": "submission"
     }
   }

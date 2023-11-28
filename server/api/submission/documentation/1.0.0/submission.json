@@ -751,37 +751,6 @@
                   "type": "string"
                 }
               },
-              "submission": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "student_grade": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "Grade": {
-                "type": "string"
-              },
-              "Comments": {
-                "type": "string"
-              },
-              "submission": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -843,9 +812,6 @@
             "type": "string"
           },
           "classroom": {
-            "type": "string"
-          },
-          "student_grade": {
             "type": "string"
           },
           "created_by": {

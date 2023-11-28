@@ -60,12 +60,7 @@
       "model": "student"
     },
     "classroom": {
-      "model": "classroom",
-      "via": "submission"
-    },
-    "student_grade": {
-      "via": "submission",
-      "model": "student-grade"
+      "model": "classroom"
     }
   }
 }

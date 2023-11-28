@@ -573,9 +573,6 @@
                   "type": "string"
                 }
               },
-              "submission": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -680,9 +677,6 @@
                   "type": "string"
                 },
                 "classroom": {
-                  "type": "string"
-                },
-                "student_grade": {
                   "type": "string"
                 },
                 "created_by": {
