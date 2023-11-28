@@ -60,6 +60,23 @@ export const getTeachers = async () =>
     error: 'Teachers could not be retrieved.',
   });
 
+  export const addTeacher = async (first_name, last_name, school) =>
+    makeRequest({
+        method: POST,
+        path: `${server}/mentors`,
+        data: { first_name: first_name, last_name: last_name, school: school },
+        auth: true,
+        error: 'Failed to add teacher.',
+    });
+
+export const deleteTeacher = async (teacherID) => 
+    makeRequest({
+        method: DELETE,
+        path: `${server}/mentors/${teacherID}`,
+        auth: true,
+        error: 'Failed to delete teacher.',
+    });
+
 export const getAllClassrooms = async () =>
   makeRequest({
     method: GET,
