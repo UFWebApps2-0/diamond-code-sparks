@@ -4,6 +4,7 @@ import {
   getClassroom,
   getLessonModule,
   getLessonModuleDiscussions,
+  createDiscussion,
 } from '../../../../Utils/requests';
 import MentorSubHeader from '../../../../components/MentorSubHeader/MentorSubHeader';
 import CreateDiscussionModal from './CreateDiscussionModal';
@@ -46,7 +47,7 @@ export default function Discussions({ classroomId, viewing }) {
               message.error(lsRes.err);
             }
             const discRes = await getLessonModuleDiscussions(lsRes.data.id);
-            console.log(discRes);
+            // console.log(discRes);
             if (discRes) setDiscussions(discRes.data);
             else { message.error(discRes.err); }
           }
@@ -76,6 +77,15 @@ export default function Discussions({ classroomId, viewing }) {
     'lime',
   ];
 
+  // const addDiscussion = (discussion) => {
+  //   setDiscussions([...discussions, discussion]);
+  // }
+  const addDiscussion = async (title, description) => {
+    const res = await createDiscussion(title, description, activeLessonModule.id);
+    if (res.err) {message.error(res.err)}
+    setDiscussions([...discussions, res.data]);
+  }
+
   return (
     <div>
       {/* return home */}
@@ -83,7 +93,8 @@ export default function Discussions({ classroomId, viewing }) {
         <i className='fa fa-arrow-left' aria-hidden='true' />
       </button>
       {/* make new discussion button */}
-      <CreateDiscussionModal code={classroom.code} /> {/* stil needs to be given logic*/}
+      {/* <CreateDiscussionModal lessonModuleId={activeLessonModule.id} onCreate={addDiscussion}/> */}
+      <CreateDiscussionModal onCreate={addDiscussion}/>
       <MentorSubHeader title={classroom.name}></MentorSubHeader>
       <div id='home-content-container'> {/* container for the whole page */}
         <div id='active-lesson-module'> {/* container for the currently selected lesson module */}
@@ -96,7 +107,8 @@ export default function Discussions({ classroomId, viewing }) {
                   classroomId={classroomId}
                   gradeId={gradeId}
                   viewing={viewing}
-                  setActivities={setActivities}
+                  setActivities={setDiscussions}
+                  // setActivities={setActivities}
                   // setDiscussions={setDiscussions}
                 />
               </div>
@@ -123,10 +135,10 @@ export default function Discussions({ classroomId, viewing }) {
                       <div id='view-discussion-heading' style={{display: "flex"}}>
                         <MentorDiscussionDetailModal ///////////// button for mentor to view the discussion details
                           learningStandard={activeLessonModule}
-                          selectActivity={discussion}
+                          selectDiscussion={discussion}
                           activityDetailsVisible={false}
                           setActivityDetailsVisible={false}
-                          setActivities={setActivities}
+                          setDiscussions={setDiscussions}
                           viewing={false}
                         />
                       </div>

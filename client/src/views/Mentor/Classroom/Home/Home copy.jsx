@@ -121,7 +121,6 @@ export default function Home({ classroomId, viewing }) {
                   </a>
                 </p>
               ) : null}
-              {/* maybe try to create a wrapper called lesson-content with 2 columns for activities and discussions */}
               {activities ? (
                 <div id='card-btn-container' className='flex space-between'>
                   {activities.map((activity) => (
