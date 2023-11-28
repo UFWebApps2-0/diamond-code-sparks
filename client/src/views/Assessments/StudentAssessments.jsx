@@ -44,6 +44,7 @@ function StudentAssessments({stuId,classId})
       temp[i] = false;
       setView(temp);
     }
+
     useEffect(() => {
  
       getStudentClassAssessments(stuId,classId).then((res) => {
@@ -51,8 +52,6 @@ function StudentAssessments({stuId,classId})
           const data = [];
           res.data.forEach((assessment,i) => {
 
-            let questions = getClassAssessment(assessment.name,classId).then((res)=>res.data.questions);
-            console.log(questions);
             data.push({
               key: assessment.id,
               name: assessment.assessmentName,
@@ -77,7 +76,7 @@ function StudentAssessments({stuId,classId})
                       </Button>,
                     ]}
                   >
-                    <CompletedAssessment name={assessment.assessmentName} answers={assessment.answers} questions={questions}/>
+                    <CompletedAssessment name={assessment.assessmentName} answers={assessment.answers} classId={classId}/>
                 </Modal>
               </>
               ),
