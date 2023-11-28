@@ -169,13 +169,6 @@ export default function ManageAccount() {
               </td>
             </tr>
             <tr
-              onClick={() =>
-                handleTeacherClick({
-                  teacherId: "2",
-                  first_name: "Jane",
-                  last_name: "Doe",
-                })
-              }
             >
               <td>Jane Doe</td>
               <td>University of Miami</td>
