@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../ActivityLevels.less';
-import { compileArduinoCode, handleUpdateWorkspace,  handleCreatorSaveActivityLevel, handleCreatorSaveActivity } from '../../Utils/helpers';
+import { importWorkspace, exportWorkspace, compileArduinoCode, handleUpdateWorkspace,  handleCreatorSaveActivityLevel, handleCreatorSaveActivity } from '../../Utils/helpers';
 import { message, Spin, Row, Col, Alert, Menu, Dropdown } from 'antd';
 import CodeModal from '../modals/CodeModal';
 import ConsoleModal from '../modals/ConsoleModal';
@@ -292,7 +292,26 @@ export default function MentorCanvas({ activity, isSandbox, setActivity,  isMent
       <LoadWorkspaceModal loadSave={loadSave} classroomId={classroomId} />
     </Menu>
   );
-
+  
+  let alreadyImportedFromCookie = false;
+  const handleImportFromCookie = () => {
+    let workspaceXmlCached = sessionStorage.getItem("casmm-workspace-login");
+    if (workspaceXmlCached === null || workspaceXmlCached === "" || alreadyImportedFromCookie) {
+      return;
+    }
+    if (window.Blockly.mainWorkspace !== null) {
+      // alert(workspaceXmlCached);
+      importWorkspace(window.Blockly.mainWorkspace, workspaceXmlCached);
+      alreadyImportedFromCookie = true;  // Only import once
+      window.sessionStorage.removeItem("casmm-workspace-login");
+    }
+    else {
+      // Keep trying to import every few seconds until we succeed.
+      setTimeout(handleImportFromCookie, 3000);
+    }
+  }
+  setTimeout(handleImportFromCookie, 3000);
+  
   return (
     <div id='horizontal-container' className='flex flex-column'>
       <div className='flex flex-row'>
