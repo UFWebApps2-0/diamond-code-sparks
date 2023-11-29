@@ -6,7 +6,6 @@ import { message, Spin, Row, Col, Alert, Menu, Dropdown } from 'antd';
 import CodeModal from '../modals/CodeModal';
 import ConsoleModal from '../modals/ConsoleModal';
 import PlotterModal from '../modals/PlotterModal';
-// Ashley Savigne: added displayDiagram and verson hist
 import DisplayDiagramModal from '../modals/DisplayDiagramModal'
 import VersionHistoryModal from '../modals/VersionHistoryModal';
 import {
@@ -16,7 +15,6 @@ import {
 } from '../../Utils/consoleHelpers';
 import ArduinoLogo from '../Icons/ArduinoLogo';
 import PlotterLogo from '../Icons/PlotterLogo';
-// ashley: added usenav
 import { useNavigate } from 'react-router-dom';
 
 let plotId = 1;
@@ -26,7 +24,6 @@ export default function PublicCanvas({ activity, isSandbox }) {
   const [hoverUndo, setHoverUndo] = useState(false);
   const [hoverRedo, setHoverRedo] = useState(false);
   const [hoverCompile, setHoverCompile] = useState(false);
-  //Ashley added below
   const [hoverImage, setHoverImage] = useState(false);
   const [hoverConsole, setHoverConsole] = useState(false);
   const [showConsole, setShowConsole] = useState(false);
@@ -35,18 +32,13 @@ export default function PublicCanvas({ activity, isSandbox }) {
   const [connectionOpen, setConnectionOpen] = useState(false);
   const [selectedCompile, setSelectedCompile] = useState(false);
   const [compileError, setCompileError] = useState('');
-  //ashley added bottom 3
   const [saves, setSaves] = useState({});
   const [lastSavedTime, setLastSavedTime] = useState(null);
   const [lastAutoSave, setLastAutoSave] = useState(null);
-
   const [forceUpdate] = useReducer((x) => x + 1, 0);
-  //ashley added below
   const navigate = useNavigate();
   const workspaceRef = useRef(null);
   const activityRef = useRef(null);
-
-  //ashley added blow x2
   const replayRef = useRef([]);
   const clicks = useRef(0);
 
@@ -56,9 +48,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
     });
     window.Blockly.addChangeListener(blocklyEvent);
   };
-
-  // Ashley: do not need to loadsave bc this user is unregistered
-
+  
   const loadSave = (selectedSave) => {
     try {
       let toLoad = activity.template;
@@ -110,10 +100,8 @@ export default function PublicCanvas({ activity, isSandbox }) {
     });
   };
 
-  // Ashley: also idk what this does
   let blocked = false;
   const blocklyEvent = (event) => {
-    // if it is a click event, add click
     if (
       (event.type === 'ui' && event.element === 'click') ||
       event.element === 'selected'
