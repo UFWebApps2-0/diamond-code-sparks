@@ -6,7 +6,7 @@ import {
   addTeacher,
   deleteTeacher,
   getTeachers,
-  getSchoolByName,
+  
   addSchool,
 } from "../../Utils/requests"; // Import the deleteTeacher function
 import { Input, Modal, Button, message } from "antd";
