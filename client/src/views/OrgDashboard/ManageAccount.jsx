@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
 import "./ManageAccount.less"; // Import the styles
-import { addTeacher, deleteTeacher } from "../../Utils/requests"; // Import the deleteTeacher function
+import {
+  addTeacher,
+  deleteTeacher,
+  getTeachers,
+  getSchoolByName,
+  addSchool,
+} from "../../Utils/requests"; // Import the deleteTeacher function
 import { Input, Modal, Button, message } from "antd";
 import { CloseOutlined } from "@ant-design/icons"; // Import the close icon
 
@@ -15,7 +21,12 @@ export default function ManageAccount() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [teachers, setTeachers] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    handleGetTeachers();
+  }, []);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -44,6 +55,7 @@ export default function ManageAccount() {
       setLastName("");
       setSchool("");
       setIsModalVisible(false);
+      handleGetTeachers();
     } else {
       message.error(res.err);
     }
@@ -55,7 +67,11 @@ export default function ManageAccount() {
       return;
     }
 
-    const res = await deleteTeacher(selectedTeacher.teacherId);
+    console.log("Deleting teacher with ID:", selectedTeacher.id);
+
+    const res = await deleteTeacher(selectedTeacher.id);
+
+    console.log("Delete Teacher Response:", res);
 
     if (res.data) {
       message.success(
@@ -67,6 +83,7 @@ export default function ManageAccount() {
       setIsModalVisible(false);
       setSelectedTeacher(null);
       setDeleteModal(false);
+      handleGetTeachers();
     } else {
       message.error(res.err);
     }
@@ -75,6 +92,16 @@ export default function ManageAccount() {
   const handleTeacherClick = (teacher) => {
     setSelectedTeacher(teacher);
     setDeleteModal(true);
+  };
+
+  const handleGetTeachers = async () => {
+    try {
+      const res = await getTeachers();
+      setTeachers(res.data);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -132,9 +159,18 @@ export default function ManageAccount() {
           visible={deleteModal}
           onCancel={() => setDeleteModal(false)}
           width={"50vw"}
-          onOk={handleRemove}
-          okText="Delete"
-          cancelText="Cancel"
+          footer={[
+            <Button
+              key="cancel"
+              type="primary"
+              onClick={() => setDeleteModal(false)}
+            >
+              Cancel
+            </Button>,
+            <Button key="delete" type="primary" danger onClick={handleRemove}>
+              Delete
+            </Button>,
+          ]}
         >
           Are you sure you want to delete this teacher?
         </Modal>
@@ -148,47 +184,24 @@ export default function ManageAccount() {
           </thead>
           <tbody>
             {/* Replace this with actual data */}
-            <tr>
-              <td>John Doe</td>
-              <td>University of Florida</td>
-              <td>
-                <Button
-                  type="link"
-                  danger
-                  onClick={() => {
-                    showDeleteModal();
-                    handleTeacherClick({
-                      teacherId: "1",
-                      first_name: "John",
-                      last_name: "Doe",
-                    });
-                  }}
-                >
-                  <CloseOutlined />
-                </Button>
-              </td>
-            </tr>
-            <tr
-            >
-              <td>Jane Doe</td>
-              <td>University of Miami</td>
-              <td>
-                <Button
-                  type="link"
-                  danger
-                  onClick={() => {
-                    showDeleteModal();
-                    handleTeacherClick({
-                      teacherId: "2",
-                      first_name: "Jane",
-                      last_name: "Doe",
-                    });
-                  }}
-                >
-                  <CloseOutlined />
-                </Button>
-              </td>
-            </tr>
+            {teachers.map((teacher) => (
+              <tr key={teacher.id}>
+                <td>{`${teacher.first_name} ${teacher.last_name}`}</td>
+                <td>{teacher.school ? teacher.school.name : "N/A"}</td>
+                <td>
+                  <Button
+                    type="link"
+                    danger
+                    onClick={() => {
+                      showDeleteModal();
+                      handleTeacherClick(teacher);
+                    }}
+                  >
+                    <CloseOutlined />
+                  </Button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
