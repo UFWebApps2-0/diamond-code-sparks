@@ -46,6 +46,10 @@
     "activity_template": {
       "type": "text",
       "required": false
+    },
+    "student_vis": {
+      "type": "boolean",
+      "default": true
     }
   }
 }
