@@ -637,6 +637,9 @@
               "activity_template": {
                 "type": "string"
               },
+              "student_vis": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },

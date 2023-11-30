@@ -19,13 +19,14 @@ import { useNavigate } from 'react-router-dom';
 
 let plotId = 1;
 
-export default function StudentCanvas({ activity, toggleSplit }) {
+export default function StudentCanvas({ activity, toggleSplit, toggleSplitD }) {
   const [hoverSave, setHoverSave] = useState(false);
   const [hoverUndo, setHoverUndo] = useState(false);
   const [hoverRedo, setHoverRedo] = useState(false);
   const [hoverCompile, setHoverCompile] = useState(false);
   const [hoverImage, setHoverImage] = useState(false);
   const [hoverSplit, setHoverSplit] = useState(false);
+  const [hoverSplitD, setHoverSplitD] = useState(false);
   const [hoverConsole, setHoverConsole] = useState(false);
   const [showConsole, setShowConsole] = useState(false);
   const [showPlotter, setShowPlotter] = useState(false);
@@ -242,6 +243,10 @@ export default function StudentCanvas({ activity, toggleSplit }) {
 
   const handleToggleSplit = () => {
     setSplitScreen(!splitScreen);
+  };
+  const handleToggleSplitD = () => {
+    setDisableSplit(!disableSplit);
+    setSplitOpen(false); // Close split-screen when disabling
   };
 
   const buttonStyle = {
@@ -477,6 +482,7 @@ export default function StudentCanvas({ activity, toggleSplit }) {
                         onMouseEnter={() => setHoverSplit(true)}
                         onMouseLeave={() => setHoverSplit(false)}
                       >
+
                       {hoverSplit && (
                         <div className='popup ModalCompile4'> Split Screen</div>
                       )}

@@ -3,21 +3,23 @@ import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import BlocklyCanvasPanel from "../../components/ActivityPanels/BlocklyCanvasPanel/BlocklyCanvasPanel"
 import NavBar from "../../components/NavBar/NavBar"
-import Blank from "./Blank";
-import SplitPane from 'react-split-pane';
-import './Blank.css'
 import {
   getAuthorizedWorkspaceToolbox,
   getActivityToolbox,
   getActivityToolboxAll,
 } from "../../Utils/requests"
 import { useGlobalState } from "../../Utils/userState"
+import Blank from "./Blank";
+import SplitPane from 'react-split-pane';
+import './Blank.css'
 
 export default function BlocklyPage({ isSandbox }) {
   const [value] = useGlobalState("currUser")
   const [activity, setActivity] = useState({})
   const navigate = useNavigate()
   const [splitOpen, setSplitOpen] = useState(false)
+  const [splitScreenEnabled, setSplitScreenEnabled] = useState(false);
+  const [disableSplit, setDisableSplit] = useState(false);
 
   useEffect(() => {
     const setup = async () => {
@@ -52,7 +54,6 @@ export default function BlocklyPage({ isSandbox }) {
       // else show toolbox based on the activity we are viewing
       else {
         const localActivity = JSON.parse(localStorage.getItem("my-activity"))
-
         if (localActivity) {
           if (localActivity.toolbox) {
             setActivity(localActivity)
@@ -75,52 +76,37 @@ export default function BlocklyPage({ isSandbox }) {
 
     setup()
   }, [isSandbox, navigate, value.role])
-  /*
-    return (
-    <div className="container nav-padding">
-      <NavBar />
-      <div className="split-screen" style={splitScreenStyle}>
-        <div style={childDivStyle}>
-          <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
-        </div>
-        
-        <div style={childDivStyle}>
-          <Blank/>
-       </div>
-      </div>
-    </div>
-  )
-  */
 
-  /*
-     <div className="split-screen" style={splitScreenStyle}>
-        <div style={childDivStyle}>
-          <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
-        </div>
-        
-        <div style={childDivStyle2}>
-          <Blank/>
-       </div>
-      </div>
-  */
+  const [leftPaneSize, setLeftPaneSize] = useState('50%');
 
-      const [leftPaneSize, setLeftPaneSize] = useState('50%');
+  const handleDrag = newSize => {
+    // The new size is greater than or equal to 50% of the window width
+    if (newSize >= window.innerWidth / 2) {
+      setLeftPaneSize(newSize);
+    }
+  };
 
-      const handleDrag = newSize => {
-        // The new size is greater than or equal to 50% of the window width
-        if (newSize >= window.innerWidth / 2) {
-          setLeftPaneSize(newSize);
-        }
-      };
-
-      const handleToggleSplit = () => {
+  const handleToggleSplit = () => {
+    const localActivity = JSON.parse(localStorage.getItem('my-activity'));
+    if(localActivity.student_vis == true)
+      if (!disableSplit) {
         setSplitOpen(!splitOpen);
-      };
+      }
+    else{
+      setSplitOpen(false);
+    }
+  };
+  //handles toggling split-screen 
+  const handleToggleSplitD = () => {
+    setDisableSplit(!disableSplit);
+    setSplitOpen(false); //Close split-screen when disabling
+  };
+
 
       return (
         <div className="container nav-padding">
           <NavBar />
-          { splitOpen ? (
+          { splitOpen && !disableSplit ? (
             <SplitPane
             split="vertical"
             minSize="59%"
@@ -130,7 +116,7 @@ export default function BlocklyPage({ isSandbox }) {
             pane1Style={{ minWidth: '59%'}}
             >
               <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} toggleSplit={handleToggleSplit}/>
-              {/* someone else implements this blank function and we call it */}
+              {/* someone else implements this blank */}
               <Blank/> 
               
             </SplitPane>

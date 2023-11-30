@@ -22,6 +22,7 @@ export default function LessonEditor({
   const [linkError, setLinkError] = useState(false)
   const [displayName, setDisplayName] = useState(learningStandard.name)
   
+  
   // eslint-disable-next-line
   const [_, setSearchParams] = useSearchParams()
 
@@ -57,7 +58,7 @@ export default function LessonEditor({
       name,
       description,
       standards,
-      link
+      link,
     )
     if (response.err) {
       message.error("Fail to update lesson")
@@ -129,6 +130,7 @@ export default function LessonEditor({
             />
           </Form.Item>
           
+
           <Form.Item label="Link to Additional Resources (Optionals)">
             <Input
               onChange={e => {

@@ -193,13 +193,7 @@ export default function LessonModuleCreator({
               placeholder="Enter lesson Standards"
             />
           </Form.Item>
-          <Form.Item
-            label="Visible to students"
-            name="visibleToStudents"
-            valuePropName="checked"
-          >
-            <Checkbox onChange={e => setVisibleVal(e.target.checked)}/>
-          </Form.Item>
+          
 
           <Form.Item label="Link to Additional Resource (Optional)">
             <Input
