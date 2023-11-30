@@ -130,7 +130,7 @@ export default function BlocklyPage({ isSandbox }) {
             pane1Style={{ minWidth: '59%'}}
             >
               <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} toggleSplit={handleToggleSplit}/>
-              {/* someone else implements this blank */}
+              {/* someone else implements this blank function and we call it */}
               <Blank/> 
               
             </SplitPane>
