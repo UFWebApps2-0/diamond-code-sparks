@@ -37,24 +37,31 @@ export default function Dashboard() {
     navigate('/all-lessons');
   };
 
+  const lessonCreator = () => {
+    navigate(`/ccdashboard`)
+  }
+
   return (
-      <div className='container nav-padding'>
-        <NavBar />
-        <div id='main-header'>Welcome {value.name}</div>
-        <div className='sub-header-container'>
-          <MentorSubHeader title={'Your Classrooms'} />
-        </div>
-        <div id='classrooms-container'>
-          <div id='dashboard-card-container'>
-            {classrooms.map((classroom) => (
-              <div key={classroom.id} id='dashboard-class-card'>
-                <div id='card-left-content-container'>
-                  <h1 id='card-title'>{classroom.name}</h1>
-                  <div id='card-button-container'>
-                    <button onClick={() => handleViewClassroom(classroom.id)}>
-                      View
-                    </button>
-                  </div>
+    <div className='container nav-padding'>
+      <NavBar />
+      <div id='main-header'>Welcome {value.name}</div>
+      <MentorSubHeader title={'Create Lesson'} onClick={() => lessonCreator()}></MentorSubHeader>
+      <div id='lesson-creator'>
+        <button onClick={() => lessonCreator()}>
+          Create Lesson
+        </button>
+      </div>
+      <MentorSubHeader title={'Your Classrooms'}></MentorSubHeader>
+      <div id='classrooms-container'>
+        <div id='dashboard-card-container'>
+          {classrooms.map((classroom) => (
+            <div key={classroom.id} id='dashboard-class-card'>
+              <div id='card-left-content-container'>
+                <h1 id='card-title'>{classroom.name}</h1>
+                <div id='card-button-container' className='flex flex-row'>
+                  <button onClick={() => handleViewClassroom(classroom.id)}>
+                    View
+                  </button>
                 </div>
                 <div id='card-right-content-container'>
                   <DashboardDisplayCodeModal code={classroom.code} />
