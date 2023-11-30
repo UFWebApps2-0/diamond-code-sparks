@@ -8,37 +8,58 @@ const { Panel } = Collapse;
 // https://ant.design/components/collapse#components-collapse-demo-size
 // https://ant.design/components/collapse#components-collapse-demo-custom
 
+// https://dev.to/shareef/how-to-work-with-arrays-in-reactjs-usestate-4cmi 
+
 export default function GroupView(props) {
     const {
         studentData,
         filterText,
     } = props;
 
-    const [groupSize, setGroupSize] = useState(3);
+    // Format of incoming information from Strapi backend
+    // groupFormat = [
+    //     {
+    //         id: 0,
+    //         students: [],
+    //     },
+    // ];
 
     // Move this to roster.jsx for future work in gathering groupData from backend
+    const [groupSize, setGroupSize] = useState(3);
     const [groupData, setGroupData] = useState([]);
 
-    // Add a search onto the search filter text to reduce number of groups shown
-    // useEffect(() => {
-    //     const filterRoster = classroom.students.filter((student) => student.name.toLowerCase().includes(filterText.toLowerCase()));
-    //     filterRoster.forEach((student) => {
-    //         data.push({
-    //             key: student.id,
-    //             name: student.name,
-    //             character: student.character,
-    //             enrolled: {
-    //                 id: student.id,
-    //                 enrolled: student.enrolled,
-    //             },
-    //             last_logged_in: student.last_logged_in,
-    //         });
-    //     });
-    //     setStudentData(data);
-    // } else {
-    //     message.error(res.err);
-    // }
-    //     , filterText)
+    var groupTemp = groupData;
+
+    function filterGroups(data) {
+        if (data.students === undefined) {
+            return false;
+        }
+
+        const res = data.students.filter((student) =>
+            student.name.toLowerCase().includes(filterText.toLowerCase()));
+
+        if (res === undefined || res.length == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    //  Search onto the search filter text to reduce number of groups shown
+    useEffect(() => {
+        if (filterText != "") {
+            let data = [];
+
+            // TODO Work on backend to make data persist
+            // Currently will filter an ever shrinking list of groups because we can't maintain consistency between rerenders
+            // Can hardcode for now but should be stored on backend
+
+            data = groupData.filter(filterGroups);
+            setGroupData(data);
+        } else {
+            setGroupData(groupTemp);
+        }
+    }, [filterText]);
 
 
 
@@ -62,12 +83,11 @@ export default function GroupView(props) {
             dataSource[i - 1] = temp;
         }
 
-        // Group students
-        // Hard coded groups of 3. Will be changed to allow teacher to specify
         let groups = [];
-
+        let i = 0;
         while (dataSource.length > 0) {
-            groups.push(dataSource.splice(0, groupSize))
+            let temp = dataSource.splice(0, groupSize);
+            groups.push({ id: ++i, students: temp });
         }
 
         // Return groups
@@ -90,7 +110,7 @@ export default function GroupView(props) {
                     <button onClick={() => handleClick()}>
                         Randomize Groups
                     </button>
-                    <InputNumber min={1} max={10} defaultValue={3} onChange={onChange} />
+                    <InputNumber min={1} max={10} defaultValue={groupSize} onChange={onChange} />
 
                     <div id="card-container">
                         <p id="center-text">No Groups Available</p>
@@ -105,19 +125,23 @@ export default function GroupView(props) {
             <button onClick={() => handleClick()}>
                 Randomize Groups
             </button>
-            <InputNumber min={1} max={10} defaultValue={3} onChange={onChange} />
+            <InputNumber min={1} max={10} defaultValue={groupSize} onChange={onChange} />
 
             <div id="card-container">
                 <Collapse className="centerCollapse">
-                    {groupData.map((group, index) => (
-                        <Panel header={"Group: " + (index + 1)} key={(index + 1)} >
-                            {group.map((person, i) => (
-                                <text id="center-text">{(i + 1) + ". " + person.name}</text>
-                            ))}
-                        </Panel>
+                    {groupData.map((group) => (
+                        group.id != 0 ? (<Panel header={"Group: " + group.id} key={group.id} >
+                            {
+                                group.students.map((person, index) => (
+                                    <p id="center-text" key={index + 1} >{(index + 1) + ". " + person.name}</p>
+                                ))
+                            }
+                        </Panel>)
+                            : null
                     ))}
                 </Collapse>
             </div>
         </div >
     );
 }
+

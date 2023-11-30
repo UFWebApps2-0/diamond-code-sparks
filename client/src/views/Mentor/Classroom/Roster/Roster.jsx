@@ -32,7 +32,8 @@ export default function Roster({ classroomId }) {
         setClassroom(classroom);
 
         // Added new filter result to the shown classroom
-        const filterRoster = classroom.students.filter((student) => student.name.toLowerCase().includes(filterText.toLowerCase()));
+        const filterRoster = classroom.students.filter((student) =>
+          student.name.toLowerCase().includes(filterText.toLowerCase()));
         filterRoster.forEach((student) => {
           data.push({
             key: student.id,
@@ -52,8 +53,6 @@ export default function Roster({ classroomId }) {
     });
   }, [classroomId, filterText]);
   // Added filterText state dependency to rerender student data with teachers inputted filter
-
-
 
   const getFormattedDate = (value, locale = 'en-US') => {
     if (value) {
