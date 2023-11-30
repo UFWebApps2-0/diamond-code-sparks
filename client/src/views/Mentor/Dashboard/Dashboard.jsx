@@ -71,8 +71,8 @@ export default function Dashboard() {
                     <p id='label'>Students</p>
                   </div>
                 </div>
-                
               </div>
+            </div>
             ))}
           </div>
           <button onClick={handleViewAllLessonsClick} className="view-all-lessons-button">
