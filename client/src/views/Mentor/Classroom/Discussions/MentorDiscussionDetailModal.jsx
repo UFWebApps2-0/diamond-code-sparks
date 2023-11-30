@@ -8,7 +8,6 @@ import {
   getLessonModuleDiscussions,
   updateDiscussionDetails,
 } from "../../../../Utils/requests"
-import "../../../ContentCreator/ActivityEditor/ActivityEditor.less"
 import "../../../ContentCreator/DiscussionEditor/DiscussionEditor.less"
 
 const SCIENCE = 1
@@ -20,6 +19,7 @@ const MentorDiscussionDetailModal = ({
   selectDiscussion,
   setDiscussions,
   open,
+  viewing,
 }) => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -30,6 +30,7 @@ const MentorDiscussionDetailModal = ({
   const navigate = useNavigate()
 
   useEffect(() => {
+    console.log("effect used")
     const showActivityDetailsModal = async () => {
       const response = await getDiscussion(selectDiscussion.id)
       if (response.err) {
@@ -55,9 +56,10 @@ const MentorDiscussionDetailModal = ({
       message.success("Successfully saved discussion")
       // just save the form
       if (submitButton === 0) {
+        console.log(viewing)
         const getDiscussionAll = await getLessonModuleDiscussions(viewing)
         const myDiscussions = getDiscussionAll.data
-        // myDiscussions.sort((a, b) => (a.number > b.number ? 1 : -1))
+        myDiscussions.sort((a, b) => (a.number > b.number ? 1 : -1))
         setDiscussions([...myDiscussions])
       } 
     }
@@ -89,7 +91,7 @@ const MentorDiscussionDetailModal = ({
       width="45vw"
     >
       <Form
-        id="activity-detail-editor"
+        id="discussion-detail-editor"
         layout="horizontal"
         size="default"
         labelCol={{

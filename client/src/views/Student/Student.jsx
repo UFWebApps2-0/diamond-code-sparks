@@ -3,10 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
 import { getStudentClassroom, getLessonModule } from '../../Utils/requests';
+import StudentDiscussionDetailModal from './StudentDiscussionDetailModal';
 import './Student.less';
 
 function Student() {
   const [learningStandard, setLessonModule] = useState({}); // learningStandard is the lesson module
+  const [selectedDiscussion, setSelectedDiscussion] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,12 +38,25 @@ function Student() {
 
     navigate('/workspace');
   };
+
+  const showModal = () => {
+    setModalVisible(true)
+  };
+
+  const handleCancel = () => {
+    console.log("handleCancel called")
+    setModalVisible(false)
+    console.log("modalVisible: ", modalVisible)
+  };
+
+  const handleOk = () => {
+      setModalVisible(false)
+  }; 
   
   const handleDiscussionSelection = (discussion) => {
-    // discussion.lesson_module_name = learningStandard.name;
-    // localStorage.setItem('my-discussion', JSON.stringify(discussion));
-    // navigate('/discussion');
     /* want to open pop up like create discussion page that just has the title and description and button to go to discussion page */
+    setSelectedDiscussion(discussion);
+    setModalVisible(true);
   }
 
   return (
@@ -79,7 +96,18 @@ function Student() {
               onClick={() => handleDiscussionSelection(discussion)}
               >
               {/* <li> {discussion.Title} </li> */}
-              <li> {`${learningStandard.name}: ${discussion.Title}`} </li>
+              <li> 
+                {`${learningStandard.name}: ${discussion.Title}`} 
+                <StudentDiscussionDetailModal
+                  learningStandardName={learningStandard.name}
+                  title={discussion.Title}
+                  description={discussion.Description}
+                  visible={modalVisible}
+                  // check notes page for link to help /////////////////// IN GENERAL J LOOK HERE FIRST ////////////
+                  handleCancel={handleCancel}
+                  handleOk={handleOk}
+                />
+                </li>
               </div>
             ))
           ) : (
