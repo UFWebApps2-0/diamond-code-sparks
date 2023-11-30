@@ -36,6 +36,10 @@
     },
     "link": {
       "type": "string"
+    },
+    "discussions": {
+      "via": "lesson_module",
+      "collection": "discussion"
     }
   }
 }

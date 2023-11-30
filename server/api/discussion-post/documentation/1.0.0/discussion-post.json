@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/units": {
+    "/discussion-posts": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,9 +10,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Unit"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Unit"
+          "Discussion-post"
         ],
         "parameters": [
           {
@@ -201,72 +202,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unit"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Unit"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewUnit"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/units/count": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,12 +244,22 @@
         },
         "summary": "",
         "tags": [
-          "Unit"
+          "Discussion-post"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewDiscussion-post"
+              }
+            }
+          }
+        }
       }
     },
-    "/units/{id}": {
+    "/discussion-posts/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -321,7 +269,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unit"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -359,7 +311,64 @@
         },
         "summary": "",
         "tags": [
-          "Unit"
+          "Discussion-post"
+        ],
+        "parameters": []
+      }
+    },
+    "/discussion-posts/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Discussion-post"
         ],
         "parameters": [
           {
@@ -383,7 +392,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unit"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -421,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Unit"
+          "Discussion-post"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewUnit"
+                "$ref": "#/components/schemas/NewDiscussion-post"
               }
             }
           }
@@ -495,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Unit"
+          "Discussion-post"
         ],
         "parameters": [
           {
@@ -514,39 +527,39 @@
   },
   "components": {
     "schemas": {
-      "Unit": {
+      "Discussion-post": {
         "required": [
-          "id",
-          "name",
-          "number"
+          "id"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "grade": {
+          "PostContent": {
+            "type": "string"
+          },
+          "parent_post": {
             "required": [
-              "id",
-              "name"
+              "id"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "name": {
+              "PostContent": {
                 "type": "string"
               },
-              "classrooms": {
+              "parent_post": {
+                "type": "string"
+              },
+              "kid_posts": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "units": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+              "published_at": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -556,59 +569,30 @@
               }
             }
           },
-          "name": {
-            "type": "string"
-          },
-          "standards_id": {
-            "type": "string"
-          },
-          "standards_description": {
-            "type": "string"
-          },
-          "number": {
-            "type": "integer"
-          },
-          "lesson_modules": {
+          "kid_posts": {
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "number",
-                "name"
+                "id"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "number": {
-                  "type": "number"
-                },
-                "name": {
+                "PostContent": {
                   "type": "string"
                 },
-                "expectations": {
+                "parent_post": {
                   "type": "string"
                 },
-                "activities": {
+                "kid_posts": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "unit": {
+                "published_at": {
                   "type": "string"
-                },
-                "standards": {
-                  "type": "string"
-                },
-                "link": {
-                  "type": "string"
-                },
-                "discussions": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
                 },
                 "created_by": {
                   "type": "string"
@@ -618,35 +602,30 @@
                 }
               }
             }
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "NewUnit": {
-        "required": [
-          "name",
-          "number"
-        ],
+      "NewDiscussion-post": {
         "properties": {
-          "grade": {
+          "PostContent": {
             "type": "string"
           },
-          "name": {
+          "parent_post": {
             "type": "string"
           },
-          "standards_id": {
-            "type": "string"
-          },
-          "standards_description": {
-            "type": "string"
-          },
-          "number": {
-            "type": "integer"
-          },
-          "lesson_modules": {
+          "kid_posts": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"
@@ -658,9 +637,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Unit"
-    }
-  ]
+  "tags": []
 }

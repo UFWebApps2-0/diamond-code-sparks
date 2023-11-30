@@ -5,6 +5,7 @@ import './Classroom.less';
 import NavBar from '../../../components/NavBar/NavBar';
 import Roster from './Roster/Roster';
 import Home from './Home/Home';
+import Discussions from './Discussions/Discussions';
 import SavedWorkSpaceTab from '../../../components/Tabs/SavedWorkspaceTab';
 import { useSearchParams, useParams } from 'react-router-dom';
 
@@ -51,8 +52,14 @@ export default function Classroom({
             classroomId={id}
           />
         </TabPane>
-        <TabPane tab='Discussion' key='discussion'>
-          /* fill this out */
+        <TabPane tab='Discussions' key='discussions'>
+          {/* new discussions page */}
+          <Discussions
+            classroomId={parseInt(id)}
+            selectedActivity={selectedActivity}
+            setSelectedActivity={setSelectedActivity}
+            viewing={viewing}
+          />
         </TabPane>
       </Tabs>
     </div>

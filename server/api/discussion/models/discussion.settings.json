@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "discussions",
+  "info": {
+    "name": "Discussion",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "lesson_module": {
+      "model": "lesson-module",
+      "via": "discussions"
+    }
+  }
+}
