@@ -142,6 +142,10 @@ const ActivityDetailModal = ({
         setActivityDetailsVisible(false)
         handleViewActivityTemplate(res.data)
       }
+      else if (submitButton === 3) {
+        setActivityDetailsVisible(false)
+        handleViewActivityTemplate(res.data)
+      }
     }
   }
 
@@ -239,7 +243,7 @@ const ActivityDetailModal = ({
         <Form.Item
           id="form-label"
           wrapperCol={{
-            offset: 6,
+            offset: 1,
             span: 30,
           }}
         >
@@ -252,6 +256,11 @@ const ActivityDetailModal = ({
             Save and Set
             <br />
             Demo Template
+          </button>
+          <button id="save--set-demo-btn" onClick={() => setSubmitButton(3)}>
+            Save and Set
+            <br />
+            Code Replay
           </button>
         </Form.Item>
         <Form.Item
