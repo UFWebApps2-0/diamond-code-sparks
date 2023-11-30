@@ -14,9 +14,6 @@ import {
   getActivityToolboxAll,
 } from "../../Utils/requests"
 import { useGlobalState } from "../../Utils/userState"
-import Blank from "./Blank";
-import SplitPane from 'react-split-pane';
-import './Blank.css'
 
 export default function BlocklyPage({ isSandbox }) {
   const [value] = useGlobalState("currUser")
