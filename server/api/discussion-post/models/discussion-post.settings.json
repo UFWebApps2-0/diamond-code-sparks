@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "discussion_posts",
+  "info": {
+    "name": "Discussion Post",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "PostContent": {
+      "type": "richtext"
+    },
+    "parent_post": {
+      "model": "discussion-post",
+      "via": "kid_posts"
+    },
+    "kid_posts": {
+      "collection": "discussion-post",
+      "via": "parent_post"
+    }
+  }
+}
