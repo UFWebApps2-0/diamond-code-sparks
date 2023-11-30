@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import DeleteOrgModal from './DeleteOrgModal';
 import { getOrganizations, getAllOrgs, updateOrgName } from "../../Utils/requests"
+import { useGlobalState } from '../../Utils/userState';
 
 export default function OrgDashboard() {
 	const [orgs, setOrgs] = useState([]);
@@ -13,6 +14,7 @@ export default function OrgDashboard() {
 	const [orgName, setOrgName] = useState('');
 	const [sort, setSort] = useState('default');
 	const [deleteFlag, setDeleteFlag] = useState(false); // used to trigger re-render upon org deletion
+	const [value] = useGlobalState('currUser');
 
 	useEffect(() => {
     	let orgList = [];
@@ -111,8 +113,7 @@ export default function OrgDashboard() {
 	return (
 	    <div className='container nav-padding'>
 	        <NavBar />
-	        {/* Replace 'Admin' with username after admin accounts are created */}
-	        <div id='main-header'>Welcome Admin</div>
+	        <div id='main-header'>Welcome {value.name}</div>
 	        <div id='org-dash-bar'>
 	        	<input
 	       			type='button'
@@ -150,7 +151,7 @@ export default function OrgDashboard() {
 				        		</div>
 				        		<div id='card-bottom-content-container'>
 				        			<button className='manage-btn' onClick={() => navigate('/admindashboard')}>
-				        				<p>Manage Classrooms</p>
+				        				<p>Manage Schools</p>
 				        			</button>
 				        			<div className='divider' />
 				        			<button className='manage-btn' onClick={() => navigate('/managegalleries')}>
