@@ -20,17 +20,17 @@ export default function ManageAccount() {
   const [school, setSchool] = useState("");
   const [schools, setSchools] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-    const [selectedTeacher, setSelectedTeacher] = useState(null);
-    const [selectedSchools, setSelectedSchools] = useState([]);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
+  const [selectedSchools, setSelectedSchools] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
-    const [teachers, setTeachers] = useState([]);
-    const [isError, setIsError] = useState("");
-    const [newSchoolName, setNewSchoolName] = useState("");
+  const [teachers, setTeachers] = useState([]);
+  const [isError, setIsError] = useState("");
+  const [newSchoolName, setNewSchoolName] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-      handleGetTeachers();
-      let schoolList = [];
+    handleGetTeachers();
+    let schoolList = [];
     getSchools().then((res) => {
       if (res.data) {
         for (let i = 0; i < res.data.length; i++) {
@@ -46,16 +46,15 @@ export default function ManageAccount() {
     });
   }, []);
 
-    
   const handleSelectSchool = (id) => {
     setSelectedSchools([...selectedSchools, id]);
     setIsError("");
-  }
+  };
 
   const handleDeselectSchool = (id) => {
     setSelectedSchools(selectedSchools.filter((school) => school != id));
-  }
-    
+  };
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -63,30 +62,28 @@ export default function ManageAccount() {
   const showDeleteModal = () => {
     setDeleteModal(true);
   };
-    
+
   const newSchoolNameChange = (event) => {
     setNewSchoolName(event.target.value);
-  }
-    
+  };
+
   const addNewSchool = async (e) => {
     e.preventDefault();
 
     // add new school to db
     if (newSchoolName != "") {
-      const res = await addSchool(
-        newSchoolName
-      );
-  
+      const res = await addSchool(newSchoolName);
+
       if (res.data) {
-          setSchools([...schools, res.data]);
-          setNewSchoolName("");
+        setSchools([...schools, res.data]);
+        setNewSchoolName("");
       } else {
-          message.error(res.err);
+        message.error(res.err);
       }
     } else {
       message.error("New school must have a name.");
     }
-  }
+  };
 
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -97,9 +94,8 @@ export default function ManageAccount() {
 
     console.log("First Name:", first_name);
     console.log("Last Name:", last_name);
-      console.log("School:", JSON.stringify(school));
-      console.log("Selected Schools:", JSON.stringify(selectedSchools));
-      
+    console.log("School:", JSON.stringify(school));
+    console.log("Selected Schools:", JSON.stringify(selectedSchools));
 
     const res = await addTeacher(first_name, last_name, selectedSchools[0]);
 
@@ -107,9 +103,9 @@ export default function ManageAccount() {
       message.success(`${first_name} ${last_name} has been added.`);
       setFirstName("");
       setLastName("");
-        setSchool("");
-        setSelectedSchools([]);
-        setNewSchoolName("");
+      setSchool("");
+      setSelectedSchools([]);
+      setNewSchoolName("");
       setIsModalVisible(false);
       handleGetTeachers();
     } else {
@@ -160,6 +156,33 @@ export default function ManageAccount() {
     }
   };
 
+  const filterTeachers = (teacher) => {
+    const fullName = `${teacher.first_name} ${teacher.last_name}`.toLowerCase();
+    return fullName.includes(searchTerm.toLowerCase());
+  };
+
+  const sortByName = (a, b) => {
+    const nameA = `${a.first_name} ${a.last_name}`.toLowerCase();
+    const nameB = `${b.first_name} ${b.last_name}`.toLowerCase();
+    return nameA.localeCompare(nameB);
+  };
+
+  const sortAtoZ = (a, b) => {
+    return a.school.name < b.school.name ? -1 : 1;
+  };
+
+  const sortedTeachers = [...teachers];
+  const sortedSchools = [...schools];
+
+  if (sortOption === "name") {
+    sortedTeachers.sort(sortByName);
+  } else if (sortOption === "school") {
+    sortedTeachers.sort(sortAtoZ);
+    console.log(sortedTeachers);
+  }
+    
+  const filteredTeachers = sortedTeachers.filter(filterTeachers);
+
   return (
     <div id="container nav-padding">
       <NavBar />
@@ -204,35 +227,33 @@ export default function ManageAccount() {
             value={last_name}
             onChange={(e) => setLastName(e.target.value)}
           />
-                        <Select 
-                style={{width: '100%'}}
-                placeholder="Please select at least one"
-                onSelect={handleSelectSchool}
-                onDeselect={handleDeselectSchool}
-                status={isError}
-                dropdownRender={(menu) => (
-                  <>
-                    {menu}
-                    <Divider
-                      style={{margin: "8px 0"}}
-                    />
-                    <Space
-                      style={{padding: "0 8px 4px"}}
-                    >
-                      <Input
-                        placeholder="Please enter school"
-                        value={newSchoolName}
-                        onChange={newSchoolNameChange}
-                      />
-                      <Button type="text" onClick={addNewSchool}>
-                        Add School
-                      </Button>
-                    </Space>
-                  </>
-                )}
-              >
-                {schools.map((school) => <option value={school.id}>{school.name}</option>)}
-              </Select>
+          <Select
+            style={{ width: "100%" }}
+            placeholder="Please select at least one"
+            onSelect={handleSelectSchool}
+            onDeselect={handleDeselectSchool}
+            status={isError}
+            dropdownRender={(menu) => (
+              <>
+                {menu}
+                <Divider style={{ margin: "8px 0" }} />
+                <Space style={{ padding: "0 8px 4px" }}>
+                  <Input
+                    placeholder="Please enter school"
+                    value={newSchoolName}
+                    onChange={newSchoolNameChange}
+                  />
+                  <Button type="text" onClick={addNewSchool}>
+                    Add School
+                  </Button>
+                </Space>
+              </>
+            )}
+          >
+            {sortedSchools.map((school) => (
+              <option value={school.id}>{school.name}</option>
+            ))}
+          </Select>
         </Modal>
         <Modal
           title={"Are you sure you want to delete this teacher?"}
@@ -265,7 +286,7 @@ export default function ManageAccount() {
           <tbody>
             {/* Replace this with actual data */}
             {teachers !== null ? (
-              teachers.map((teacher) => (
+              filteredTeachers.map((teacher) => (
                 <tr key={teacher.id}>
                   <td>{`${teacher.first_name} ${teacher.last_name}`}</td>
                   <td>{teacher.school ? teacher.school.name : "N/A"}</td>
