@@ -6,10 +6,10 @@ import {
   addTeacher,
   deleteTeacher,
   getTeachers,
-  
   addSchool,
+  getSchools,
 } from "../../Utils/requests"; // Import the deleteTeacher function
-import { Input, Modal, Button, message } from "antd";
+import { Input, Modal, Button, message, Select, Divider, Space } from "antd";
 import { CloseOutlined } from "@ant-design/icons"; // Import the close icon
 
 export default function ManageAccount() {
@@ -18,16 +18,44 @@ export default function ManageAccount() {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [school, setSchool] = useState("");
+  const [schools, setSchools] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedTeacher, setSelectedTeacher] = useState(null);
+    const [selectedTeacher, setSelectedTeacher] = useState(null);
+    const [selectedSchools, setSelectedSchools] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [teachers, setTeachers] = useState([]);
+    const [teachers, setTeachers] = useState([]);
+    const [isError, setIsError] = useState("");
+    const [newSchoolName, setNewSchoolName] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    handleGetTeachers();
+      handleGetTeachers();
+      let schoolList = [];
+    getSchools().then((res) => {
+      if (res.data) {
+        for (let i = 0; i < res.data.length; i++) {
+          // only allow users to select schools that aren't already connected to an org
+          if (res.data[i].organization == null) {
+            schoolList.push(res.data[i]);
+          }
+        }
+      } else {
+        message.error(res.err);
+      }
+      setSchools(schoolList);
+    });
   }, []);
 
+    
+  const handleSelectSchool = (id) => {
+    setSelectedSchools([...selectedSchools, id]);
+    setIsError("");
+  }
+
+  const handleDeselectSchool = (id) => {
+    setSelectedSchools(selectedSchools.filter((school) => school != id));
+  }
+    
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -35,6 +63,30 @@ export default function ManageAccount() {
   const showDeleteModal = () => {
     setDeleteModal(true);
   };
+    
+  const newSchoolNameChange = (event) => {
+    setNewSchoolName(event.target.value);
+  }
+    
+  const addNewSchool = async (e) => {
+    e.preventDefault();
+
+    // add new school to db
+    if (newSchoolName != "") {
+      const res = await addSchool(
+        newSchoolName
+      );
+  
+      if (res.data) {
+          setSchools([...schools, res.data]);
+          setNewSchoolName("");
+      } else {
+          message.error(res.err);
+      }
+    } else {
+      message.error("New school must have a name.");
+    }
+  }
 
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -45,15 +97,19 @@ export default function ManageAccount() {
 
     console.log("First Name:", first_name);
     console.log("Last Name:", last_name);
-    console.log("School:", school);
+      console.log("School:", JSON.stringify(school));
+      console.log("Selected Schools:", JSON.stringify(selectedSchools));
+      
 
-    const res = await addTeacher(first_name, last_name, school);
+    const res = await addTeacher(first_name, last_name, selectedSchools[0]);
 
     if (res.data) {
       message.success(`${first_name} ${last_name} has been added.`);
       setFirstName("");
       setLastName("");
-      setSchool("");
+        setSchool("");
+        setSelectedSchools([]);
+        setNewSchoolName("");
       setIsModalVisible(false);
       handleGetTeachers();
     } else {
@@ -148,11 +204,35 @@ export default function ManageAccount() {
             value={last_name}
             onChange={(e) => setLastName(e.target.value)}
           />
-          <Input
-            placeholder="School Name"
-            value={school}
-            onChange={(e) => setSchool(e.target.value)}
-          />
+                        <Select 
+                style={{width: '100%'}}
+                placeholder="Please select at least one"
+                onSelect={handleSelectSchool}
+                onDeselect={handleDeselectSchool}
+                status={isError}
+                dropdownRender={(menu) => (
+                  <>
+                    {menu}
+                    <Divider
+                      style={{margin: "8px 0"}}
+                    />
+                    <Space
+                      style={{padding: "0 8px 4px"}}
+                    >
+                      <Input
+                        placeholder="Please enter school"
+                        value={newSchoolName}
+                        onChange={newSchoolNameChange}
+                      />
+                      <Button type="text" onClick={addNewSchool}>
+                        Add School
+                      </Button>
+                    </Space>
+                  </>
+                )}
+              >
+                {schools.map((school) => <option value={school.id}>{school.name}</option>)}
+              </Select>
         </Modal>
         <Modal
           title={"Are you sure you want to delete this teacher?"}
@@ -184,24 +264,30 @@ export default function ManageAccount() {
           </thead>
           <tbody>
             {/* Replace this with actual data */}
-            {teachers.map((teacher) => (
-              <tr key={teacher.id}>
-                <td>{`${teacher.first_name} ${teacher.last_name}`}</td>
-                <td>{teacher.school ? teacher.school.name : "N/A"}</td>
-                <td>
-                  <Button
-                    type="link"
-                    danger
-                    onClick={() => {
-                      showDeleteModal();
-                      handleTeacherClick(teacher);
-                    }}
-                  >
-                    <CloseOutlined />
-                  </Button>
-                </td>
+            {teachers !== null ? (
+              teachers.map((teacher) => (
+                <tr key={teacher.id}>
+                  <td>{`${teacher.first_name} ${teacher.last_name}`}</td>
+                  <td>{teacher.school ? teacher.school.name : "N/A"}</td>
+                  <td>
+                    <Button
+                      type="link"
+                      danger
+                      onClick={() => {
+                        showDeleteModal();
+                        handleTeacherClick(teacher);
+                      }}
+                    >
+                      <CloseOutlined />
+                    </Button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3">Loading...</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
