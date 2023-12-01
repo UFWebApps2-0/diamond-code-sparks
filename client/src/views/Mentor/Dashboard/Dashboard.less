@@ -19,6 +19,32 @@
   background: #colors[senary];
   border-radius: 5px;
   border: 2px solid #colors[secondary];
+
+  .button {
+    display: inline-block;
+    display: block;
+    text-align: center;
+    justify-content: center;
+    width: 13vw;
+    height: 2.25vw;
+    font-size: 1vw;
+    font-weight: 500;
+    border-radius: 30px;
+    margin: auto auto 3% 6%;
+    background: #colors[quaternary];
+    border: none;
+    color: #colors[text-primary];
+    transition: 0.25s;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
+    padding: 5px;
+    
+
+    &:hover {
+        width: 14vw;
+        background: #colors[quinary];
+    }
+}
 }
 
 #dashboard-card-container {
@@ -117,6 +143,27 @@
         &:hover {
           background: #colors[quinary];
         }
+
+        #code-display-text {
+          font-size: 15em;
+          text-align: center;
+        }
+      }
+
+      #dashboard-display-gallery-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        background-color: #colors[quaternary];
+        border-top-right-radius: 10px;
+        border: none;
+
+        // &:hover {
+        //   background: #colors[quinary];
+        // }
 
         #code-display-text {
           font-size: 15em;
