@@ -678,6 +678,9 @@
               "last_logged_in": {
                 "type": "string"
               },
+              "googleClassroomEmail": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },

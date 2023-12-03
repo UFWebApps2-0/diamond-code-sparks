@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/28/2023 10:38:10 AM"
+    "x-generation-date": "12/02/2023 11:19:21 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -3387,6 +3387,63 @@
             }
           }
         }
+      }
+    },
+    "/googleClassroom/getCourses": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Googleclassroom"
+        ],
+        "parameters": []
       }
     },
     "/grades": {
@@ -12957,6 +13014,9 @@
                 "last_logged_in": {
                   "type": "string"
                 },
+                "googleClassroomEmail": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -13889,6 +13949,9 @@
               "last_logged_in": {
                 "type": "string"
               },
+              "googleClassroomEmail": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -14364,6 +14427,9 @@
                   "type": "boolean"
                 },
                 "last_logged_in": {
+                  "type": "string"
+                },
+                "googleClassroomEmail": {
                   "type": "string"
                 },
                 "created_by": {
@@ -14867,6 +14933,9 @@
           "last_logged_in": {
             "type": "string",
             "format": "date-time"
+          },
+          "googleClassroomEmail": {
+            "type": "string"
           }
         }
       },
@@ -14897,6 +14966,9 @@
           "last_logged_in": {
             "type": "string",
             "format": "date-time"
+          },
+          "googleClassroomEmail": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -15082,6 +15154,9 @@
                 "type": "boolean"
               },
               "last_logged_in": {
+                "type": "string"
+              },
+              "googleClassroomEmail": {
                 "type": "string"
               },
               "created_by": {
@@ -15659,6 +15734,9 @@
     },
     {
       "name": "Googleauth"
+    },
+    {
+      "name": "Googleclassroom"
     },
     {
       "name": "Grade"

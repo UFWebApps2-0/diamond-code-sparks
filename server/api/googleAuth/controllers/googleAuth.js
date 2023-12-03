@@ -15,6 +15,7 @@ module.exports = {
     async verifyGoogleToken(ctx) {
       const { token } = ctx.request.body;
       let ticket;
+      console.log('Verifying Google token...')
       try {
         ticket = await client.verifyIdToken({
             idToken: token,

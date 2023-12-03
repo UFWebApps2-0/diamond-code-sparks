@@ -62,6 +62,9 @@ export default function TeacherLogin() {
   const handleGoogleLogin = (res) => {
     console.log("Encoded JWT Token: " + res.credential);
     const token = res.credential; // Get the token from Google response
+    // Save the token to session storage
+    sessionStorage.setItem('googleToken', res.credential);
+
 
     // Send the token to your Strapi backend for verification
     axios.post('http://localhost:1337/api/googleAuth/verify-google-token', { token })
