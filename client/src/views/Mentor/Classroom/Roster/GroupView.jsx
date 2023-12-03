@@ -28,6 +28,7 @@ export default function GroupView(props) {
     const [groupSize, setGroupSize] = useState(3);
     const [groupData, setGroupData] = useState([]);
 
+    // Store a copy of groupData 
     var groupTemp = groupData;
 
     function filterGroups(data) {
@@ -49,11 +50,6 @@ export default function GroupView(props) {
     useEffect(() => {
         if (filterText != "") {
             let data = [];
-
-            // TODO Work on backend to make data persist
-            // Currently will filter an ever shrinking list of groups because we can't maintain consistency between rerenders
-            // Can hardcode for now but should be stored on backend
-
             data = groupData.filter(filterGroups);
             setGroupData(data);
         } else {
@@ -83,6 +79,7 @@ export default function GroupView(props) {
             dataSource[i - 1] = temp;
         }
 
+        // After randomizing students, group into respective sizes
         let groups = [];
         let i = 0;
         while (dataSource.length > 0) {
@@ -102,7 +99,7 @@ export default function GroupView(props) {
         setGroupSize(value);
     };
 
-    // Empty
+    // Empty group array
     if (groupData.length == 0) {
         return (
             <div>
@@ -111,7 +108,6 @@ export default function GroupView(props) {
                         Randomize Groups
                     </button>
                     <InputNumber min={1} max={10} defaultValue={groupSize} onChange={onChange} />
-
                     <div id="card-container">
                         <p id="center-text">No Groups Available</p>
                     </div>
@@ -129,9 +125,11 @@ export default function GroupView(props) {
 
             <div id="card-container">
                 <Collapse className="centerCollapse">
+                    {/* Goes through each group */}
                     {groupData.map((group) => (
                         group.id != 0 ? (<Panel header={"Group: " + group.id} key={group.id} >
                             {
+                                // Goes through each student in a group
                                 group.students.map((person, index) => (
                                     <p id="center-text" key={index + 1} >{(index + 1) + ". " + person.name}</p>
                                 ))
