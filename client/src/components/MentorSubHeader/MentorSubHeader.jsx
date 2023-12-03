@@ -61,11 +61,12 @@ export default function MentorSubHeader(props) {
           </button>
         ) : null}
 
-        {/* {addActivityActive && groupViewActive ? (
+        {addActivityActive && groupViewActive ? (
           <button id='link'>
             <i className='fa fa-plus-square' />
           </button>
-        ) : null} */}
+        ) : null}
+
         {addUserActive && !groupViewActive ? (
           <AddStudentsModal
             addStudentsToTable={addStudentsToTable}
