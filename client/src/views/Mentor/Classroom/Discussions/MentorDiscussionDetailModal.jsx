@@ -19,7 +19,7 @@ const MentorDiscussionDetailModal = ({
   selectDiscussion,
   setDiscussions,
   open,
-  viewing,
+  // viewing,
 }) => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -45,21 +45,28 @@ const MentorDiscussionDetailModal = ({
   }, [selectDiscussion])
 
   const handleSave = async () => {
+    console.log("selected discussion id: ", selectDiscussion.id)
+    console.log("title: ", title)
+    console.log("description: ", description)
     const res = await updateDiscussionDetails(
-      selectDiscussion.id,
-      title,
-      description,
+      selectDiscussion.id, title, description
+      // { Title: title, Description: description }
     )
+    console.log(res.data)
     if (res.err) {
       message.error(res.err)
     } else {
       message.success("Successfully saved discussion")
       // just save the form
       if (submitButton === 0) {
-        console.log(viewing)
-        const getDiscussionAll = await getLessonModuleDiscussions(viewing)
+        setVisible(false)
+        console.log("visible: ", visible)
+        // console.log(viewing)
+        // const getDiscussionAll = await getLessonModuleDiscussions(viewing)
+        const getDiscussionAll = await getLessonModuleDiscussions(learningStandard.id)
+        // const getDiscussionAll = await getLessonModuleDiscussions(viewing)
         const myDiscussions = getDiscussionAll.data
-        myDiscussions.sort((a, b) => (a.number > b.number ? 1 : -1))
+        // myDiscussions.sort((a, b) => (a.number > b.number ? 1 : -1))
         setDiscussions([...myDiscussions])
       } 
     }
