@@ -16,7 +16,7 @@ export default function GroupView(props) {
         filterText,
     } = props;
 
-    // Format of incoming information from Strapi backend
+    // Expect format of incoming information from Strapi backend
     // groupFormat = [
     //     {
     //         id: 0,
@@ -56,8 +56,6 @@ export default function GroupView(props) {
             setGroupData(groupTemp);
         }
     }, [filterText]);
-
-
 
     // Handles randomization of students into groups of size groupSize. Returns array of groups
     const randomizeGroups = () => {
@@ -127,19 +125,20 @@ export default function GroupView(props) {
                 <Collapse className="centerCollapse">
                     {/* Goes through each group */}
                     {groupData.map((group) => (
+                        // Group id should never be 0 as that is the default value
                         group.id != 0 ? (<Panel header={"Group: " + group.id} key={group.id} >
                             {
                                 // Goes through each student in a group
                                 group.students.map((person, index) => (
-                                    <p id="center-text" key={index + 1} >{(index + 1) + ". " + person.name}</p>
+                                    <p id="center-text" key={index + 1} >
+                                        {(index + 1) + ". " + person.name}
+                                    </p>
                                 ))
                             }
-                        </Panel>)
-                            : null
+                        </Panel>) : null
                     ))}
                 </Collapse>
             </div>
         </div >
     );
 }
-
