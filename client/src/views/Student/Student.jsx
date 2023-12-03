@@ -19,7 +19,6 @@ function Student() {
     const fetchData = async () => {
       try {
         const res = await getStudentClassroom();
-        // console.log("getStudentClassroom return:\n" ,res);
         if (res.data) {
           if (res.data.lesson_module) {
             setLessonModule(res.data.lesson_module);
@@ -46,22 +45,15 @@ function Student() {
     navigate('/workspace');
   };
 
-  const showModal = () => {
-    setModalVisible(true)
-  };
-
   const handleCancel = () => {
-    console.log("handleCancel called")
     setModalVisible(false)
-    console.log("modalVisible: ", modalVisible)
   };
 
   const handleOk = () => {
-      setModalVisible(false)
+    setModalVisible(false)
   }; 
   
   const handleDiscussionSelection = (discussion) => {
-    /* want to open pop up like create discussion page that just has the title and description and button to go to discussion page */
     setSelectedDiscussion(discussion);
     setModalVisible(true);
   }
@@ -103,7 +95,6 @@ function Student() {
               </p>
             </div>
           )}
-            {/* <li> {learningStandard.discussions} </li> */}
           {learningStandard.discussions  ? (
             learningStandard.discussions.map((discussion) => (
               <div 
@@ -111,18 +102,8 @@ function Student() {
               id='list-item-wrapper'
               onClick={() => handleDiscussionSelection(discussion)}
               >
-              {/* <li> {discussion.Title} </li> */}
               <li> 
                 {`${learningStandard.name}: ${discussion.Title}`} 
-                <StudentDiscussionDetailModal
-                  learningStandardName={learningStandard.name}
-                  title={discussion.Title}
-                  description={discussion.Description}
-                  visible={modalVisible}
-                  // check notes page for link to help /////////////////// IN GENERAL J LOOK HERE FIRST ////////////
-                  handleCancel={handleCancel}
-                  handleOk={handleOk}
-                />
                 </li>
               </div>
             ))
@@ -134,6 +115,15 @@ function Student() {
             View all Lessons
           </button>
       </div>
+      <StudentDiscussionDetailModal
+        learningStandardName={learningStandard ? learningStandard.name : ''}
+        title={selectedDiscussion ? selectedDiscussion.Title : ''}
+        description={selectedDiscussion ? selectedDiscussion.Description : ''}
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        handleCancel={handleCancel}
+        handleOk={handleOk}
+      />
     </div>
   );
 }

@@ -9,6 +9,7 @@ export default function StudentDiscussionDetailModal({
     visible,
     handleCancel,
     handleOk,
+    setVisible
 }) {
     // const [visible, setVisible] = useState(false);
 
@@ -36,6 +37,7 @@ export default function StudentDiscussionDetailModal({
                 title={`${learningStandardName}: ${title}`}
                 visible={visible}
                 onCancel={handleCancel}
+                // onCancel={setVisible(false)}
                 // width='50vw'
                 footer={[
                     <Button key="ok" type="primary" onClick={handleOk}>

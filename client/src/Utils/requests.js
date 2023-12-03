@@ -518,15 +518,15 @@ export const updateActivityDetails = async (
 
 export const updateDiscussionDetails = async (
     id,
-    title,
-    description,
+    Title,
+    Description,
   ) =>
     makeRequest({
       method: PUT,
       path: `${server}/discussions/${id}`,
       data: {
-        title,
-        description,
+        Title,
+        Description,
       },
       auth: true,
       error: 'Failed to update discussion',
