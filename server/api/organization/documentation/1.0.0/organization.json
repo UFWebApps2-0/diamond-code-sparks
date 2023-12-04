@@ -581,6 +581,9 @@
             "type": "string",
             "default": "Organization Description"
           },
+          "County": {
+            "type": "string"
+          },
           "administrators": {
             "type": "array",
             "items": {
@@ -593,8 +596,11 @@
                 "id": {
                   "type": "string"
                 },
-                "organization": {
-                  "type": "string"
+                "organizations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "firstname": {
                   "type": "string"
@@ -602,7 +608,7 @@
                 "lastname": {
                   "type": "string"
                 },
-                "users_permissions_user": {
+                "user": {
                   "type": "string"
                 },
                 "schools": {
@@ -622,9 +628,6 @@
                 }
               }
             }
-          },
-          "County": {
-            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -652,14 +655,14 @@
             "type": "string",
             "default": "Organization Description"
           },
+          "County": {
+            "type": "string"
+          },
           "administrators": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "County": {
-            "type": "string"
           },
           "published_at": {
             "type": "string",

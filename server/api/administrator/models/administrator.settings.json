@@ -11,9 +11,10 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "organization": {
+    "organizations": {
+      "collection": "organization",
       "via": "administrators",
-      "model": "organization"
+      "dominant": true
     },
     "firstname": {
       "type": "string",
@@ -23,9 +24,10 @@
       "type": "string",
       "required": true
     },
-    "users_permissions_user": {
+    "user": {
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "administrator"
     },
     "schools": {
       "collection": "school",

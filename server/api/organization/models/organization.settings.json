@@ -28,12 +28,12 @@
       "type": "text",
       "default": "Organization Description"
     },
-    "administrators": {
-      "via": "organization",
-      "collection": "administrator"
-    },
     "County": {
       "type": "string"
+    },
+    "administrators": {
+      "via": "organizations",
+      "collection": "administrator"
     }
   }
 }

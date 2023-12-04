@@ -561,6 +561,9 @@
                 "role": {
                   "type": "string"
                 },
+                "administrator": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },

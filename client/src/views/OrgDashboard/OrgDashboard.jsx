@@ -4,7 +4,7 @@ import './OrgDashboard.less';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import DeleteOrgModal from './DeleteOrgModal';
-import { getOrganizations, getAllOrgs, updateOrgName } from "../../Utils/requests"
+import { getOrganizations, getAllOrgs, updateOrgName, getAdmin } from "../../Utils/requests"
 
 export default function OrgDashboard() {
 	const [orgs, setOrgs] = useState([]);
@@ -15,10 +15,22 @@ export default function OrgDashboard() {
 	const [deleteFlag, setDeleteFlag] = useState(false); // used to trigger re-render upon org deletion
 
 	useEffect(() => {
-    	let orgList = [];
+    	let orgIds = [];
 
     	// TODO: update to be admin-specific orgs (use Mentor/Dashboard/Dashboard.jsx as a model)
-
+		getAdmin().then((res) => {
+			if (res.data) {
+				res.data.organizations.forEach((organization) => {
+					orgIds.push(organization.id);
+				});
+				getOrganizations(orgIds).then((organizations) => {
+					setOrgs(organizations);
+				});
+			} else {
+				message.error(res.err);
+			}
+		});
+/**
     	getAllOrgs().then((res) => {
     	   	if (res.data) {
     	   		for (let i = 0; i < res.data.length; i++) {
@@ -36,6 +48,7 @@ export default function OrgDashboard() {
     	   		message.error(res.error);
     	   	}
     	});
+*/
   	}, [orgName, sort, deleteFlag]);
 
   	const sortById = (a, b) => {

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/03/2023 6:32:05 PM"
+    "x-generation-date": "12/04/2023 5:00:53 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -1042,6 +1042,63 @@
             }
           }
         }
+      }
+    },
+    "/administrators/me": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Administrator"
+        ],
+        "parameters": []
       }
     },
     "/administrators/count": {
@@ -12958,44 +13015,47 @@
           "id": {
             "type": "string"
           },
-          "organization": {
-            "required": [
-              "id",
-              "name"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "schools": {
-                "type": "array",
-                "items": {
+          "organizations": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "schools": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "description": {
+                  "type": "string"
+                },
+                "County": {
+                  "type": "string"
+                },
+                "administrators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
                   "type": "string"
                 }
-              },
-              "description": {
-                "type": "string"
-              },
-              "administrators": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "County": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           },
@@ -13005,7 +13065,7 @@
           "lastname": {
             "type": "string"
           },
-          "users_permissions_user": {
+          "user": {
             "required": [
               "id",
               "username",
@@ -13040,6 +13100,9 @@
                 "type": "boolean"
               },
               "role": {
+                "type": "string"
+              },
+              "administrator": {
                 "type": "string"
               },
               "created_by": {
@@ -13111,8 +13174,11 @@
           "lastname"
         ],
         "properties": {
-          "organization": {
-            "type": "string"
+          "organizations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "firstname": {
             "type": "string"
@@ -13120,7 +13186,7 @@
           "lastname": {
             "type": "string"
           },
-          "users_permissions_user": {
+          "user": {
             "type": "string"
           },
           "schools": {
@@ -14310,6 +14376,9 @@
               "role": {
                 "type": "string"
               },
+              "administrator": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -14415,6 +14484,9 @@
             "type": "string",
             "default": "Organization Description"
           },
+          "County": {
+            "type": "string"
+          },
           "administrators": {
             "type": "array",
             "items": {
@@ -14427,8 +14499,11 @@
                 "id": {
                   "type": "string"
                 },
-                "organization": {
-                  "type": "string"
+                "organizations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "firstname": {
                   "type": "string"
@@ -14436,7 +14511,7 @@
                 "lastname": {
                   "type": "string"
                 },
-                "users_permissions_user": {
+                "user": {
                   "type": "string"
                 },
                 "schools": {
@@ -14456,9 +14531,6 @@
                 }
               }
             }
-          },
-          "County": {
-            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -14486,14 +14558,14 @@
             "type": "string",
             "default": "Organization Description"
           },
+          "County": {
+            "type": "string"
+          },
           "administrators": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "County": {
-            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -14827,14 +14899,14 @@
               "description": {
                 "type": "string"
               },
+              "County": {
+                "type": "string"
+              },
               "administrators": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
-              },
-              "County": {
-                "type": "string"
               },
               "published_at": {
                 "type": "string"
@@ -14859,8 +14931,11 @@
                 "id": {
                   "type": "string"
                 },
-                "organization": {
-                  "type": "string"
+                "organizations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "firstname": {
                   "type": "string"
@@ -14868,7 +14943,7 @@
                 "lastname": {
                   "type": "string"
                 },
-                "users_permissions_user": {
+                "user": {
                   "type": "string"
                 },
                 "schools": {
@@ -16034,6 +16109,9 @@
                 "role": {
                   "type": "string"
                 },
+                "administrator": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -16146,6 +16224,48 @@
                 "type": "string"
               }
             }
+          },
+          "administrator": {
+            "required": [
+              "id",
+              "firstname",
+              "lastname"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "organizations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "firstname": {
+                "type": "string"
+              },
+              "lastname": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "schools": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -16186,6 +16306,9 @@
             "default": false
           },
           "role": {
+            "type": "string"
+          },
+          "administrator": {
             "type": "string"
           },
           "created_by": {

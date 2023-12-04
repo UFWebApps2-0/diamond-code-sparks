@@ -96,6 +96,7 @@ export const getActivityToolboxAll = async () =>
 //     auth: true,
 //     error: 'Activity cannot be retrived',
 //   });
+
 export const getActivityToolbox = async (id) =>
   makeRequest({
     method: GET,
@@ -110,6 +111,14 @@ export const getMentor = async () =>
     path: `${server}/classroom-managers/me`,
     auth: true,
     error: 'Your classroom manager information could not be retrieved.',
+  });
+
+export const getAdmin = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/administrators/me`,
+    auth: true,
+    error: 'Your administrator information could not be retrieved.',
   });
 
 export const getClassroom = async (id) =>
