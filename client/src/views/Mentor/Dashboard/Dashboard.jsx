@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Dashboard() {
   const [classrooms, setClassrooms] = useState([]);
   const [value] = useGlobalState('currUser');
+  const [deleteFlag, setDeleteFlag] = useState(false);
   const navigate = useNavigate();
   
 
@@ -33,7 +34,7 @@ export default function Dashboard() {
         navigate('/teacherlogin');
       }
     });
-  }, []);
+  }, [deleteFlag]);
 
   const handleViewClassroom = (classroomId) => {
     navigate(`/classroom/${classroomId}`);
@@ -59,7 +60,14 @@ export default function Dashboard() {
                   </button>
                 </div>
                 <div id='admin-card-button-container' className ='flex flex-row'>
-                  <EditClassroomModal currentClassroom={classroom}/>
+                  <EditClassroomModal
+                    classroomId={classroom.id}
+                    classroomName={classroom.name}
+                    classroomCode={classroom.code}
+                    deleteFlag={deleteFlag}
+                    setDeleteFlag={setDeleteFlag}
+
+                  />
               </div>
               </div>
               <div id='card-right-content-container'>
@@ -78,6 +86,7 @@ export default function Dashboard() {
   );
     
   }
+
 
   return (
     <div className='container nav-padding'>

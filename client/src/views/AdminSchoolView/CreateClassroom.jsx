@@ -1,12 +1,31 @@
 import React, { useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import "../OrgDashboard/CreateOrg.less"
+import { useNavigate } from "react-router-dom";
+import { addClassroom } from "../../Utils/requests";
 
 export default function CreateClassroom() {
     const[classroomName, setClassroomName] = useState("");
+    const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+  
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      if(classroomName != '') {
+      const res = await addClassroom(classroomName);
+
+      if(res.data) {
+         message.success(`Successfully created ${classroomName}.`)
+      }
+      else {
+          message.error("Failed to create classroom.")
+      }
+      setClassroomName('');
+      navigate('/dashboard');
+
+  } else {
+      message.info('Missing required field.')
+  }
     };
     return (
         <div className="container nav-padding">

@@ -1,49 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import "./AdminSchoolDashboard.less";
 import { useNavigate } from "react-router-dom";
 import EditSchoolModal from "./EditSchoolModal";
+import { useGlobalState } from "../../Utils/userState";
+import { getSchools } from "../../Utils/requests";
 
 export default function AdminSchoolDashboard() {
     const [schools, setSchools] = useState([]);
+    const [schoolName, setSchoolName] = useState('');
+    const [value] = useGlobalState('currUser');
+    const [deleteFlag, setDeleteFlag] = useState(false);
     const navigate = useNavigate();
 
-    const sampleSchool1 = {
-        id: 1,
-        name: "School 1",
-        teachers: [
-            {teachername: "teachername1"},
-            {teachername: "teachername2"}
-        ],
-        code: "9999",
-         name: "School 1",
+    useEffect(() => {
+        let schoolList = [];
 
-        students: [
-            {studentname: "name1"},
-            {studentname: "name2"},
-            {studentname: "name3"}
-        ]
-        
-    }
-    const sampleSchool2 = {
-        id: 2,
-        name: "School 2",
-        teachers: [
-            {teachername: "teachername1"},
-            {teachername: "teachername2"}
-        ],
-        code: "1111",
-        
-         name: "School 2",
+        getSchools().then((res) => {
+            if (res.data) {
+                for(let i = 0; i < res.data.length; i++) {
+                    schoolList.push(res.data[i]);
+                }
+                setSchools(schoolList);
+            } else {
+                message.error(res.error);
+            }
+        });
+    }, [schoolName, deleteFlag]);
+    
 
-        students: [
-            {studentname: "name1"},
-            {studentname: "name2"},
-            {studentname: "name3"},
-            {studentname: "name4"},
-            {studentname: "name5"}
-        ]
-    }
 
     const handleViewSchool = (schoolId) => {
         //alert("View School " + schoolId);
@@ -55,19 +40,24 @@ export default function AdminSchoolDashboard() {
     }
 
 
-    schools.push(sampleSchool1);
-    schools.push(sampleSchool2);
+    //schools.push(sampleSchool1);
+    //schools.push(sampleSchool2);
 
     return (
         <div className='container nav-padding'>
+            
             <NavBar />
             <div id='main-header'>Admin School View</div>
+            
             <div id='page-header'>
                 <h1>Schools</h1> 
             </div>
             
+            
+            
             <div id='admin-classrooms-container'>
-
+            
+            
             <input 
                 type = 'button'
                 onClick = {() => navigate('/createschool')}
@@ -84,25 +74,29 @@ export default function AdminSchoolDashboard() {
                             </button>
                         </div>
                         <div id='admin-card-button-container' className='flex flex-row'>
-                            <EditSchoolModal currentSchool={school}/>
-                        {/*<button onClick={() => handleEditSchool(school.id)}>
-                             Edit
-                            </button>
-                    */}
+                            <EditSchoolModal 
+                                schoolId={school.id}
+                                schoolName={school.name}
+                                schoolCounty={school.county}
+                                schoolState={school.state}
+                                deleteFlag={deleteFlag}
+                                setDeleteFlag={setDeleteFlag}
+                            />
+            
                         </div>
                     
                     </div>
                             <div id='card-right-content-container'>
                             
                             <div id='admin-teacher-number-container'>
-                                    <h1 id='number'>{school.teachers.length}</h1>
+                                    <h1 id='number'>1</h1>
                                     <p id='label'>Teachers</p>
                             </div>
 
                             <div id='divider' />
 
                             <div id='admin-student-number-container'>
-                                    <h1 id='number'>{school.students.length}</h1>
+                                    <h1 id='number'>1</h1>
                                     <p id='label'>Students</p>
                             </div>
                            {/* <div id='divider' />
@@ -111,12 +105,16 @@ export default function AdminSchoolDashboard() {
                                 <p id='label'>Join Code</p>
                             </div>
                     */}
+                    
+
                             
                         </div>
+                        
                     </div>
                     ))}
                 </div>
             </div>
+            
         </div>
       );
 }

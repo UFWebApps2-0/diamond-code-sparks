@@ -1,11 +1,13 @@
 import {Modal, Button, Form, Input, message} from 'antd';
 import React, {useState} from "react";
+import { updateClassroom } from '../../Utils/requests';
 import './AdminSchoolDashboard.less'
 
-export default function EditClassroomModal({currentClassroom}) {
+export default function EditClassroomModal(props) {
     const [visible, setVisible] = useState(false);
+    const {classroomId, classroomName, classroomCode, deleteFlag, setDeleteFlag} = props;
     const [name, setName] = useState("");
-    const [joinCode, setJoinCode] = useState("");
+    //const [joinCode, setJoinCode] = useState("");
     const [deleteVisible, setDeleteVisible] = useState(false);
     const [confirm, setConfirm] = useState('');
 
@@ -21,9 +23,25 @@ export default function EditClassroomModal({currentClassroom}) {
         setDeleteVisible(false);
     }
 
-    const handleSave = () => {
+    const handleSave = async(event) => {
+        event.preventDefault();
+
+        if(name != '') {
+          const res = await updateClassroom(classroomId, name);
+
+          if(res.data) {
+            message.success(`Successfully edited ${classroomName}`);
+          }
+          else {
+            message.error(res.err);
+          }
+        }
+        setDeleteFlag(!deleteFlag);
+        setName('');
+        //setJoinCode('');
+        
         setVisible(false);
-        {/* update changes in back-end */}
+        
     }
 
     const handleDelete = () => {
@@ -32,7 +50,7 @@ export default function EditClassroomModal({currentClassroom}) {
     }
 
     const handlePermanentDelete = () => {
-      if(confirm == currentClassroom.name) {
+      if(confirm == classroomName) {
         // Do the deleting
         setDeleteVisible(false);
       }
@@ -40,7 +58,7 @@ export default function EditClassroomModal({currentClassroom}) {
         message.error('Confirm deletion.')
       }
       else {
-        message.warning('Typo in ' + currentClassroom.name + ".")
+        message.warning('Typo in ' + classroomName + ".")
       }
     }
 
@@ -64,7 +82,7 @@ export default function EditClassroomModal({currentClassroom}) {
             ]}
           >
             <div style={{display: 'flex', justifyContent:'center', fontWeight:'bold'}}>
-              <p>Type "{currentClassroom.name}" below to confirm deletion:</p>
+              <p>Type "{classroomName}" below to confirm deletion:</p>
             </div>
 
             <div style={{display: 'flex', justifyContent:'center'}}>
@@ -117,18 +135,20 @@ export default function EditClassroomModal({currentClassroom}) {
             value={name}
             className="input"
             required
-            placeholder={currentClassroom.name}
+            placeholder={classroomName}
           ></Input>
         </Form.Item>
+        {/*}
         <Form.Item id="form-label" label="Join Code">
           <Input
             onChange={e => setJoinCode(e.target.value)}
             value={joinCode}
             className="input"
             required
-            placeholder={currentClassroom.code}
+            placeholder={classroomCode}
           ></Input>
         </Form.Item>
+      */}
       </Form>
 
 

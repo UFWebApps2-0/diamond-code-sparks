@@ -1,11 +1,15 @@
 import {Modal, Button, Form, Input, message} from 'antd';
 import React, {useState} from "react";
 import './AdminSchoolDashboard.less'
+import { deleteSchool, updateSchoolName, updateSchoolCounty, updateSchoolState} from '../../Utils/requests';
 
-export default function EditSchoolModal({currentSchool}) {
+export default function EditSchoolModal(props) {
     const [visible, setVisible] = useState(false);
-    const [name, setName] = useState("");
     const [deleteVisible, setDeleteVisible] = useState(false);
+    const {schoolId, schoolName, schoolCounty, schoolState, deleteFlag, setDeleteFlag} = props;
+    const [newSchoolName, setNewSchoolName] = useState("");
+    const [newSchoolCounty, setNewSchoolCounty] = useState("");
+    const [newSchoolState, setNewSchoolState] = useState("");
     const [confirm, setConfirm] = useState('');
 
     const showModal = () => {
@@ -13,15 +17,59 @@ export default function EditSchoolModal({currentSchool}) {
     }
 
     const handleCancel = () => {
+        setNewSchoolName('');
+        setNewSchoolCounty('');
+        setNewSchoolState('');
         setVisible(false);
     }
 
     const handleDeleteCancel = () => {
+        setConfirm("");
         setDeleteVisible(false);
+        setVisible(true);
     }
 
-    const handleSave = () => {
-        setVisible(false);
+
+    const handleSave = async (event) => {
+        event.preventDefault();
+        // if one of the fields is edited
+        if(newSchoolName != '' || newSchoolCounty != '' || newSchoolState != '') {
+          let success = false;
+          if(newSchoolName != '') {
+            const res= await updateSchoolName(schoolId, newSchoolName);
+            if(res.data) {
+              success = true;
+            }
+          }
+          if(newSchoolCounty != '') {
+            const res= await updateSchoolCounty(schoolId, newSchoolCounty);
+            if(res.data) {
+              success = true;
+            }
+          }
+          if(newSchoolState != '') {
+            const res = await updateSchoolState(schoolId, newSchoolState);
+            if(res.data) {
+              success = true;
+            }
+          }
+          
+          if(success) {
+            message.success(`Successfully edited ${schoolName}.`);
+          } else {
+              message.error(res.err);
+          }
+          setDeleteFlag(!deleteFlag);
+          setNewSchoolName('');
+          setNewSchoolCounty('');
+          setNewSchoolState('');
+          setVisible(false);
+        }
+        else {
+          message.info('No changes were made.');
+        }
+
+        
         {/* update changes in back-end */}
     }
 
@@ -30,16 +78,22 @@ export default function EditSchoolModal({currentSchool}) {
         setDeleteVisible(true);
     }
 
-    const handlePermanentDelete = () => {
-      if(confirm == currentSchool.name) {
+    const handlePermanentDelete = async () => {
+      if(confirm == schoolName) {
         // Do the deleting
+        const res = await deleteSchool(schoolId);
+        if(res.data) {
+          message.success(schoolName + ' has been deleted');
+        }
+        setDeleteFlag(!deleteFlag);
+        setConfirm("");
         setDeleteVisible(false);
       }
       else if (confirm == '') {
-        message.error('Confirm deletion.')
+        message.error('Confirm deletion.');
       }
       else {
-        message.warning('Typo in ' + currentSchool.name + ".")
+        message.warning('Typo in ' + schoolName + ".")
       }
     }
 
@@ -63,7 +117,7 @@ export default function EditSchoolModal({currentSchool}) {
             ]}
           >
             <div style={{display: 'flex', justifyContent:'center', fontWeight:'bold'}}>
-              <p>Type "{currentSchool.name}" below to confirm deletion:</p>
+              <p>Type "{schoolName}" below to confirm deletion:</p>
             </div>
 
             <div style={{display: 'flex', justifyContent:'center'}}>
@@ -110,13 +164,31 @@ export default function EditSchoolModal({currentSchool}) {
         onFinish={handleSave}
       >
 
-<Form.Item id="form-label" label="Name">
+        <Form.Item id="form-label" label="Name">
           <Input
-            onChange={e => setName(e.target.value)}
-            value={name}
+            onChange={e => setNewSchoolName(e.target.value)}
+            value={newSchoolName}
             className="input"
             required
-            placeholder={currentSchool.name}
+            placeholder={schoolName}
+          ></Input>
+        </Form.Item>
+        <Form.Item id="form-label" label="County">
+          <Input
+            onChange={e => setNewSchoolCounty(e.target.value)}
+            value={newSchoolCounty}
+            className="input"
+            required
+            placeholder={schoolCounty}
+          ></Input>
+        </Form.Item>
+        <Form.Item id="form-label" label="State">
+          <Input
+            onChange={e => setNewSchoolState(e.target.value)}
+            value={newSchoolState}
+            className="input"
+            required
+            placeholder={schoolState}
           ></Input>
         </Form.Item>
       </Form>
