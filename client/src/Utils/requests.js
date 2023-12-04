@@ -716,6 +716,14 @@ export const getOrganization = async (id) =>
         error: 'Organization information could not be retrieved',
     });
 
+export const getSchool = async (id) => 
+    makeRequest ({
+        method: GET,
+        path: `${server}/schools/${id}`,
+        auth:true,
+        error: 'School information could not be retrieved.',
+    });
+
 export const getAllOrgs = async () =>
     makeRequest({
         method: GET,
@@ -759,12 +767,13 @@ export const getSchools = async () =>
         error: 'Schools could not be retrieved',
     });
 
-export const addSchool = async (name) =>
+export const addSchool = async (name, organization) =>
     makeRequest({
         method: POST,
         path: `${server}/schools`,
         data: {
-            name: name
+            name: name,
+            organization: organization
         },
         auth: true,
         error: 'Failed to add school.',
@@ -824,6 +833,14 @@ export const updateSchoolName = async(id, name) =>
         },
         auth: true,
         error: 'Failed to add classroom.'
+    });
+
+    export const getClassroomcount = async (id) =>
+    makeRequest({
+        method: GET,
+        path: `${server}/schools/${id}/count`,
+        auth: true,
+        error: 'Failed to retrieve learning standard.',
     });
 
 

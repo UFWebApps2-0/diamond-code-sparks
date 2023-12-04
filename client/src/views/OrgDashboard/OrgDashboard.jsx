@@ -113,6 +113,11 @@ export default function OrgDashboard() {
 			return (<span>{school.name}, </span>);
 		}
 	}
+
+	const navToSchools = (orgId) => {
+		window.sessionStorage.setItem("currOrg", orgId);
+		navigate('/admindashboard');
+	}
     
 	return (
 	    
@@ -162,7 +167,7 @@ export default function OrgDashboard() {
 				        			<p>{org.schools.map(printSchools)}</p>
 				        		</div>
 				        		<div id='card-bottom-content-container'>
-				        			<button className='manage-btn' onClick={() => navigate('/admindashboard')}>
+				        			<button className='manage-btn' onClick={() => navToSchools(org.id)}>
 				        				<p>Manage Schools</p>
 				        			</button>
 				        			<div className='divider' />

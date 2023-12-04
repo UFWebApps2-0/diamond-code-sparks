@@ -17,6 +17,7 @@ export default function CreateClassroom() {
 
         const res = await addSchool(
           classroomName,
+          window.sessionStorage.getItem("currOrg")
         );
 
         if(res.data) {
