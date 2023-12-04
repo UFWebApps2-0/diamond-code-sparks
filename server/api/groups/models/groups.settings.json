@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "groups",
+  "info": {
+    "name": "Groups",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "classroom": {
+      "model": "classroom",
+      "via": "groups"
+    },
+    "students": {
+      "collection": "student",
+      "via": "groups",
+      "dominant": true
+    }
+  }
+}

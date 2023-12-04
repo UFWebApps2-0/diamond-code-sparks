@@ -131,9 +131,9 @@ export default function ListView(props) {
       align: 'left',
     },
     {
-        title: 'View Students Work',
-      dataIndex: 'view_student_work',
-        key: 'view_students_work',
+        title: 'View Group Assignments',
+        dataIndex: 'view_group_assignments',
+        key: 'view_group_assignments',
       width: '22.5%',
       align: 'left',
       sorter: {

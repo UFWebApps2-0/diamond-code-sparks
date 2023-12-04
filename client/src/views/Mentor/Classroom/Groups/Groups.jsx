@@ -27,19 +27,17 @@ export default function Roster({ classroomId }) {
       if (res.data) {
         const classroom = res.data;
         setClassroom(classroom);
-        classroom.students.forEach((student) => {
+        classroom.groups.forEach((group) => {
           data.push({
-            key: student.id,
-            name: student.name,
-            character: student.character,
-            enrolled: {
-              id: student.id,
-              enrolled: student.enrolled,
-            },
-            last_logged_in: student.last_logged_in,
+              key: group.id,
+              name: group.Name,
+              students: group.students,
+           
+            //last_logged_in: student.last_logged_in,
           });
+          //console.log(group.students[])
         });
-        setStudentData(data);
+        setGroupData(data);
       } else {
         message.error(res.err);
       }
