@@ -44,15 +44,6 @@ export default function HomeJoin(props) {
           disabled={loading}
         />
       </div>
-      {/* Straight to org dashboard for testing purposes */}
-      <div>
-        <input
-          type='button'
-          value='Go to Org Dashboard'
-          onClick={() => navigate('/orgdash')}
-          style={{marginTop: 40}}
-        />
-      </div>
     </div>
   );
 }
