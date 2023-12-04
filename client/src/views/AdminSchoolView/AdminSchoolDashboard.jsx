@@ -4,7 +4,7 @@ import "./AdminSchoolDashboard.less";
 import { useNavigate } from "react-router-dom";
 import EditSchoolModal from "./EditSchoolModal";
 import { useGlobalState } from "../../Utils/userState";
-import { getSchools } from "../../Utils/requests";
+import { getOrganization, getClassroomcount } from "../../Utils/requests";
 
 export default function AdminSchoolDashboard() {
     const [schools, setSchools] = useState([]);
@@ -15,23 +15,28 @@ export default function AdminSchoolDashboard() {
 
     useEffect(() => {
         let schoolList = [];
+        let classroomCountList = [];
 
-        getSchools().then((res) => {
+        let orgId = window.sessionStorage.getItem("currOrg");
+
+        getOrganization(orgId).then((res) => {
             if (res.data) {
-                for(let i = 0; i < res.data.length; i++) {
-                    schoolList.push(res.data[i]);
+                for(let i = 0; i < res.data.schools.length; i++) {
+                    schoolList.push(res.data.schools[i]);
                 }
                 setSchools(schoolList);
             } else {
-                message.error(res.error);
+                message.error(res.err);
             }
         });
+
+        
     }, [schoolName, deleteFlag]);
+    
     
 
 
     const handleViewSchool = (schoolId) => {
-        //alert("View School " + schoolId);
         navigate('/dashboard')
     }
 
@@ -89,16 +94,17 @@ export default function AdminSchoolDashboard() {
                             <div id='card-right-content-container'>
                             
                             <div id='admin-teacher-number-container'>
-                                    <h1 id='number'>1</h1>
-                                    <p id='label'>Teachers</p>
+                                    <h1 id='number'>6</h1>
+                                    <p id='label'>Classrooms</p>
                             </div>
 
                             <div id='divider' />
 
-                            <div id='admin-student-number-container'>
+                            {/*<div id='admin-student-number-container'>
                                     <h1 id='number'>1</h1>
                                     <p id='label'>Students</p>
                             </div>
+                    */}
                            {/* <div id='divider' />
                             <div id='admin-code-container'>
                                 <h1 id='number'>{school.code}</h1>
