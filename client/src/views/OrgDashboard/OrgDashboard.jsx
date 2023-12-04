@@ -20,24 +20,28 @@ export default function OrgDashboard() {
     	let orgList = [];
 
     	// TODO: update to be admin-specific orgs (use Mentor/Dashboard/Dashboard.jsx as a model)
-
-    	getAllOrgs().then((res) => {
-    	   	if (res.data) {
-    	   		for (let i = 0; i < res.data.length; i++) {
-    	   			orgList.push(res.data[i]);
-    	   		}
-    	   		if (sort == 'aToZ') {
-    	   			orgList.sort(sortAtoZ);
-    	   		} else if (sort == 'zToA') {
-    	   			orgList.sort(sortZtoA);
-    	   		} else {
-    	   			orgList.sort(sortById);
-    	   		}
-    	   		setOrgs(orgList);
-    	   	} else {
-    	   		message.error(res.error);
-    	   	}
-    	});
+		
+		if (value.role !== 'DefaultUser') {
+			getAllOrgs().then((res) => {
+				if (res.data) {
+					for (let i = 0; i < res.data.length; i++) {
+						orgList.push(res.data[i]);
+					}
+					if (sort == 'aToZ') {
+						orgList.sort(sortAtoZ);
+					} else if (sort == 'zToA') {
+						orgList.sort(sortZtoA);
+					} else {
+						orgList.sort(sortById);
+					}
+					setOrgs(orgList);
+				} else {
+					message.error(res.error);
+				}
+		 });
+		} else {
+			message.error(`Not Logged In`)
+		}
   	}, [orgName, sort, deleteFlag]);
 
   	const sortById = (a, b) => {
@@ -111,13 +115,15 @@ export default function OrgDashboard() {
 	}
     
 	return (
-	    <div className='container nav-padding'>
-	        <NavBar />
+	    
+		<div className='container nav-padding'>
+	        {value === 'DefaultUser' ? message.info(`Please log in`) : null}
+			<NavBar />
 	        <div id='main-header'>Welcome {value.name}</div>
 	        <div id='org-dash-bar'>
 	        	<input
 	       			type='button'
-	       			onClick={() => navigate('/createorg')}
+	       			onClick={value.role !== 'DefaultUser' ? () => navigate('/createorg') : message.info(`Please Log In`)}
 	       			value='Create new organization'
 	        	/>
 	        	<select
@@ -134,7 +140,13 @@ export default function OrgDashboard() {
 	        </div>
 	        <div id='orgs-container'>
 	        	<div id='no-orgs-message'>
-	        		{orgs.length == 0 && <p>Looks like you don't have any organizations yet.</p>}
+				{orgs.length === 0 && (
+				<p>
+					{value.role === "DefaultUser"
+					? "Please log in to see your organizations."
+					: "Looks like you don't have any organizations yet."}
+				</p>
+				)}
 	        	</div>
 	        	<div id='dashboard-card-container'>
 	        		{orgs.map((org) => (
