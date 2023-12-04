@@ -743,6 +743,14 @@ export const deleteOrganization = async (id) =>
         error: 'Failed to delete organization.',
     });
 
+export const deleteSchool = async(id) =>
+    makeRequest({
+        method: DELETE,
+        path: `${server}/schools/${id}`,
+        auth: true,
+        error: 'Failed to delete organization.',
+    });
+
 export const getSchools = async () =>
     makeRequest({
         method: GET,
@@ -756,8 +764,67 @@ export const addSchool = async (name) =>
         method: POST,
         path: `${server}/schools`,
         data: {
-            name: name,
+            name: name
         },
         auth: true,
         error: 'Failed to add school.',
     });
+
+export const updateSchoolName = async(id, name) =>
+    makeRequest({
+        method: PUT,
+        path:`${server}/schools/${id}`,
+        data: {
+            name: name
+        },
+        auth: true,
+        error: 'Failed to edit school.'
+    });
+
+    export const updateSchoolCounty = async(id, county) =>
+    makeRequest({
+        method: PUT,
+        path:`${server}/schools/${id}`,
+        data: {
+            county: county
+        },
+        auth: true,
+        error: 'Failed to edit school.'
+    });
+    export const updateSchoolState = async(id, state) =>
+    makeRequest({
+        method: PUT,
+        path:`${server}/schools/${id}`,
+        data: {
+            state: state
+        },
+        auth: true,
+        error: 'Failed to edit school.'
+    });
+
+    export const updateClassroom = async(id, name) =>
+    makeRequest({
+        method:PUT,
+        path:`${server}/classrooms/${id}`,
+        data: {
+            name: name,
+        },
+        auth: true,
+        error: 'Failed to edit classroom.'
+    });
+
+    export const addClassroom = async(name) =>
+    makeRequest({
+        method: POST,
+        path:`${server}/classrooms`,
+        data: {
+            name: name,
+        
+            
+        },
+        auth: true,
+        error: 'Failed to add classroom.'
+    });
+
+
+
