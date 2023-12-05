@@ -176,7 +176,7 @@ export const createActivity = async (activity, learningStandard) =>
     error: 'Login failed.',
   });
 
-export const createDiscussion = async (title, description, learningStandard) =>
+export const createDiscussion = async (title, description, learningStandard, date, interval) =>
   makeRequest({
     method: POST,
     path: `${server}/discussions`,
@@ -184,6 +184,8 @@ export const createDiscussion = async (title, description, learningStandard) =>
       lesson_module: learningStandard,
       Title: title,
       Description: description,
+      Due_Date : date, 
+      Reminder_Interval : interval,
     },
     auth: true,
     error: 'Login failed. - createDiscussion',

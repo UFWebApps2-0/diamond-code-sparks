@@ -36,6 +36,9 @@ function Student() {
   const handleViewAllLessonsClick = () => {
     navigate('/all-lessons-student');
   };
+  const handleViewAllReminders = () => {
+    navigate('/reminders');
+  };
 
   const handleSelection = (activity, status) => {
     activity.lesson_module_name = learningStandard.name;
@@ -114,11 +117,15 @@ function Student() {
         <button onClick={handleViewAllLessonsClick} className="view-all-lessons-button">
             View all Lessons
           </button>
+        <button onClick={handleViewAllReminders} className="view-all-reminders-button">
+            View all Reminders
+          </button>
       </div>
       <StudentDiscussionDetailModal
         learningStandardName={learningStandard ? learningStandard.name : ''}
         title={selectedDiscussion ? selectedDiscussion.Title : ''}
         description={selectedDiscussion ? selectedDiscussion.Description : ''}
+        dueDate={selectedDiscussion ? selectedDiscussion.dueDate: ''}
         visible={modalVisible}
         setVisible={setModalVisible}
         handleCancel={handleCancel}
