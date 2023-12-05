@@ -5,8 +5,10 @@ import { createGlobalState } from "/node_modules/.vite/deps/react-hooks-global-s
 //import './Program_Page.less';
 import { getSaves, getStudent, getSession, getSessions} from '../../Utils/requests';
 import Workspace from '../../views/Workspace/Workspace';
+import { useNavigate } from 'react-router-dom';
 
 function ProgramPage() {
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +37,10 @@ function ProgramPage() {
     fetchData();
   }, []);
 
+  const handleEditClick = () => {
+    navigate('/sandbox'); // Navigate to BlocklyPage when button is clicked
+  };
+
 
   return (
     <div className="my-programs">
@@ -44,10 +50,10 @@ function ProgramPage() {
         <div className="menu"></div>
       </div>
       <div className="programs-list">
-        <div className="program new-program">
+        <button onClick={handleEditClick} className="program new-program">
           <div className="add-icon">+</div>
           <div>New Program</div>
-        </div>
+        </button>
         <MyCards programNumber={1} lessonNumber={2}/>
         <MyCards programNumber={2} lessonNumber={3}/>
         <MyCards programNumber={3} lessonNumber={2}/>
