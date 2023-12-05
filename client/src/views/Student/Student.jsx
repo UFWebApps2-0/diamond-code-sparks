@@ -53,11 +53,7 @@ function Student() {
   function viewMProgram(status) {
     setMakeProgram(status);
     setMenu(false);
-  }
-
-  function viewMProgram(status) {
-    setMakeProgram(status);
-    setMenu(false);
+    navigate('/sandbox');
   }
 
   function viewProgram(status) {
