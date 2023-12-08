@@ -19,7 +19,8 @@ import StudentLogin from './views/StudentLogin/StudentLogin';
 import ForgetPassword from './views/TeacherLogin/ForgetPassword';
 import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
-
+import Notifications from './views/Notifications/Notifications';
+import AllLessons from './views/Mentor/AllLessons/AllLessons'; // Adjust the import path as necessary
 const App = () => {
   return (
     <div>
@@ -97,6 +98,14 @@ const App = () => {
           }
         />
         <Route
+          path='/notifications'
+          element={
+            <PrivateRoute>
+              <Notifications />
+            </PrivateRoute>
+          }
+        />
+        <Route
           path='/activity'
           element={
             <PrivateRoute>
@@ -111,6 +120,13 @@ const App = () => {
               <ContentCreator />
             </PrivateRoute>
           }
+        />
+        <Route
+         path='/all-lessons' 
+        element={
+        <PrivateRoute>
+          <AllLessons />
+          </PrivateRoute>} 
         />
         <Route path='/bugreport' element={<BugReport />} />
         <Route path='*' element={<NotFound/>} />

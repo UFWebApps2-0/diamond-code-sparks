@@ -21,7 +21,7 @@ module.exports = {
     // get the current learning standard
     const selection = await strapi.services.selection.findOne(
       { classroom: ids, current: true },
-      ['lesson_module.activities', 'classroom.grade']
+      ['lesson_module.activities', 'lesson_module.discussions', 'classroom.grade']
     );
     // return the classroom and learning standard or 404 if there is no current
     return selection
