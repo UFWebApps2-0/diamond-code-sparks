@@ -509,7 +509,7 @@ export const updateActivityDetails = async (
     error: 'Failed to update unit',
   });
 
-export const updateDiscussionDetails = async (
+export const updateDiscussionDetails = async ( // update discussion
     id,
     Title,
     Description,
@@ -533,7 +533,7 @@ export const getLessonModuleActivities = async (lsId) =>
     error: 'Activity cannot be retrived',
   });
 
-export const getLessonModuleDiscussions = async (lsId) =>
+export const getLessonModuleDiscussions = async (lsId) => // get discussions
   makeRequest({
     method: GET,
     path: `${server}/discussions?lesson_module.id=${lsId}`,

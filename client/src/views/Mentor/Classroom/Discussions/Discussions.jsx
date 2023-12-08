@@ -47,7 +47,6 @@ export default function Discussions({ classroomId, viewing }) {
               message.error(lsRes.err);
             }
             const discRes = await getLessonModuleDiscussions(lsRes.data.id);
-            // console.log(discRes);
             if (discRes) setDiscussions(discRes.data);
             else { message.error(discRes.err); }
           }
@@ -77,9 +76,6 @@ export default function Discussions({ classroomId, viewing }) {
     'lime',
   ];
 
-  // const addDiscussion = (discussion) => {
-  //   setDiscussions([...discussions, discussion]);
-  // }
   const addDiscussion = async (title, description) => {
     const res = await createDiscussion(title, description, activeLessonModule.id);
     if (res.err) {message.error(res.err)}
@@ -93,7 +89,6 @@ export default function Discussions({ classroomId, viewing }) {
         <i className='fa fa-arrow-left' aria-hidden='true' />
       </button>
       {/* make new discussion button */}
-      {/* <CreateDiscussionModal lessonModuleId={activeLessonModule.id} onCreate={addDiscussion}/> */}
       <CreateDiscussionModal onCreate={addDiscussion}/>
       <MentorSubHeader title={classroom.name}></MentorSubHeader>
       <div id='home-content-container'> {/* container for the whole page */}

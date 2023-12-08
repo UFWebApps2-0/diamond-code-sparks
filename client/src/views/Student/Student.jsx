@@ -31,22 +31,22 @@ function Student() {
     fetchData();
   }, []);
 
-  const handleSelection = (activity) => {
+  const handleSelection = (activity) => { // navigate to selected activity page
     activity.lesson_module_name = learningStandard.name;
     localStorage.setItem('my-activity', JSON.stringify(activity));
 
     navigate('/workspace');
   };
 
-  const handleCancel = () => {
+  const handleCancel = () => { // close discussion modal
     setModalVisible(false)
   };
 
-  const handleOk = () => {
+  const handleOk = () => { // close discussion modal
     setModalVisible(false)
   }; 
   
-  const handleDiscussionSelection = (discussion) => {
+  const handleDiscussionSelection = (discussion) => { // open discussion modal
     setSelectedDiscussion(discussion);
     setModalVisible(true);
   }
@@ -62,11 +62,11 @@ function Student() {
           {learningStandard.activities ? (
             learningStandard.activities
               .sort((activity1, activity2) => activity1.number - activity2.number)
-              .map((activity) => (
+              .map((activity) => ( // display activity selectors
                 <div
                   key={activity.id}
                   id='list-item-wrapper'
-                  onClick={() => handleSelection(activity)}
+                  onClick={() => handleSelection(activity)} // on click navigate to activity page
                 >
                   <li>{`${learningStandard.name}: Activity ${activity.number}`}</li>
                 </div>
@@ -80,11 +80,11 @@ function Student() {
             </div>
           )}
           {learningStandard.discussions  ? (
-            learningStandard.discussions.map((discussion) => (
+            learningStandard.discussions.map((discussion) => ( // display discussion selectors
               <div 
               key={discussion.id}
               id='list-item-wrapper'
-              onClick={() => handleDiscussionSelection(discussion)}
+              onClick={() => handleDiscussionSelection(discussion)} // on click show discussion modal preview
               >
               <li> 
                 {`${learningStandard.name}: ${discussion.Title}`} 
@@ -96,7 +96,7 @@ function Student() {
           )}
         </ul>
       </div>
-      <StudentDiscussionDetailModal
+      <StudentDiscussionDetailModal // discussion modal preview component
         learningStandardName={learningStandard ? learningStandard.name : ''}
         title={selectedDiscussion ? selectedDiscussion.Title : ''}
         description={selectedDiscussion ? selectedDiscussion.Description : ''}
