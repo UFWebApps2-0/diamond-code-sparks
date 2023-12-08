@@ -9,8 +9,19 @@
   text-align: left;
   padding-top: 20px;
 }
+.sub-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 2%;
+
+
+}
+
 
 #classrooms-container {
+  position:relative;
   margin: 6vh auto 4vh auto;
   padding-top: 40px;
   padding-bottom: 40px;
@@ -19,6 +30,24 @@
   background: #colors[senary];
   border-radius: 5px;
   border: 2px solid #colors[secondary];
+
+  .view-all-lessons-button {
+    font-size: 1vw;
+    font-weight: 500;
+    padding: 10px 20px;
+    background:  #colors[secondary];
+    color:  #colors[senary];
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.25s;
+    margin-right: 0px;
+    margin-bottom: -70px;
+
+    &:hover {
+      background:  #colors[secondary];
+    }
+  }
 }
 
 #dashboard-card-container {
@@ -141,4 +170,5 @@
       border-bottom-right-radius: 10px;
     }
   }
+  
 }

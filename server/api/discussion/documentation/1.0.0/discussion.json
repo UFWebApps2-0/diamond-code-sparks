@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/units": {
+    "/discussions": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -12,7 +12,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Unit"
+                    "$ref": "#/components/schemas/Discussion"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Unit"
+          "Discussion"
         ],
         "parameters": [
           {
@@ -201,7 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unit"
+                  "$ref": "#/components/schemas/Discussion"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Unit"
+          "Discussion"
         ],
         "requestBody": {
           "description": "",
@@ -247,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewUnit"
+                "$ref": "#/components/schemas/NewDiscussion"
               }
             }
           }
         }
       }
     },
-    "/units/count": {
+    "/discussions/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -306,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Unit"
+          "Discussion"
         ],
         "parameters": []
       }
     },
-    "/units/{id}": {
+    "/discussions/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -321,7 +321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unit"
+                  "$ref": "#/components/schemas/Discussion"
                 }
               }
             }
@@ -359,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Unit"
+          "Discussion"
         ],
         "parameters": [
           {
@@ -383,7 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unit"
+                  "$ref": "#/components/schemas/Discussion"
                 }
               }
             }
@@ -421,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Unit"
+          "Discussion"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewUnit"
+                "$ref": "#/components/schemas/NewDiscussion"
               }
             }
           }
@@ -495,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Unit"
+          "Discussion"
         ],
         "parameters": [
           {
@@ -514,35 +514,55 @@
   },
   "components": {
     "schemas": {
-      "Unit": {
+      "Discussion": {
         "required": [
-          "id",
-          "name",
-          "number"
+          "id"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "grade": {
+          "Title": {
+            "type": "string"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "lesson_module": {
             "required": [
               "id",
+              "number",
               "name"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
+              "number": {
+                "type": "number"
+              },
               "name": {
                 "type": "string"
               },
-              "classrooms": {
+              "expectations": {
+                "type": "string"
+              },
+              "activities": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "units": {
+              "unit": {
+                "type": "string"
+              },
+              "standards": {
+                "type": "string"
+              },
+              "link": {
+                "type": "string"
+              },
+              "discussions": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -556,97 +576,26 @@
               }
             }
           },
-          "name": {
-            "type": "string"
-          },
-          "standards_id": {
-            "type": "string"
-          },
-          "standards_description": {
-            "type": "string"
-          },
-          "number": {
-            "type": "integer"
-          },
-          "lesson_modules": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "number",
-                "name"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "number": {
-                  "type": "number"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "expectations": {
-                  "type": "string"
-                },
-                "activities": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "unit": {
-                  "type": "string"
-                },
-                "standards": {
-                  "type": "string"
-                },
-                "link": {
-                  "type": "string"
-                },
-                "discussions": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "NewUnit": {
-        "required": [
-          "name",
-          "number"
-        ],
+      "NewDiscussion": {
         "properties": {
-          "grade": {
+          "Title": {
             "type": "string"
           },
-          "name": {
+          "Description": {
             "type": "string"
           },
-          "standards_id": {
+          "lesson_module": {
             "type": "string"
           },
-          "standards_description": {
-            "type": "string"
-          },
-          "number": {
-            "type": "integer"
-          },
-          "lesson_modules": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"
@@ -660,7 +609,7 @@
   },
   "tags": [
     {
-      "name": "Unit"
+      "name": "Discussion"
     }
   ]
 }
