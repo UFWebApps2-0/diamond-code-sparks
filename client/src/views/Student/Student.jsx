@@ -81,7 +81,8 @@ function Student() {
             Go to Notifications
           </button>
         </div>
-
+        <p id='lesson-module-expectations'>{`Expectations: ${learningStandard.expectations}`}</p>
+        {/*This is the module expectations*/}
         <ul>
           {learningStandard.activities ? (
             learningStandard.activities
