@@ -6,36 +6,17 @@ import { postUser, setUserSession } from '../../Utils/AuthRequests';
 import './TeacherLogin.less';
 import axios from 'axios';
 
-
-// Additions
-import { jwtDecode } from 'jwt-decode';
-
-const useFormInput = (initialValue) => {
-  const [value, setValue] = useState(initialValue);
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-  return {
-    value,
-    onChange: handleChange,
-  };
-};
-
 export default function TeacherLogin() {
-  const [email, setEmail] = useState(''); // Changed to useState to have both normal and
+  // State hooks for managing form inputs and loading state
+  const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState(''); // Google sign in options
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate();  // Hook for programmatically navigating
 
-  const CLIENT_ID = "770928523351-1b7sbtjeoloc1i675t92f0ko31ckaojn.apps.googleusercontent.com";
-
-  // Normal login
+ // Function to handle normal login process
   const handleLogin = () => {
     setLoading(true);
-    let body = { identifier: email, password: password }; // Removed ".value"
-
-    console.log(body);
+    let body = { identifier: email, password: password };
 
     postUser(body)
       .then((response) => {
@@ -59,8 +40,8 @@ export default function TeacherLogin() {
       });
   };
 
+  // Function to handle login via Google
   const handleGoogleLogin = (res) => {
-    console.log("Encoded JWT Token: " + res.credential);
     const token = res.credential; // Get the token from Google response
     // Save the token to session storage
     sessionStorage.setItem('googleToken', res.credential);
@@ -73,7 +54,6 @@ export default function TeacherLogin() {
       if (response.data.newUser) {
         // Sign up the new user using the response data
         const newUser = response.data.newUser;
-        console.log(newUser)
         axios.post('http://localhost:1337/api/users', newUser)
         .then(signUpResponse => {
           // Handle successful sign-up (e.g., set user session, navigate)
@@ -113,8 +93,6 @@ export default function TeacherLogin() {
       message.error('Google login failed.');
     });
 };
-
-
 
   // Init google client and render button on page load
   useEffect(() => {
