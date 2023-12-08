@@ -2,7 +2,7 @@ import {Modal, Button} from 'antd';
 import React, {useState} from "react";
 import './Student.less'
 
-export default function StudentDiscussionDetailModal({
+export default function StudentDiscussionDetailModal({ // modal component that displays discussion details
     learningStandardName, 
     title, 
     description,
@@ -11,41 +11,19 @@ export default function StudentDiscussionDetailModal({
     handleOk,
     setVisible
 }) {
-    // const [visible, setVisible] = useState(false);
-
-    // const showModal = () => {
-    //     setVisible(true)
-    // };
-
-    // const handleCancel = () => {
-    //     setVisible(false)
-    // };
-
-    // const handleOk = () => {
-    //     setVisible(false)
-    // };
-
     return (
-        <div 
-        // id='display-code-modal'
-        // id='list-item-wrapper'
-        >
-            {/* <button id='display-code-btn' onClick={showModal}>
-                {`${learningStandardName}: ${title}`}
-                </button> */}
+        <div>
             <Modal
-                title={`${learningStandardName}: ${title}`}
+                title={`${learningStandardName}: ${title}`} // display the discussion title
                 visible={visible}
                 onCancel={handleCancel}
-                // onCancel={setVisible(false)}
-                // width='50vw'
                 footer={[
                     <Button key="ok" type="primary" onClick={handleOk}>
                         OK
                     </Button>,
                 ]}
             >
-                <div id="code-display-text">{description}</div>
+                <div id="code-display-text">{description}</div> {/* display the discussion description */}
             </Modal>
         </div>
     );

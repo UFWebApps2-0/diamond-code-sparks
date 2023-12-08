@@ -40,7 +40,7 @@ function Student() {
     navigate('/reminders');
   };
 
-  const handleSelection = (activity, status) => {
+  const handleSelection = (activity, status) => { // navigate to selected activity page
     activity.lesson_module_name = learningStandard.name;
     activity.status = status; // Add status to the activity object
     localStorage.setItem('my-activity', JSON.stringify(activity));
@@ -52,15 +52,15 @@ function Student() {
   };
 
 
-  const handleCancel = () => {
+  const handleCancel = () => { // close discussion modal
     setModalVisible(false)
   };
 
-  const handleOk = () => {
+  const handleOk = () => { // close discussion modal
     setModalVisible(false)
   }; 
   
-  const handleDiscussionSelection = (discussion) => {
+  const handleDiscussionSelection = (discussion) => { // open discussion modal
     setSelectedDiscussion(discussion);
     setModalVisible(true);
   }
@@ -116,11 +116,11 @@ function Student() {
             </div>
           )}
           {learningStandard.discussions  ? (
-            learningStandard.discussions.map((discussion) => (
+            learningStandard.discussions.map((discussion) => ( // display discussion selectors
               <div 
               key={discussion.id}
               id='list-item-wrapper'
-              onClick={() => handleDiscussionSelection(discussion)}
+              onClick={() => handleDiscussionSelection(discussion)} // on click show discussion modal preview
               >
               <li> 
                 {`${learningStandard.name}: ${discussion.Title}`} 
@@ -138,7 +138,7 @@ function Student() {
             View all Reminders
           </button>
       </div>
-      <StudentDiscussionDetailModal
+      <StudentDiscussionDetailModal // discussion modal preview component
         learningStandardName={learningStandard ? learningStandard.name : ''}
         title={selectedDiscussion ? selectedDiscussion.Title : ''}
         description={selectedDiscussion ? selectedDiscussion.Description : ''}
