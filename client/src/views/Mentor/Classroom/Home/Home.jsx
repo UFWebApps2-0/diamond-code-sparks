@@ -60,6 +60,7 @@ export default function Home({ classroomId, viewing }) {
     navigate('/sandbox');
   };
 
+
   const openActivityInWorkspace = (activity, name) => {
     activity.lesson_module_name = name;
     activity.template = activity.activity_template;

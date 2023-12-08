@@ -1,10 +1,12 @@
-import { message } from 'antd';
+import { message, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
 import { getStudentClassroom, getLessonModule } from '../../Utils/requests';
 import StudentDiscussionDetailModal from './StudentDiscussionDetailModal';
 import './Student.less';
+
+const { Option } = Select;
 
 function Student() {
   const [learningStandard, setLessonModule] = useState({}); // learningStandard is the lesson module
@@ -24,19 +26,31 @@ function Student() {
         } else {
           message.error(res.err);
         }
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.error(error);
       }
     };
     fetchData();
   }, []);
 
-  const handleSelection = (activity) => { // navigate to selected activity page
+  const handleViewAllLessonsClick = () => {
+    navigate('/all-lessons-student');
+  };
+  const handleViewAllReminders = () => {
+    navigate('/reminders');
+  };
+
+  const handleSelection = (activity, status) => { // navigate to selected activity page
     activity.lesson_module_name = learningStandard.name;
+    activity.status = status; // Add status to the activity object
     localStorage.setItem('my-activity', JSON.stringify(activity));
 
     navigate('/workspace');
   };
+  const handleGoToNotifications = () => {
+    navigate('/notifications');
+  };
+
 
   const handleCancel = () => { // close discussion modal
     setModalVisible(false)
@@ -55,20 +69,42 @@ function Student() {
     <div className='container nav-padding'>
       <NavBar />
       <div id='activity-container'>
-        <div id='header'>
+        <div id='header' style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
           <div>Select your Activity</div>
+          <button
+            onClick={handleGoToNotifications}
+            style={{
+              border: '2px solid',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              backgroundColor: '#edd24a', 
+              color: 'white' 
+            }}
+          >
+            Go to Notifications
+          </button>
         </div>
+        <p id='lesson-module-expectations'>{`Expectations: ${learningStandard.expectations}`}</p>
+        {/*This is the module expectations*/}
         <ul>
           {learningStandard.activities ? (
             learningStandard.activities
               .sort((activity1, activity2) => activity1.number - activity2.number)
-              .map((activity) => ( // display activity selectors
-                <div
-                  key={activity.id}
-                  id='list-item-wrapper'
-                  onClick={() => handleSelection(activity)} // on click navigate to activity page
-                >
-                  <li>{`${learningStandard.name}: Activity ${activity.number}`}</li>
+              .map((activity) => (
+                <div key={activity.id} id='list-item-wrapper'>
+                  <li onClick={() => handleSelection(activity)}>
+                    {`${learningStandard.name}: Activity ${activity.number}`}
+                  </li>
+                  <div></div>
+                  <div>
+                  <Select className="custom-dropdown"
+                    defaultValue="Select Status"
+                    style={{ width: 200, marginLeft: 20 }}
+                  >
+                    <Option value="completed">Completed</Option>
+                    <Option value="inProgress">In-Progress</Option>
+                  </Select>
+                </div>
                 </div>
               ))
           ) : (
@@ -95,11 +131,18 @@ function Student() {
             <p>No discussions available.</p>
           )}
         </ul>
+        <button onClick={handleViewAllLessonsClick} className="view-all-lessons-button">
+            View all Lessons
+          </button>
+        <button onClick={handleViewAllReminders} className="view-all-reminders-button">
+            View all Reminders
+          </button>
       </div>
       <StudentDiscussionDetailModal // discussion modal preview component
         learningStandardName={learningStandard ? learningStandard.name : ''}
         title={selectedDiscussion ? selectedDiscussion.Title : ''}
         description={selectedDiscussion ? selectedDiscussion.Description : ''}
+        dueDate={selectedDiscussion ? selectedDiscussion.dueDate: ''}
         visible={modalVisible}
         setVisible={setModalVisible}
         handleCancel={handleCancel}

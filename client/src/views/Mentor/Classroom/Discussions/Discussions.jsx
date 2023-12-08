@@ -76,7 +76,7 @@ export default function Discussions({ classroomId, viewing }) {
     'lime',
   ];
 
-  const addDiscussion = async (title, description) => {
+  const addDiscussion = async (title, description, dueDate) => {
     const res = await createDiscussion(title, description, activeLessonModule.id);
     if (res.err) {message.error(res.err)}
     setDiscussions([...discussions, res.data]);

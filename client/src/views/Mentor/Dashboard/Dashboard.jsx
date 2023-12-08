@@ -33,11 +33,24 @@ export default function Dashboard() {
   const handleViewClassroom = (classroomId) => {
     navigate(`/classroom/${classroomId}`);
   };
+  const handleViewAllLessonsClick = () => {
+    navigate('/all-lessons');
+  };
+
+  const lessonCreator = () => {
+    navigate(`/ccdashboard`)
+  }
 
   return (
     <div className='container nav-padding'>
       <NavBar />
       <div id='main-header'>Welcome {value.name}</div>
+      <MentorSubHeader title={'Create Lesson'} onClick={() => lessonCreator()}></MentorSubHeader>
+      <div id='lesson-creator'>
+        <button onClick={() => lessonCreator()}>
+          Create Lesson
+        </button>
+      </div>
       <MentorSubHeader title={'Your Classrooms'}></MentorSubHeader>
       <div id='classrooms-container'>
         <div id='dashboard-card-container'>
@@ -50,19 +63,23 @@ export default function Dashboard() {
                     View
                   </button>
                 </div>
-              </div>
-              <div id='card-right-content-container'>
-                <DashboardDisplayCodeModal code={classroom.code} />
-                <div id='divider' />
-                <div id='student-number-container'>
-                  <h1 id='number'>{classroom.students.length}</h1>
-                  <p id='label'>Students</p>
+                <div id='card-right-content-container'>
+                  <DashboardDisplayCodeModal code={classroom.code} />
+                  <div id='divider' />
+                  <div id='student-number-container'>
+                    <h1 id='number'>{classroom.students.length}</h1>
+                    <p id='label'>Students</p>
+                  </div>
                 </div>
               </div>
             </div>
-          ))}
+            ))}
+          </div>
+          <button onClick={handleViewAllLessonsClick} className="view-all-lessons-button">
+            View all Lessons
+          </button>
         </div>
       </div>
-    </div>
-  );
+    );
+    
 }

@@ -247,6 +247,29 @@ p {
   text-align: center;
 }
 
+#next-activity-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //align-self: flex-end;
+  background-color: #colors[quaternary];
+  border: none;
+  border-radius: 10px;
+  margin: 0 auto 1.2em auto;
+  width: 80%;
+  height: 40px;
+  font-size: 2.5vh;
+  font-weight: 500;
+  color: #colors[text-primary];
+  line-height: 30px;
+  transition: 0.25s;
+  &:hover {
+    cursor: pointer;
+    background-color: #colors[quinary];
+    width: 82%;
+  }
+}
+
 #secondary-section-header {
   background-color: #colors[secondary];
   border-radius: 80px;
