@@ -7,7 +7,6 @@ export default function EditClassroomModal(props) {
     const [visible, setVisible] = useState(false);
     const {classroomId, classroomName, classroomCode, deleteFlag, setDeleteFlag} = props;
     const [name, setName] = useState("");
-    //const [joinCode, setJoinCode] = useState("");
     const [deleteVisible, setDeleteVisible] = useState(false);
     const [confirm, setConfirm] = useState('');
 
@@ -38,7 +37,6 @@ export default function EditClassroomModal(props) {
         }
         setDeleteFlag(!deleteFlag);
         setName('');
-        //setJoinCode('');
         
         setVisible(false);
         
@@ -50,6 +48,7 @@ export default function EditClassroomModal(props) {
     }
 
     const handlePermanentDelete = () => {
+      /*
       if(confirm == classroomName) {
         // Do the deleting
         setDeleteVisible(false);
@@ -60,6 +59,9 @@ export default function EditClassroomModal(props) {
       else {
         message.warning('Typo in ' + classroomName + ".")
       }
+      */
+     alert("Handle Classroom Delete");
+     setDeleteVisible(false);
     }
 
     return (
@@ -138,17 +140,6 @@ export default function EditClassroomModal(props) {
             placeholder={classroomName}
           ></Input>
         </Form.Item>
-        {/*}
-        <Form.Item id="form-label" label="Join Code">
-          <Input
-            onChange={e => setJoinCode(e.target.value)}
-            value={joinCode}
-            className="input"
-            required
-            placeholder={classroomCode}
-          ></Input>
-        </Form.Item>
-      */}
       </Form>
 
 

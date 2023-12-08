@@ -12,7 +12,9 @@ export default function CreateClassroomModal(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        alert("Handle Create Classroom");
+        setVisible(false);
+        /*
         if(classroomName != '') {
 
             let codes = [];
@@ -55,7 +57,9 @@ export default function CreateClassroomModal(props) {
 
         
         setVisible(false);
+        */
     }
+
 
     const handleCancel = (e) => {
         setClassroomName("");

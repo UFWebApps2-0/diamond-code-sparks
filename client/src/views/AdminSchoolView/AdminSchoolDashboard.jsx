@@ -98,20 +98,6 @@ export default function AdminSchoolDashboard() {
                                     <p id='label'>Classrooms</p>
                             </div>
 
-                            <div id='divider' />
-
-                            {/*<div id='admin-student-number-container'>
-                                    <h1 id='number'>1</h1>
-                                    <p id='label'>Students</p>
-                            </div>
-                    */}
-                           {/* <div id='divider' />
-                            <div id='admin-code-container'>
-                                <h1 id='number'>{school.code}</h1>
-                                <p id='label'>Join Code</p>
-                            </div>
-                    */}
-                    
 
                             
                         </div>
