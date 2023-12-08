@@ -1,18 +1,18 @@
 {
   "paths": {
-    "/mentors": {
+    "/groups": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find all the groups's records",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve groups document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Mentor"
+                    "$ref": "#/components/schemas/Groups"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Mentor"
+          "Groups"
         ],
         "parameters": [
           {
@@ -194,14 +194,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new record",
+        "description": "Create a new groups record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve groups document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Mentor"
+                  "$ref": "#/components/schemas/Groups"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Mentor"
+          "Groups"
         ],
         "requestBody": {
           "description": "",
@@ -247,20 +247,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewMentor"
+                "$ref": "#/components/schemas/NewGroups"
               }
             }
           }
         }
       }
     },
-    "/mentors/count": {
+    "/groups/count": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Retrieve the number of groups documents",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve groups document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -306,22 +306,22 @@
         },
         "summary": "",
         "tags": [
-          "Mentor"
+          "Groups"
         ],
         "parameters": []
       }
     },
-    "/mentors/{id}": {
+    "/groups/{id}": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find one groups record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve groups document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Mentor"
+                  "$ref": "#/components/schemas/Groups"
                 }
               }
             }
@@ -359,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Mentor"
+          "Groups"
         ],
         "parameters": [
           {
@@ -376,14 +376,14 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a record",
+        "description": "Update a single groups record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve groups document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Mentor"
+                  "$ref": "#/components/schemas/Groups"
                 }
               }
             }
@@ -421,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Mentor"
+          "Groups"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewMentor"
+                "$ref": "#/components/schemas/NewGroups"
               }
             }
           }
@@ -449,10 +449,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a record",
+        "description": "Delete a single groups record",
         "responses": {
           "200": {
-            "description": "deletes a single record based on the ID supplied",
+            "description": "deletes a single groups based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Mentor"
+          "Groups"
         ],
         "parameters": [
           {
@@ -514,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Mentor": {
+      "Groups": {
         "required": [
           "id"
         ],
@@ -522,15 +522,13 @@
           "id": {
             "type": "string"
           },
-          "first_name": {
+          "Name": {
             "type": "string"
           },
-          "last_name": {
-            "type": "string"
-          },
-          "school": {
+          "classroom": {
             "required": [
-              "id"
+              "id",
+              "code"
             ],
             "properties": {
               "id": {
@@ -539,19 +537,46 @@
               "name": {
                 "type": "string"
               },
-              "county": {
+              "school": {
                 "type": "string"
               },
-              "state": {
-                "type": "string"
-              },
-              "classrooms": {
+              "sessions": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
               "mentors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "students": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "code": {
+                "type": "string"
+              },
+              "grade": {
+                "type": "string"
+              },
+              "selections": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "authorized_workspaces": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "groups": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -565,12 +590,12 @@
               }
             }
           },
-          "classrooms": {
+          "students": {
             "type": "array",
             "items": {
               "required": [
                 "id",
-                "code"
+                "enrolled"
               ],
               "properties": {
                 "id": {
@@ -579,7 +604,10 @@
                 "name": {
                   "type": "string"
                 },
-                "school": {
+                "character": {
+                  "type": "string"
+                },
+                "classroom": {
                   "type": "string"
                 },
                 "sessions": {
@@ -588,35 +616,11 @@
                     "type": "string"
                   }
                 },
-                "mentors": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "enrolled": {
+                  "type": "boolean"
                 },
-                "students": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "code": {
+                "last_logged_in": {
                   "type": "string"
-                },
-                "grade": {
-                  "type": "string"
-                },
-                "selections": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "authorized_workspaces": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
                 },
                 "groups": {
                   "type": "array",
@@ -633,72 +637,29 @@
               }
             }
           },
-          "user": {
-            "required": [
-              "id",
-              "username",
-              "email"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "username": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "confirmationToken": {
-                "type": "string"
-              },
-              "confirmed": {
-                "type": "boolean"
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "role": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "NewMentor": {
+      "NewGroups": {
         "properties": {
-          "first_name": {
+          "Name": {
             "type": "string"
           },
-          "last_name": {
+          "classroom": {
             "type": "string"
           },
-          "school": {
-            "type": "string"
-          },
-          "classrooms": {
+          "students": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "user": {
-            "type": "string"
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"
@@ -712,7 +673,7 @@
   },
   "tags": [
     {
-      "name": "Mentor"
+      "name": "Groups"
     }
   ]
 }
