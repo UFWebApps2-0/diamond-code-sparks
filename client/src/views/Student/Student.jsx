@@ -44,6 +44,10 @@ function Student() {
 
     navigate('/workspace');
   };
+  const handleGoToNotifications = () => {
+    navigate('/notifications');
+  };
+
 
   const handleCancel = () => {
     setModalVisible(false)
@@ -62,8 +66,20 @@ function Student() {
     <div className='container nav-padding'>
       <NavBar />
       <div id='activity-container'>
-        <div id='header'>
+        <div id='header' style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
           <div>Select your Activity</div>
+          <button
+            onClick={handleGoToNotifications}
+            style={{
+              border: '2px solid',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              backgroundColor: '#edd24a', 
+              color: 'white' 
+            }}
+          >
+            Go to Notifications
+          </button>
         </div>
 
         <ul>
