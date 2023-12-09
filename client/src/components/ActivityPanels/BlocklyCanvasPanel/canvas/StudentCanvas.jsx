@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useReducer } from 'react';
 import '../../ActivityLevels.less';
 import { compileArduinoCode, handleSave } from '../../Utils/helpers';
 import { message, Spin, Row, Col, Alert, Dropdown, Menu } from 'antd';
-import { getSaves } from '../../../../Utils/requests';
+import { getSaves, getActivity, getStudentClassroom } from '../../../../Utils/requests';
 import CodeModal from '../modals/CodeModal';
 import ConsoleModal from '../modals/ConsoleModal';
 import PlotterModal from '../modals/PlotterModal';
@@ -16,6 +16,7 @@ import {
 import ArduinoLogo from '../Icons/ArduinoLogo';
 import PlotterLogo from '../Icons/PlotterLogo';
 import { useNavigate } from 'react-router-dom';
+//import { getLessonModule } from '../../../../Util/requests'
 
 let plotId = 1;
 
@@ -35,6 +36,8 @@ export default function StudentCanvas({ activity }) {
   const [saves, setSaves] = useState({});
   const [lastSavedTime, setLastSavedTime] = useState(null);
   const [lastAutoSave, setLastAutoSave] = useState(null);
+  const [codeSubmitted, setCodeSubmitted] = useState(false);
+  const [isLast, setIsLast] = useState(false);
 
   const [forceUpdate] = useReducer((x) => x + 1, 0);
   const navigate = useNavigate();
@@ -299,6 +302,7 @@ export default function StudentCanvas({ activity }) {
     }
   };
   const handleCompile = async () => {
+    setCodeSubmitted(true); //When code is submitted, it sets this useState variable to true.
     if (showConsole || showPlotter) {
       message.warning(
         'Close Serial Monitor and Serial Plotter before uploading your code'
@@ -336,6 +340,33 @@ export default function StudentCanvas({ activity }) {
     let output = new Date(value).toLocaleDateString(locale);
     return output + ' ' + new Date(value).toLocaleTimeString(locale);
   };
+
+  const handleActivityChange = async() => {
+
+    const res = await getStudentClassroom(); //Gets the data of the current classroom.
+    if(res.data){
+      const acts = res.data.lesson_module.activities
+        .sort((activity1, activity2) => activity1.number - activity2.number) //Sorts the activities.
+        .find(activity =>
+          activity.number > activityRef.current.number //Finds the next activity.
+        );
+
+      if(acts != null){
+        localStorage.setItem('my-activity', JSON.stringify(acts)); //Changing the activity.
+        location.reload()
+
+        const temp = res.data.lesson_module.activities
+          .find(activity => activity.number > acts.number);
+
+        if(temp == null){
+          setIsLast(true);
+        }
+      }
+    }
+    else{
+      message.error(res.err)
+    }
+  }
 
   const menu = (
     <Menu>
@@ -495,7 +526,15 @@ export default function StudentCanvas({ activity }) {
                 </Row>
               </Col>
             </Row>
-            <div id='blockly-canvas' />
+            <div id='blockly-canvas' /> {/*This updates the page to show the next activity button when code is compiled.*/}
+            {codeSubmitted && !isLast && (
+              <button 
+                id="next-activity-button"
+                onClick={handleActivityChange}
+              >
+                Next Activity
+              </button>
+            )}   
           </Spin>
         </div>
 
@@ -511,7 +550,7 @@ export default function StudentCanvas({ activity }) {
           plotData={plotData}
           setPlotData={setPlotData}
           plotId={plotId}
-        />          
+        />      
       </div>
 
       {/* This xml is for the blocks' menu we will provide. Here are examples on how to include categories and subcategories */}
@@ -539,6 +578,7 @@ export default function StudentCanvas({ activity }) {
             ))
         }
       </xml>
+      
 
       {compileError && (
         <Alert

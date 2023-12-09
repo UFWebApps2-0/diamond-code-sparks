@@ -129,7 +129,7 @@ export default function NavBar() {
         <img src={Logo} id='casmm-logo' alt='logo' />
       </Link>
       <div id='dropdown-menu'>
-       {currentRoute.endsWith('/student') && <NotificationDropdown />}
+       {currentRoute.endsWith('/student') && <NotificationDropdown style = {{marginRight: '30px'}}/>}
         <Dropdown overlay={menu} trigger={['click']}>
           <button
             className='ant-dropdown-link'

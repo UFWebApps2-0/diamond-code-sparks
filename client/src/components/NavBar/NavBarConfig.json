@@ -10,6 +10,7 @@
     "ContentCreatorDashboard": "/ccdashboard",
     "ResearcherDashboard": "/report",
     "BugReport": "/bugreport",
+    "Discussions": "/discussions",
     "Notifications": "/notifications"
   },
   "users": {

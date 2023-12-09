@@ -25,7 +25,7 @@ export default function NotificationDropdown() {
             {notifications.map((note, index) => (
                 <Menu.Item key={index}>
                     {note}
-                    <Button type="primary" onClick={(e) => { e.preventDefault();clearNotification(index);}}>
+                    <Button type="primary" onClick={(e) => { e.preventDefault(); clearNotification(index); }}>
                         Clear
                     </Button>
                 </Menu.Item>
@@ -43,7 +43,9 @@ export default function NotificationDropdown() {
     return (
         <Dropdown overlay={notifications.length > 0 ? notificationMenu : emptyMenu} trigger={['click']} visible={dropdownVisible} onVisibleChange={handleVisibleChange} style={{ marginLeft: '20px' }}>
             <Badge count={notifications.length}>
-                <BellOutlined className="bell-icon" /> {/* Add a class name to the icon */}
+                <span className="bell-icon">
+                    <BellOutlined />
+                </span>
             </Badge>
         </Dropdown>
     );
