@@ -47,10 +47,6 @@ function Student() {
 
     navigate('/workspace');
   };
-  const handleGoToNotifications = () => {
-    navigate('/notifications');
-  };
-
 
   const handleCancel = () => { // close discussion modal
     setModalVisible(false)
@@ -71,18 +67,6 @@ function Student() {
       <div id='activity-container'>
         <div id='header' style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
           <div>Select your Activity</div>
-          <button
-            onClick={handleGoToNotifications}
-            style={{
-              border: '2px solid',
-              borderRadius: '5px',
-              padding: '5px 10px',
-              backgroundColor: '#edd24a', 
-              color: 'white' 
-            }}
-          >
-            Go to Notifications
-          </button>
         </div>
         <p id='lesson-module-expectations'>{`Expectations: ${learningStandard.expectations}`}</p>
         {/*This is the module expectations*/}

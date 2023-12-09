@@ -7,10 +7,12 @@ import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { removeUserSession } from '../../Utils/AuthRequests';
 import { useGlobalState } from '../../Utils/userState';
+import NotificationDropdown from '../NotificationsDropdown/NotificationsDropdown';
 
 export default function NavBar() {
   const [value] = useGlobalState('currUser');
   let currentRoute = window.location.pathname;
+  console.log("currentRoute: ", currentRoute);
   let navigate = useNavigate();
   let routes = config.routes;
 
@@ -99,6 +101,12 @@ export default function NavBar() {
           &nbsp; Sign Out
         </Menu.Item>
       ) : null}
+      {shouldShowRoute('Notifications') ? (
+        <Menu.Item key='9' onClick={() => handleRouteChange(routes.Notifications)}>
+          <i className='fa fa-bell' />
+          &nbsp; Notifications
+        </Menu.Item>
+      ) : null}
     </Menu>
   );
 
@@ -110,17 +118,18 @@ export default function NavBar() {
           value.role === 'ContentCreator'
             ? '/ccdashboard'
             : value.role === 'Mentor'
-            ? '/dashboard'
-            : value.role === 'Student'
-            ? '/student'
-            : value.role === 'Researcher'
-            ? '/report'
-            : '/'
+              ? '/dashboard'
+              : value.role === 'Student'
+                ? '/student'
+                : value.role === 'Researcher'
+                  ? '/report'
+                  : '/'
         }
       >
         <img src={Logo} id='casmm-logo' alt='logo' />
       </Link>
       <div id='dropdown-menu'>
+       {currentRoute.endsWith('/student') && <NotificationDropdown style = {{marginRight: '30px'}}/>}
         <Dropdown overlay={menu} trigger={['click']}>
           <button
             className='ant-dropdown-link'
