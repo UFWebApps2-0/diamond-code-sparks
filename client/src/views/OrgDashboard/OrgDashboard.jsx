@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import DeleteOrgModal from './DeleteOrgModal';
 import { getOrganizations, getAllOrgs, updateOrgName, getAdmin } from "../../Utils/requests"
+import { useGlobalState } from '../../Utils/userState';
 
 export default function OrgDashboard() {
 	const [orgs, setOrgs] = useState([]);
@@ -13,6 +14,7 @@ export default function OrgDashboard() {
 	const [orgName, setOrgName] = useState('');
 	const [sort, setSort] = useState('default');
 	const [deleteFlag, setDeleteFlag] = useState(false); // used to trigger re-render upon org deletion
+	const [value] = useGlobalState('currUser');
 
 	useEffect(() => {
     	let orgIds = [];
@@ -30,24 +32,29 @@ export default function OrgDashboard() {
 				message.error(res.err);
 			}
 		});
-/**
-    	getAllOrgs().then((res) => {
-    	   	if (res.data) {
-    	   		for (let i = 0; i < res.data.length; i++) {
-    	   			orgList.push(res.data[i]);
-    	   		}
-    	   		if (sort == 'aToZ') {
-    	   			orgList.sort(sortAtoZ);
-    	   		} else if (sort == 'zToA') {
-    	   			orgList.sort(sortZtoA);
-    	   		} else {
-    	   			orgList.sort(sortById);
-    	   		}
-    	   		setOrgs(orgList);
-    	   	} else {
-    	   		message.error(res.error);
-    	   	}
-    	});
+/**		
+		if (value.role !== 'DefaultUser') {
+			getAllOrgs().then((res) => {
+				if (res.data) {
+					for (let i = 0; i < res.data.length; i++) {
+						orgList.push(res.data[i]);
+					}
+					if (sort == 'aToZ') {
+						orgList.sort(sortAtoZ);
+					} else if (sort == 'zToA') {
+						orgList.sort(sortZtoA);
+					} else {
+						orgList.sort(sortById);
+					}
+					setOrgs(orgList);
+				} else {
+					message.error(res.error);
+				}
+		 });
+
+		} else {
+			message.error(`Not Logged In`)
+		} 
 */
   	}, [orgName, sort, deleteFlag]);
 
@@ -111,16 +118,31 @@ export default function OrgDashboard() {
 			message.info('Name cannot be blank.');
 		}
 	}
+
+	const printSchools = (school, i, arr) => {
+		// if last item in the list, don't print with comma
+		if (i == arr.length - 1) {
+			return (<span>{school.name}</span>);
+		} else {
+			return (<span>{school.name}, </span>);
+		}
+	}
+
+	const navToSchools = (orgId) => {
+		window.sessionStorage.setItem("currOrg", orgId);
+		navigate('/admindashboard');
+	}
     
 	return (
-	    <div className='container nav-padding'>
-	        <NavBar />
-	        {/* Replace 'Admin' with username after admin accounts are created */}
-	        <div id='main-header'>Welcome Admin</div>
+	    
+		<div className='container nav-padding'>
+	        {value === 'DefaultUser' ? message.info(`Please log in`) : null}
+			<NavBar />
+	        <div id='main-header'>Welcome {value.name}</div>
 	        <div id='org-dash-bar'>
 	        	<input
 	       			type='button'
-	       			onClick={() => navigate('/createorg')}
+	       			onClick={value.role !== 'DefaultUser' ? () => navigate('/createorg') : message.info(`Please Log In`)}
 	       			value='Create new organization'
 	        	/>
 	        	<select
@@ -137,7 +159,13 @@ export default function OrgDashboard() {
 	        </div>
 	        <div id='orgs-container'>
 	        	<div id='no-orgs-message'>
-	        		{orgs.length == 0 && <p>Looks like you don't have any organizations yet.</p>}
+				{orgs.length === 0 && (
+				<p>
+					{value.role === "DefaultUser"
+					? "Please log in to see your organizations."
+					: "Looks like you don't have any organizations yet."}
+				</p>
+				)}
 	        	</div>
 	        	<div id='dashboard-card-container'>
 	        		{orgs.map((org) => (
@@ -150,11 +178,11 @@ export default function OrgDashboard() {
 								</button>
 			        			<div id='card-top-content-container'>
 				        			<h1 id='card-title'>{org.name}</h1>
-				        			<p>{org.description}</p>
+				        			<p>{org.schools.map(printSchools)}</p>
 				        		</div>
 				        		<div id='card-bottom-content-container'>
-				        			<button className='manage-btn' onClick={() => navigate('/admindashboard')}>
-				        				<p>Manage Classrooms</p>
+				        			<button className='manage-btn' onClick={() => navToSchools(org.id)}>
+				        				<p>Manage Schools</p>
 				        			</button>
 				        			<div className='divider' />
 				        			<button className='manage-btn' onClick={() => navigate('/managegalleries')}>
