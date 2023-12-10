@@ -691,13 +691,14 @@ export const getClassroomWorkspace = async (id) =>
     error: 'Unable to retrive classroom workspaces',
   });
 
-export const addOrganization = async (name, desc) =>
+export const addOrganization = async (name, desc, adminID) =>
   makeRequest({
     method: POST,
     path: `${server}/organizations`,
     data: {
       name: name,
       description: desc,
+      administrator: adminID,
     },
     auth: true,
     error: 'Failed to add organization.',
