@@ -840,20 +840,7 @@ export const updateSchoolName = async(id, name) =>
         auth: true,
         error: 'Failed to edit classroom.'
     });
-
-    export const addClassroom = async(name) =>
-    makeRequest({
-        method: POST,
-        path:`${server}/classrooms`,
-        data: {
-            name: name,
-        
-            
-        },
-        auth: true,
-        error: 'Failed to add classroom.'
-    });
-
+    
     export const getClassroomcount = async (id) =>
     makeRequest({
         method: GET,
