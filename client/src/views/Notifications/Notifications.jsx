@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
 import { useNavigate } from 'react-router-dom';
+import './Notifications.less';
 
 export default function Notifications({ handleLogout }) {
   const options = ['Off', 'On'];
@@ -16,22 +17,22 @@ export default function Notifications({ handleLogout }) {
   };
 
   return (
-    <div className='container flex flex-row nav-padding'>
+    <div className='notifications-container'>
       <NavBar isStudent={true} handleLogout={handleLogout} />
       <div>
-        <h1>Notification Settings</h1>
-        <button onClick={handleGoBack}>Go Back</button>
+        <h1 className='notifications-header'>Notification Settings</h1>
+        <button className='button' onClick={handleGoBack}>Go Back</button>
         <div>
-          <h2 style={{ fontWeight: 'bold' }}>Settings for</h2>
+          <h2 className='notifications-header'>Settings for</h2>
           <select>
             <option value="activity1">Activity 1</option>
             <option value="activity2">Activity 2</option>
           </select>
-          <table style={{ width: '100%', textAlign: 'left' }}>
+          <table className='notifications-table'>
             <thead>
               <tr>
                 {columns.map((column, index) => (
-                  <th key={index} style={{ fontWeight: 'bold', textAlign: index > 0 ? 'right' : 'left' }}>
+                  <th key={index} className={`notifications-table-header ${index > 0 ? 'notifications-table-cell' : ''}`}>
                     {column}
                   </th>
                 ))}
@@ -39,32 +40,15 @@ export default function Notifications({ handleLogout }) {
             </thead>
             <tbody>
               <tr>
-                <td>Due Date</td>
-                <td style={{ textAlign: 'right' }}>
+                <td className='notifications-table-cell'>Due Date</td>
+                <td className='notifications-table-cell-right'>
                   <select defaultValue="off">
                     {options.map(option => (
                       <option key={option} value={option.toLowerCase()}>{option}</option>
                     ))}
                   </select>
                 </td>
-                <td style={{ textAlign: 'right' }}>
-                  <select defaultValue="off">
-                    {options.map(option => (
-                      <option key={option} value={option.toLowerCase()}>{option}</option>
-                    ))}
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Course Content</td>
-                <td style={{ textAlign: 'right' }}>
-                  <select defaultValue="off">
-                    {options.map(option => (
-                      <option key={option} value={option.toLowerCase()}>{option}</option>
-                    ))}
-                  </select>
-                </td>
-                <td style={{ textAlign: 'right' }}>
+                <td className='notifications-table-cell-right'>
                   <select defaultValue="off">
                     {options.map(option => (
                       <option key={option} value={option.toLowerCase()}>{option}</option>
@@ -73,32 +57,15 @@ export default function Notifications({ handleLogout }) {
                 </td>
               </tr>
               <tr>
-                <td>Grading</td>
-                <td style={{ textAlign: 'right' }}>
+                <td className='notifications-table-cell'>Course Content</td>
+                <td className='notifications-table-cell-right'>
                   <select defaultValue="off">
                     {options.map(option => (
                       <option key={option} value={option.toLowerCase()}>{option}</option>
                     ))}
                   </select>
                 </td>
-                <td style={{ textAlign: 'right' }}>
-                  <select defaultValue="off">
-                    {options.map(option => (
-                      <option key={option} value={option.toLowerCase()}>{option}</option>
-                    ))}
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Past Due</td>
-                <td style={{ textAlign: 'right' }}>
-                  <select defaultValue="off">
-                    {options.map(option => (
-                      <option key={option} value={option.toLowerCase()}>{option}</option>
-                    ))}
-                  </select>
-                </td>
-                <td style={{ textAlign: 'right' }}>
+                <td className='notifications-table-cell-right'>
                   <select defaultValue="off">
                     {options.map(option => (
                       <option key={option} value={option.toLowerCase()}>{option}</option>
@@ -107,15 +74,49 @@ export default function Notifications({ handleLogout }) {
                 </td>
               </tr>
               <tr>
-                <td>Upcoming</td>
-                <td style={{ textAlign: 'right' }}>
+                <td className='notifications-table-cell'>Grading</td>
+                <td className='notifications-table-cell-right'>
                   <select defaultValue="off">
                     {options.map(option => (
                       <option key={option} value={option.toLowerCase()}>{option}</option>
                     ))}
                   </select>
                 </td>
-                <td style={{ textAlign: 'right' }}>
+                <td className='notifications-table-cell-right'>
+                  <select defaultValue="off">
+                    {options.map(option => (
+                      <option key={option} value={option.toLowerCase()}>{option}</option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td className='notifications-table-cell'>Past Due</td>
+                <td className='notifications-table-cell-right'>
+                  <select defaultValue="off">
+                    {options.map(option => (
+                      <option key={option} value={option.toLowerCase()}>{option}</option>
+                    ))}
+                  </select>
+                </td>
+                <td className='notifications-table-cell-right'>
+                  <select defaultValue="off">
+                    {options.map(option => (
+                      <option key={option} value={option.toLowerCase()}>{option}</option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td className='notifications-table-cell'>Upcoming</td>
+                <td className='notifications-table-cell-right'>
+                  <select defaultValue="off">
+                    {options.map(option => (
+                      <option key={option} value={option.toLowerCase()}>{option}</option>
+                    ))}
+                  </select>
+                </td>
+                <td className='notifications-table-cell-right'>
                   <select defaultValue="off">
                     {options.map(option => (
                       <option key={option} value={option.toLowerCase()}>{option}</option>
