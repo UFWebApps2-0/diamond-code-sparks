@@ -10,11 +10,6 @@ export default function CreateDiscussionModal({ onCreate }) {
     const [description, setDescription] = useState('');
     const [date, setDueDate] = useState('');
     const [reminderInterval, setReminderInterval] = useState(1);
-    
-    // maybe need props.lessonModuleId to pass to createDiscussion
-
-    // need lesson_module.id to pass to createDiscussion
-    // const {code} = props;
 
     const showModal = () => {
         setVisible(true)
@@ -25,16 +20,13 @@ export default function CreateDiscussionModal({ onCreate }) {
     };
 
     const handleOk = async () => {
-        // const res = await createDiscussion(title, description, lessonModuleId);
-        // if (res.err) {message.error(res.err)}        
-        // onCreate(res.data);
         onCreate(title, description, date, reminderInterval);
         setVisible(false)
     };
 
     return (
         <div id='create-discussion-modal'>
-            <button id='create-disc-btn' onClick={showModal}>Create New Discussion</button>
+            <button id='create-disc-btn' onClick={showModal}>Create New Discussion</button> {/* show modal button */}
             <Modal
                 title={'New Discussion'}
                 visible={visible}
@@ -46,10 +38,8 @@ export default function CreateDiscussionModal({ onCreate }) {
                     </Button>,
                 ]}
             >
-                {/* <div id="code-display-text">123</div> */}
                 <div id="create-discussion-inputs"> {/* input fields for the discussion title and description */}
                     <Input placeholder="Discussion Title" onChange={(e) => setTitle(e.target.value)} />
-                    {/* it would be nice to have a space between these */}
                     <Input.TextArea placeholder="Discussion Description" onChange={(e) => setDescription(e.target.value)} />
                     {/* Include the DueDate component and pass setDueDate */}
                     <div> <DatePicker placeholder='Select Due Date' onChange={(date, dateString) => setDueDate(dateString)} /> </div>
