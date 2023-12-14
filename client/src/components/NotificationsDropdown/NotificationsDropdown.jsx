@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Menu, Dropdown, Button, Badge, Empty } from 'antd';
 import { BellOutlined } from '@ant-design/icons';
+import { SettingsContext } from '../../SettingsContext';
 
 export default function NotificationDropdown() {
-    const [notifications, setNotifications] = useState([
-        'Notification 1',
-        'Notification 2',
-        'Notification 3',
-        // Add more notifications here
-    ]);
+    const { settings } = useContext(SettingsContext);
+    const [notifications, setNotifications] = useState([]);
+
+    useEffect(() => {
+        // Load notifications from localStorage when component mounts
+        const savedNotifications = localStorage.getItem('notifications');
+        if (savedNotifications) {
+            setNotifications(JSON.parse(savedNotifications));
+        }
+    }, []);
+    useEffect(() => {
+        // Save notifications to localStorage whenever they change
+        localStorage.setItem('notifications', JSON.stringify(notifications));
+    }, [notifications]);
 
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -41,8 +50,8 @@ export default function NotificationDropdown() {
     );
 
     return (
-        <Dropdown overlay={notifications.length > 0 ? notificationMenu : emptyMenu} trigger={['click']} visible={dropdownVisible} onVisibleChange={handleVisibleChange} style={{ marginLeft: '20px' }}>
-            <Badge count={notifications.length}>
+        <Dropdown overlay={settings.upcoming !== 'off' && notifications.length > 0 ? notificationMenu : emptyMenu} trigger={['click']} visible={dropdownVisible} onVisibleChange={handleVisibleChange} style={{ marginLeft: '20px' }}>
+            <Badge count={settings.upcoming !== 'off' ? notifications.length : 0}>
                 <span className="bell-icon">
                     <BellOutlined />
                 </span>

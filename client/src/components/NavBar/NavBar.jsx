@@ -8,6 +8,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { removeUserSession } from '../../Utils/AuthRequests';
 import { useGlobalState } from '../../Utils/userState';
 import NotificationDropdown from '../NotificationsDropdown/NotificationsDropdown';
+import { SettingsProvider } from '../../SettingsContext';
 
 export default function NavBar() {
   const [value] = useGlobalState('currUser');
@@ -19,6 +20,8 @@ export default function NavBar() {
   const handleLogout = () => {
     removeUserSession();
     navigate('/');
+    localStorage.removeItem('notifications');
+    localStorage.removeItem('settings');
   };
 
   const handleRouteChange = (route) => {
@@ -129,7 +132,11 @@ export default function NavBar() {
         <img src={Logo} id='casmm-logo' alt='logo' />
       </Link>
       <div id='dropdown-menu'>
-       {currentRoute.endsWith('/student') && <NotificationDropdown style = {{marginRight: '30px'}}/>}
+        {currentRoute.endsWith('/student') &&
+          <div style={{ marginRight: '15px' }}>
+            <NotificationDropdown />
+          </div>
+        }
         <Dropdown overlay={menu} trigger={['click']}>
           <button
             className='ant-dropdown-link'

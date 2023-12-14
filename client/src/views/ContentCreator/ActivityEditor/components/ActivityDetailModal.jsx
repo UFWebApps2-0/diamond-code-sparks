@@ -1,6 +1,7 @@
-import { Button, Form, Input, message, Modal } from "antd"
+import { Button, Form, Input, message, Modal, DatePicker } from "antd"
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import moment from 'moment';
 import {
   getActivity,
   getActivityToolbox,
@@ -22,6 +23,7 @@ const ActivityDetailModal = ({
   setActivities,
   viewing,
 }) => {
+  const [dueDate, setDueDate] = useState(null);
   const [description, setDescription] = useState("")
   //const [template, setTemplate] = useState("")
   const [StandardS, setStandardS] = useState("")
@@ -69,6 +71,7 @@ const ActivityDetailModal = ({
           return element.type
         })
       setComputationComponents(computation)
+      setDueDate(response.data.dueDate ? new Date(response.data.dueDate) : null);
     }
     showActivityDetailsModal()
   }, [selectActivity])
@@ -122,8 +125,9 @@ const ActivityDetailModal = ({
       link,
       scienceComponents,
       makingComponents,
-      computationComponents
-    )
+      computationComponents,
+      dueDate
+    );
     if (res.err) {
       message.error(res.err)
     } else {
@@ -235,6 +239,12 @@ const ActivityDetailModal = ({
             style={linkError ? { backgroundColor: "#FFCCCC" } : {}}
             placeholder="Enter a link"
           ></Input>
+        </Form.Item>
+        <Form.Item id="form-label" label="Due Date">
+          <DatePicker
+            value={dueDate ? moment(dueDate) : null}
+            onChange={date => setDueDate(date ? date.toDate() : null)}
+          />
         </Form.Item>
         <Form.Item
           id="form-label"
