@@ -23,6 +23,7 @@ export default function LessonModuleCreator({
   const [numOfActivityLevels, setNumOfActivityLevels] = useState("")
   const [standards, setStandards] = useState("")
   const [link, setLink] = useState("")
+  const [videoLink, setVideoLink] = useState("")
   const [linkError, setLinkError] = useState(false)
   const [learningStandardObj, setLessonModuleObj] = useState("")
   // eslint-disable-next-line
@@ -45,6 +46,7 @@ export default function LessonModuleCreator({
     setName("")
     setStandards("")
     setLink("")
+    setVideoLink("")
     setLinkError(false)
     setNumOfActivityLevels("")
     setVisible(true)
@@ -192,6 +194,20 @@ export default function LessonModuleCreator({
               placeholder="Enter lesson Standards"
             />
           </Form.Item>
+          <Form.Item label="Upload YouTube Video">
+            <Input
+              onChange={e => {
+                setVideoLink(e.target.value)
+                setLinkError(false)
+              }}
+              style={linkError ? { backgroundColor: "#FFCCCC" } : {}}
+              value={videoLink}
+              placeholder="Enter YouTube URL"
+            />
+          </Form.Item>
+
+          
+          
           <Form.Item label="Link to Additional Resource (Optional)">
             <Input
               onChange={e => {

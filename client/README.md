@@ -9,7 +9,9 @@
 1. Install [Node](https://nodejs.org/en/) and [Yarn](https://classic.yarnpkg.com/en/docs/install#windows-stable)
 2. Run `yarn` to install project dependencies
 3. Run `yarn start` to startup the client (please note that much of the functionality will not work without also starting up the backend services)
-4. Navigate to chrome://flags/ and enable the #enable-experimental-web-platform-features flag (This will provide your browser access to serial ports)
+4. Run `yarn add dotenv axios` to include the necessary packages for the OpenAI transcription API
+5. Run `yarn add react-player` to include the necessary packages for to utilze the YouTube videos in the development enviornment in the program.
+6. Navigate to chrome://flags/ and enable the #enable-experimental-web-platform-features flag (This will provide your browser access to serial ports)
 
 <br />
 

@@ -44,7 +44,7 @@ export default function Workspace({ handleLogout }) {
         lessonName={`${activity.lesson_module_name}, Activity ${activity.number}`}
         handleGoBack={handleGoBack}
         handleLogout={handleLogout}
-        isStudent={true}
+        isStudent={true}        
       />
     </div>
   );

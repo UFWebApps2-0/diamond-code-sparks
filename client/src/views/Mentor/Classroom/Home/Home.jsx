@@ -164,12 +164,19 @@ export default function Home({ classroomId, viewing }) {
                       </div>
                       <div id='view-activity-info'>
                         <p>
-                          <strong>STANDARDS: </strong>
+                          <strong>Standards: </strong>
                           {activity.StandardS}
                         </p>
                         <p>
                           <strong>Description: </strong>
                           {activity.description}
+                        </p>
+                        <p>
+                        <strong>Link to YouTube Video: </strong>
+                            <a href={activity.link} target='_blank' rel='noreferrer'>
+                              {activity.link}
+                            </a>
+                          
                         </p>
                         <p>
                           <strong>Classroom Materials: </strong>
@@ -229,9 +236,6 @@ export default function Home({ classroomId, viewing }) {
                         {activity.link ? (
                           <p>
                             <strong>Link to Additional Information: </strong>
-                            <a href={activity.link} target='_blank' rel='noreferrer'>
-                              {activity.link}
-                            </a>
                           </p>
                         ) : null}
                       </div>

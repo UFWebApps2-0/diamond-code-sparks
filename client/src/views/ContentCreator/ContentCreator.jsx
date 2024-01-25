@@ -14,6 +14,7 @@ import {
 import UnitEditor from './UnitEditor/UnitEditor';
 import LessonEditor from './LessonEditor/LessonEditor';
 import { useSearchParams } from 'react-router-dom';
+import FeedbackSection from './FeedbackSection/FeedbackSection';
 
 import './ContentCreator.less';
 
@@ -85,6 +86,24 @@ export default function ContentCreator() {
       editable: true,
       width: '22.5%',
       align: 'left',
+    },
+    {
+      title: 'Feedback',
+      dataIndex: 'name',
+      key: 'name',
+      editable: true,
+      width: '22.5%',
+      align: 'left',
+      render: (_, key) => (
+        <FeedbackSection
+          learningStandard={key}
+          linkBtn={true}
+          viewing={viewing}
+          setViewing={setViewing}
+          tab={tab}
+          page={page}
+        />
+      ),
     },
     {
       title: 'Delete',

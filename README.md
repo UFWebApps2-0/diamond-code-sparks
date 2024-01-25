@@ -9,6 +9,56 @@ Cloud-based programming interface
 
 <br/>
 
+### Features Implemented 
+- Allow teachers to upload a link to the YouTube video on teacher view
+![Features Implemented](https://i.imgur.com/Yi9WZBy.jpg)
+- Show teachers a preview of the YouTube video and have pause breaks for interactivity 
+![Features Implemented](https://i.imgur.com/TU9jMCc.jpg)
+- Show the video in the student view
+![Features Implemented](https://i.imgur.com/SGQ9J6q.jpg)
+- Styling of YouTube video in the student view
+![Features Implemented](https://i.imgur.com/VWoYy3F.jpg)
+- Generate a transcript of the YouTube video <br>
+![Features Implemented](https://i.imgur.com/ztxRJhC.jpg)
+- Implement a comments feature for students to ask questions about the video
+![Features Implemented](https://i.imgur.com/YvkroNi.jpg)
+- Create a video editor, where teachers can have interactive pop up questions at various pause breaks throughout the video
+![Features Implemented](https://i.imgur.com/TU9jMCc.jpg)
+
+### Instructions for how to run the project locally 
+
+`casmm-client-dev`
+
+1. Install [Node](https://nodejs.org/en/) and [Yarn](https://classic.yarnpkg.com/en/docs/install#windows-stable)
+2. Run `yarn` to install project dependencies
+3. Run `yarn start` to startup the client (please note that much of the functionality will not work without also starting up the backend services)
+4. Run `yarn add dotenv axios` to include the necessary packages for the OpenAI transcription API
+5. Run `yarn add react-player` to include the necessary packages for to utilze the YouTube videos in the development enviornment in the program.
+6. Navigate to chrome://flags/ and enable the #enable-experimental-web-platform-features flag (This will provide your browser access to serial ports)
+7. Run `yarn start` from `/client`
+
+`casmm-server-dev`, `casmm-compile-dev`, `casmm-db-dev`, and `casmm-compile_queue-dev`
+
+8. Install [docker](https://docs.docker.com/get-docker/)
+
+9. Run `docker compose up` from `/`
+
+   > Grant permission to the **scripts** and **server** directories if you are prompted
+
+### How to update database
+- To update the database, follow all instructions to run the project locally FIRST
+- Then input the following into your browser `http://localhost:1337/admin`
+- This will give you access to the Strapi database if updates are needed
+
+### Outstanding Work
+- Create transcription field in Strapi database so the transcription of each video can be saved in the backend as team was having software issues with Strapi and was no able to get it implemented in the backend. Currently lacks the persistence from Teacher to Student view.
+- Comments section is very buggy and fails to save in backend majority of times
+- Pose timestamps of pause breaks in the Video Editor for teachers for them to easily view where the time stamps are
+
+### Built Upon
+- Utilized OpenAI's API for AI based transcription: https://platform.openai.com/docs/overview
+- All other code is own based on various sources of documentation of necessary packages and logic. 
+
 ## Application
 
 ### `client` 
@@ -44,22 +94,6 @@ The development environment is composed of five servers. The first one is run wi
   > The first time the db is started, the [init_db.sh](/scripts/init_db.sh) script will run and seed the database with an environment specific dump. Read about Postgres initialization scripts [here](https://github.com/docker-library/docs/blob/master/postgres/README.md#initialization-scripts). To see how to create this dump, look [here](https://github.com/DavidMagda/CaSMM_fork_2023/blob/develop/scripts/readme.md).
 
 * `casmm-compile_queue-dev`
-
-#### Running
-
-`casmm-client-dev`
-
-1. Follow the [client](/client#setup) setup
-2. Run `yarn start` from `/client`
-
-`casmm-server-dev`, `casmm-compile-dev`, `casmm-db-dev`, and `casmm-compile_queue-dev`
-
-1. Install [docker](https://docs.docker.com/get-docker/)
-
-2. Run `docker compose up` from `/`
-
-   > Grant permission to the **scripts** and **server** directories if you are prompted
-   
 
 ### Staging
 
@@ -121,22 +155,19 @@ All of the deployments and releases are handled automatically with [GitHub Actio
 
 > Locked for direct commits — all commits must be made from a non-protected branch and submitted via a pull request with one approving review
 
-- **master** - Production application
+- **working** - Production application
 
 #### Non-protected
 
 > Commits can be made directly to the branch
 
-- **release** - Staging application
-- **develop** - Working version of the application
-- **feature/<`scaffold`>-<`feature-name`>** - Based off of develop
-  - ex. **feature/cms-strapi**
-- **hotfix/<`scaffold`>-<`fix-name`>** - Based off of master
-  - ex. **hotfix/client-cors**
+- **originalpull** - initial version of the forked repository 
+- **CommentsJackie** - initial work for comments section
+- **video** - video editor branch 
 
 ### Pull Requests
 
 Before submitting a pull request, rebase the feature branch into the target branch to resolve any merge conflicts.
 
-- PRs to **master** should squash and merge
+- PRs to **working** should squash and merge
 - PRs to all other branches should create a merge commit

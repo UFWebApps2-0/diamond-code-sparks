@@ -16,10 +16,12 @@ import {
 import ArduinoLogo from '../Icons/ArduinoLogo';
 import PlotterLogo from '../Icons/PlotterLogo';
 import { useNavigate } from 'react-router-dom';
+import ReactPlayer from 'react-player/youtube';
 
 let plotId = 1;
 
 export default function StudentCanvas({ activity }) {
+  const link = localStorage.getItem('link');
   const [hoverSave, setHoverSave] = useState(false);
   const [hoverUndo, setHoverUndo] = useState(false);
   const [hoverRedo, setHoverRedo] = useState(false);
@@ -349,6 +351,18 @@ export default function StudentCanvas({ activity }) {
     </Menu>
   );
 
+  // Caption languages dropdown
+  const captions = (
+    <Menu>
+      <Menu.Item>
+        <div>English</div>
+      </Menu.Item>
+      <Menu.Item>
+        <div>Spanish</div>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <div id='horizontal-container' className='flex flex-column'>
       <div className='flex flex-row'>
@@ -380,7 +394,7 @@ export default function StudentCanvas({ activity }) {
                   <Col flex='auto' />
 
                   <Col flex={'300px'}>
-                    {lastSavedTime ? `Last changes saved ${lastSavedTime}` : ''}
+                    {lastSavedTime ? `Changes saved ${lastSavedTime}` : ''}
                   </Col>
                   <Col flex={'350px'}>
                     <Row>
@@ -539,6 +553,100 @@ export default function StudentCanvas({ activity }) {
             ))
         }
       </xml>
+
+     
+      {/* Embedding the YouTube Video */}
+      
+      <div id='horizontal-container' className='flex flex-col'>  {/*content wrappers*/}
+        <div className='flex flex-row'>
+          {/*if you dont put the content in a bottom container, it just wont show up*/}
+          <div
+            id='bottom-container'
+            className='flex flex-column vertical-container overflow-visible'
+            style={{width:'97.25vw', maxHeight: '70vh', /*backgroundColor:'gold'*/}}
+          >
+            {/*the blue tab header*/}
+            <Row id='icon-control-panel'>
+              <Col flex='none' id='section-header'>
+                Lesson Video
+              </Col>
+            </Row>
+
+            {/*put content into 'Col's and wrap them all in 'Row's*/}
+            <Row style={{/*backgroundColor:'yellow'*/}} wrap={false}>
+              <Col style={{/*backgroundColor:'blue'*/}}>
+                  <div id='container' style={{padding: '30px 0 0 30px'}}>
+                    <ReactPlayer url={activity.link} controls={true} /> {/*video player*/}
+                  </div>
+              </Col>
+
+              {/*transcript button plus window*/}
+              <Col span={10} offset={1} style={{backgroundColor:'#A6A6A6'}} flex="flex flex-column" >
+                <Row id='icon-control-panel' style={{/*backgroundColor:'pink'*/}} justify={"space-around"}>
+                  <Col>
+                    <button id='secondary-section-header' style={{left:"0", fontSize: "medium", width: "20vw", height: "5vh", marginTop: '10px', marginBottom: '10px'}}>Generate Transcript</button>
+                  </Col>
+                </Row>
+                <div className='content-container' style={{overflowY: 'scroll', maxHeight: '45vh', backgroundColor: "lightgray"}}> 
+                  {/*---------------------------------------------------------------------------------------------
+                  this is where the method of getting the transcription would be called instead of this paragraph
+                  -----------------------------------------------------------------------------------------------*/}
+                    <p>
+                      A copypasta is a block of text copied and pasted to the internet and social media. Copypasta containing controversial ideas or lengthy rants are often posted for humorous purposes, to provoke reactions from those unaware that the posted text is a meme. A copypasta is a block of text copied and pasted to the internet and social media. Copypasta containing controversial ideas or lengthy rants are often posted for humorous purposes, to provoke reactions from those unaware that the posted text is a meme.A copypasta is a block of text copied and pasted to the internet and social media. Copypasta containing controversial ideas or lengthy rants are often posted for humorous purposes, to provoke reactions from those unaware that the posted text is a meme.A copypasta is a block of text copied and pasted to the internet and social media. Copypasta containing controversial ideas or lengthy rants are often posted for humorous purposes, to provoke reactions from those unaware that the posted text is a meme.
+                    </p>
+                </div> 
+               
+
+                {/*enable/disable closed captions option*/}
+                {/* <Row justify={'start'} style={{paddingTop: '10px', paddingBottom: '10px'}}>
+                  <Col offset={1}>
+                    <button id='secondary-section-header' style={{width: '5vw'}}>
+                      CC on
+                    </button>
+                  </Col>
+                  <Col offset={1}>
+                    <button id='secondary-section-header' style={{width: '5vw'}}>
+                      CC off
+                    </button>
+                  </Col>
+                  <Col offset={2}>
+                    <Dropdown overlay={captions}>
+                      <button>
+                        Languages
+                      </button>
+                    </Dropdown>
+                  </Col>
+                </Row> */}
+              </Col>
+            </Row>
+            {/* Comment Section container */}
+            <Row style={{}} justify={'start'}>
+              <div id='bottom-container' justify='space-around' style={{maxHeight: '35 vh', maxWidth: '100vw', height: '25vh'}}>
+                {/* Comment Blue Header label */}
+                <Col id='secondary-section-header' style={{left:"0", fontSize: "medium", width: "15vw", marginLeft: '2.25vw', height: '5vh', paddingTop: '6px'}}>
+                  Leave Comment
+                </Col>
+
+                {/* =========================================================
+                    vvv This is where the comment implementation would go vvv
+                    ========================================================= */}
+                <div id='container'>
+                  <div className='input-wrapper'>
+                    <input placeholder='Type Comment' style={{overflowWrap: "break-word"}}/>
+                  </div>
+                </div>
+                <Row justify={'end'}>
+                  <button id='secondary-section-header' style={{maxWidth: '5vw', marginRight: '6.5vw', marginTop:'20px'}}>
+                    Submit
+                  </button>
+                </Row>
+              </div>
+            </Row>
+            
+          </div>
+        </div> 
+      </div>
+         
 
       {compileError && (
         <Alert

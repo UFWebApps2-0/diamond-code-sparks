@@ -27,14 +27,58 @@ const MentorActivityDetailModal = ({
   const [StandardS, setStandardS] = useState("")
   const [images, setImages] = useState("")
   const [link, setLink] = useState("")
+  const [additionalLink, setAdditionalLink] = useState("")
   const [visible, setVisible] = useState(false);
   const [scienceComponents, setScienceComponents] = useState([])
   const [makingComponents, setMakingComponents] = useState([])
   const [computationComponents, setComputationComponents] = useState([])
   const [activityDetailsVisible, setActivityDetailsVisible] = useState(false)
   const [linkError, setLinkError] = useState(false)
+  const [additionalLinkError, setAdditionalLinkError] = useState(false)
   const [submitButton, setSubmitButton] = useState(0)
+  const [file, setFile] = useState(null)
+  const [transcript, setTranscript] = useState("")
   const navigate = useNavigate()
+
+  var videoFileName = 'Like Father, Like Son _ LiMu Emu & Doug _ Liberty Mutual Insurance Commercial.mp4'; 
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const transcribe = async () => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append(videoFileName, file);
+
+    try {
+      const response = await axios.post(
+        'https://api.openai.com/v1/audio/transcriptions',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${process.env.REST_OPENAI_API_KEY}`,
+          },
+        }
+      );
+
+      setTranscript(response.data.text);
+    } catch (error) {
+      console.error('Error during transcription:', error);
+    }
+  };
+
+  const handleYouTubeLinkChange = (event) => {
+    setYoutubeLink(event.target.value);
+  };
+
+  const getYouTubeEmbedLink = (url) => {
+    const regExp = /^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? `https://www.youtube.com/embed/${match[2]}` : null;
+  };
 
   useEffect(() => {
     const showActivityDetailsModal = async () => {
@@ -244,11 +288,12 @@ const MentorActivityDetailModal = ({
             setComponents={setComputationComponents}
             colorOffset={7}
           />
+          
         </Form.Item>
         <h3 id="subtitle">Additional Information</h3>
         <Form.Item
           id="form-label"
-          label="Link to Additional Resources (Optional)"
+          label="Upload Video URL"
         >
           <Input
             onChange={e => {
@@ -258,6 +303,36 @@ const MentorActivityDetailModal = ({
             className="input"
             value={link}
             style={linkError ? { backgroundColor: "#FFCCCC" } : {}}
+            placeholder="Enter a link"
+          ></Input>
+        </Form.Item>
+
+        {link && (
+        <iframe
+          width="560"
+          height="315"
+          src={getYouTubeEmbedLink(link)}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      )}
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={transcribe}>Transcribe</button>
+      {transcript && <div>Transcript: {transcript}</div>}
+
+        <Form.Item
+          id="form-label"
+          label="Link to Additional Resources (Optional)"
+        >
+          <Input
+            onChange={e => {
+              setAdditionalLink(e.target.value)
+              setAdditionalLinkError(false)
+            }}
+            className="input"
+            value={additionalLink}
+            style={additionalLinkError ? { backgroundColor: "#FFCCCC" } : {}}
             placeholder="Enter a link"
           ></Input>
         </Form.Item>
@@ -273,8 +348,7 @@ const MentorActivityDetailModal = ({
           </button>
           <button id="save--set-demo-btn" onClick={() => setSubmitButton(2)}>
             Edit Demo Template
-            <br />
-            
+            <br />           
           </button>
         </Form.Item>
         <Form.Item

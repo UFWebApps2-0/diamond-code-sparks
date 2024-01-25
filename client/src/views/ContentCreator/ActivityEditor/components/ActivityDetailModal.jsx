@@ -27,14 +27,28 @@ const ActivityDetailModal = ({
   const [StandardS, setStandardS] = useState("")
   const [images, setImages] = useState("")
   const [link, setLink] = useState("")
+  const [youtubeLink, setYoutubeLink] = useState("")
+  const [additionalLink, setAdditionalLink] = useState("")
 
   const [scienceComponents, setScienceComponents] = useState([])
   const [makingComponents, setMakingComponents] = useState([])
   const [computationComponents, setComputationComponents] = useState([])
 
   const [linkError, setLinkError] = useState(false)
+  const [youtubeLinkError, setYoutubeLinkError] = useState(false)
+  const [additionalLinkError, setAdditionalLinkError] = useState(false)
   const [submitButton, setSubmitButton] = useState(0)
   const navigate = useNavigate()
+
+  const handleYouTubeLinkChange = (event) => {
+    setYoutubeLink(event.target.value);
+  };
+
+  const getYouTubeEmbedLink = (url) => {
+    const regExp = /^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? `https://www.youtube.com/embed/${match[2]}` : null;
+  };
 
   useEffect(() => {
     const showActivityDetailsModal = async () => {
@@ -48,6 +62,7 @@ const ActivityDetailModal = ({
       setStandardS(response.data.StandardS)
       setImages(response.data.images)
       setLink(response.data.link)
+      setYoutubeLink(response.data.link)
       setLinkError(false)
       const science = response.data.learning_components
         .filter(component => component.learning_component_type === SCIENCE)
@@ -221,18 +236,46 @@ const ActivityDetailModal = ({
           />
         </Form.Item>
         <h3 id="subtitle">Additional Information</h3>
+
+        <Form.Item
+          id="form-label"
+          label="Upload YouTube Video"
+        >
+          <Input
+            className="input"    
+            value={link}
+            style={linkError ? { backgroundColor: "#FFCCCC" } : {}}
+            placeholder="Enter YouTube URL"
+            onChange={e => {
+              setLink(e.target.value)
+              setLinkError(false)
+            }}
+          ></Input>
+        </Form.Item>
+
+        {link && (
+        <iframe
+          width="560"
+          height="315"
+          src={getYouTubeEmbedLink(link)}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      )}
+        
         <Form.Item
           id="form-label"
           label="Link to Additional Resources (Optional)"
         >
           <Input
             onChange={e => {
-              setLink(e.target.value)
-              setLinkError(false)
+              setAdditionalLink(e.target.value)
+              setAdditionalLinkError(false)
             }}
             className="input"
-            value={link}
-            style={linkError ? { backgroundColor: "#FFCCCC" } : {}}
+            value={additionalLink}
+            style={additionalLinkError ? { backgroundColor: "#FFCCCC" } : {}}
             placeholder="Enter a link"
           ></Input>
         </Form.Item>
