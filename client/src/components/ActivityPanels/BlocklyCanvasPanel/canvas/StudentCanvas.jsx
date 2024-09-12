@@ -51,6 +51,8 @@ export default function StudentCanvas({ activity }) {
     window.Blockly.addChangeListener(blocklyEvent);
   };
 
+
+
   const loadSave = (selectedSave) => {
     try {
       let toLoad = activity.template;
@@ -102,6 +104,10 @@ export default function StudentCanvas({ activity }) {
     });
   };
 
+
+
+
+
   let blocked = false;
   const blocklyEvent = (event) => {
     // if it is a click event, add click
@@ -110,6 +116,7 @@ export default function StudentCanvas({ activity }) {
       event.element === 'selected'
     ) {
       clicks.current++;
+      handleManualSave();
     }
 
     // if it is other ui events or create events or is [undo, redo], return

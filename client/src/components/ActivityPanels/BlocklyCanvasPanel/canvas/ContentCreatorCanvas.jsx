@@ -181,12 +181,14 @@ export default function ContentCreatorCanvas({
 
   const handleUndo = () => {
     if (workspaceRef.current.undoStack_.length > 0)
-      workspaceRef.current.undo(false);
+          workspaceRef.current.undo(false);
+          message.warning('test undo');
   };
 
   const handleRedo = () => {
     if (workspaceRef.current.redoStack_.length > 0)
-      workspaceRef.current.undo(true);
+          workspaceRef.current.undo(true);
+      message.warning('test redo');
   };
 
   const handleConsole = async () => {
