@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useReducer } from 'react';
 import '../../ActivityLevels.less';
 import { compileArduinoCode, handleSave } from '../../Utils/helpers';
-import { message, Spin, Row, Col, Alert, Dropdown, Menu } from 'antd';
+import { message, Spin, Row, Col, Alert, Dropdown, Menu, Button } from 'antd';
 import { getSaves } from '../../../../Utils/requests';
 import CodeModal from '../modals/CodeModal';
 import ConsoleModal from '../modals/ConsoleModal';
@@ -19,12 +19,13 @@ import { useNavigate } from 'react-router-dom';
 
 let plotId = 1;
 
-export default function StudentCanvas({ activity }) {
+export default function StudentCanvas({ activity, toggleSplit }) {
   const [hoverSave, setHoverSave] = useState(false);
   const [hoverUndo, setHoverUndo] = useState(false);
   const [hoverRedo, setHoverRedo] = useState(false);
   const [hoverCompile, setHoverCompile] = useState(false);
   const [hoverImage, setHoverImage] = useState(false);
+  const [hoverSplit, setHoverSplit] = useState(false);
   const [hoverConsole, setHoverConsole] = useState(false);
   const [showConsole, setShowConsole] = useState(false);
   const [showPlotter, setShowPlotter] = useState(false);
@@ -43,7 +44,7 @@ export default function StudentCanvas({ activity }) {
 
   const replayRef = useRef([]);
   const clicks = useRef(0);
-
+  
   const setWorkspace = () => {
     workspaceRef.current = window.Blockly.inject('blockly-canvas', {
       toolbox: document.getElementById('toolbox'),
@@ -239,6 +240,15 @@ export default function StudentCanvas({ activity }) {
     }
   };
 
+  const handleToggleSplit = () => {
+    setSplitScreen(!splitScreen);
+  };
+
+  const buttonStyle = {
+    marginTop: "-10px"
+  }
+
+
   const handleConsole = async () => {
     if (showPlotter) {
       message.warning('Close serial plotter before openning serial monitor');
@@ -368,7 +378,7 @@ export default function StudentCanvas({ activity }) {
               </Col>
               <Col flex='auto'>
                 <Row align='middle' justify='end' id='description-container'>
-                  <Col flex={'30px'}>
+                  <Col flex={'1 0 30px'}>
                     <button
                       onClick={handleGoBack}
                       id='link'
@@ -377,12 +387,12 @@ export default function StudentCanvas({ activity }) {
                       <i id='icon-btn' className='fa fa-arrow-left' />
                     </button>
                   </Col>
-                  <Col flex='auto' />
+                  <Col flex='0 1 10px' />
 
-                  <Col flex={'300px'}>
+                  <Col flex={'0 1 300px'}>
                     {lastSavedTime ? `Last changes saved ${lastSavedTime}` : ''}
                   </Col>
-                  <Col flex={'350px'}>
+                  <Col flex={'270px'}>
                     <Row>
                       <Col className='flex flex-row' id='icon-align'>
                         <VersionHistoryModal
@@ -391,7 +401,7 @@ export default function StudentCanvas({ activity }) {
                           defaultTemplate={activity}
                           getFormattedDate={getFormattedDate}
                           loadSave={loadSave}
-                          pushEvent={pushEvent}
+                          pushEvent={pushEvent} 
                         />
                         <button
                           onClick={handleManualSave}
@@ -458,17 +468,31 @@ export default function StudentCanvas({ activity }) {
                       </Col>
                     </Row>
                   </Col>
-                  <Col flex={'180px'}>
+                  <Col flex={'200px'}>
                     <div
                       id='action-btn-container'
                       className='flex space-around'
                     >
+                      <div id="display-split-screen"
+                        onMouseEnter={() => setHoverSplit(true)}
+                        onMouseLeave={() => setHoverSplit(false)}
+                      >
+                      {hoverSplit && (
+                        <div className='popup ModalCompile4'> Split Screen</div>
+                      )}
+                      <Button id="link" style={buttonStyle} onClick={toggleSplit}>
+                        <font size="+1">
+                          [ | ]
+                        </font>
+                      </Button>
+                      </div>
+
                       <ArduinoLogo
                         setHoverCompile={setHoverCompile}
                         handleCompile={handleCompile}
                       />
                       {hoverCompile && (
-                        <div className='popup ModalCompile'>
+                        <div className='popup ModalCompile4'>
                           Upload to Arduino
                         </div>
                       )}
