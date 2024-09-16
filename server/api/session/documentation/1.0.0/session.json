@@ -613,6 +613,9 @@
                 "last_logged_in": {
                   "type": "string"
                 },
+                "googleClassroomEmail": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -672,6 +675,12 @@
                 },
                 "job_id": {
                   "type": "integer"
+                },
+                "student": {
+                  "type": "string"
+                },
+                "classroom": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"

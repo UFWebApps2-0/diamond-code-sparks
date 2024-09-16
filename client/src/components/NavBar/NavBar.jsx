@@ -30,6 +30,12 @@ export default function NavBar() {
 
   const menu = (
     <Menu>
+      <Menu.Item
+        key= '20'
+        onClick={() => handleRouteChange(routes.SignUp)}>
+          
+          Sign Up
+      </Menu.Item>
       {shouldShowRoute('Home') ? (
         <Menu.Item key='0' onClick={() => handleRouteChange(routes.Home)}>
           <i className='fa fa-home' />

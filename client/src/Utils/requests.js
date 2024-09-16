@@ -438,6 +438,23 @@ export const getGrades = async () =>
     error: 'Grades could not be retrieved',
   });
 
+  export const getStudentGrades = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/student-grades`,
+    auth: true,
+    error: 'Student Grades could not be retrieved',
+  });
+
+  export const getStudentGradesByClassroomID = async (classroomID) => {
+    return makeRequest({
+      method: 'GET',
+      path: `${server}/student-grades/classroom/${classroomID}`,
+      auth: true,
+      error: 'Student Grades for the specified classroom could not be retrieved',
+    });
+  };
+  
 export const getGrade = async (grade) =>
   makeRequest({
     method: GET,

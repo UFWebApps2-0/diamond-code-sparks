@@ -1,0 +1,13 @@
+{
+    "routes": [
+      {
+        "method": "POST",
+        "path": "/googleAuth/verify-google-token",
+        "handler": "googleAuth.verifyGoogleToken",
+        "config": {
+          "policies": []
+        }
+      }
+    ]
+  }
+  

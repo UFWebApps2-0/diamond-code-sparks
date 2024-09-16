@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "student_grades",
+  "info": {
+    "name": "Student Grade",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Grade": {
+      "type": "string"
+    },
+    "Comments": {
+      "type": "text"
+    },
+    "submission": {
+      "model": "submission"
+    }
+  }
+}

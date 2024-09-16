@@ -5,6 +5,7 @@
     "About": "/about",
     "Home": "/",
     "Dashboard": "/dashboard",
+    "SignUp": "/signup",
     "SignOut": "/",
     "AccountInfo": "/account",
     "ContentCreatorDashboard": "/ccdashboard",

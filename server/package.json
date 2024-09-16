@@ -11,8 +11,11 @@
     "build-client": "rm -rf ./public/client/* && cd ../client && env PUBLIC_URL=/client yarn build && mv ./build/* ../server/public/client/"
   },
   "dependencies": {
+    "@google-cloud/local-auth": "^3.0.0",
     "bull": "^4.10.0",
     "dotenv": "^10.0.0",
+    "google-auth-library": "^9.2.0",
+    "googleapis": "^128.0.0",
     "knex": "0.21.18",
     "pg": "^8.10.0",
     "redis-url-parse": "^2.0.0",

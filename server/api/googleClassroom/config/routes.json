@@ -1,0 +1,13 @@
+
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/googleClassroom/getCourses",
+      "handler": "googleClassroom.getCourses",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

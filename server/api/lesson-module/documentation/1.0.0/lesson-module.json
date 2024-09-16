@@ -594,6 +594,9 @@
                 "activity_template": {
                   "type": "string"
                 },
+                "google_ID": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },

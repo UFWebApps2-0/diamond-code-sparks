@@ -648,6 +648,9 @@
               "activity_template": {
                 "type": "string"
               },
+              "google_ID": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -658,6 +661,106 @@
           },
           "job_id": {
             "type": "integer"
+          },
+          "student": {
+            "required": [
+              "id",
+              "enrolled"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "character": {
+                "type": "string"
+              },
+              "classroom": {
+                "type": "string"
+              },
+              "sessions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "enrolled": {
+                "type": "boolean"
+              },
+              "last_logged_in": {
+                "type": "string"
+              },
+              "googleClassroomEmail": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "classroom": {
+            "required": [
+              "id",
+              "code"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "school": {
+                "type": "string"
+              },
+              "sessions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "mentors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "students": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "code": {
+                "type": "string"
+              },
+              "grade": {
+                "type": "string"
+              },
+              "selections": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "authorized_workspaces": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -707,6 +810,12 @@
           },
           "job_id": {
             "type": "integer"
+          },
+          "student": {
+            "type": "string"
+          },
+          "classroom": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
