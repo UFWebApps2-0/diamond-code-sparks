@@ -4,6 +4,8 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import StudentModal from './StudentModal';
 import Picker from 'emoji-picker-react';
 
+// Look through the code to see how tables are being rendered
+
 export default function ListView(props) {
   const {
     studentData,
@@ -42,14 +44,14 @@ export default function ListView(props) {
             rules={
               title === 'Name'
                 ? [
-                    {
-                      required: true,
-                      pattern: new RegExp(
-                        '^([A-Za-z]+)\\s*([A-Za-z]*)\\s+([A-Za-z])\\.$'
-                      ),
-                      message: `Must be in format: "First L." or "First Middle L."!`,
-                    },
-                  ]
+                  {
+                    required: true,
+                    pattern: new RegExp(
+                      '^([A-Za-z]+)\\s*([A-Za-z]*)\\s+([A-Za-z])\\.$'
+                    ),
+                    message: `Must be in format: "First L." or "First Middle L."!`,
+                  },
+                ]
                 : []
             }
           >

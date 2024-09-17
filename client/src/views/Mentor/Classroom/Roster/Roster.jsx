@@ -9,6 +9,7 @@ import './Roster.less';
 import MentorSubHeader from '../../../../components/MentorSubHeader/MentorSubHeader';
 import ListView from './ListView';
 import CardView from './CardView';
+import GroupView from './GroupView';
 import { Form, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,6 +20,9 @@ export default function Roster({ classroomId }) {
   const [listView, setListView] = useState(true);
   const [classroom, setClassroom] = useState({});
   const navigate = useNavigate();
+  const [filterText, setFilterText] = useState('');
+
+  const [groupView, setGroupView] = useState(false);
 
   useEffect(() => {
     let data = [];
@@ -26,7 +30,11 @@ export default function Roster({ classroomId }) {
       if (res.data) {
         const classroom = res.data;
         setClassroom(classroom);
-        classroom.students.forEach((student) => {
+
+        // Added new filter result to the shown classroom
+        const filterRoster = classroom.students.filter((student) =>
+          student.name.toLowerCase().includes(filterText.toLowerCase()));
+        filterRoster.forEach((student) => {
           data.push({
             key: student.id,
             name: student.name,
@@ -43,7 +51,8 @@ export default function Roster({ classroomId }) {
         message.error(res.err);
       }
     });
-  }, [classroomId]);
+  }, [classroomId, filterText]);
+  // Added filterText state dependency to rerender student data with teachers inputted filter
 
   const getFormattedDate = (value, locale = 'en-US') => {
     if (value) {
@@ -166,21 +175,38 @@ export default function Roster({ classroomId }) {
     navigate('/dashboard');
   };
 
+  // Decides the title of the roster
+  var title;
+  groupView ? title = "Your Groups" : title = "Your Students";
+
   return (
     <div>
       <button id='home-back-btn' onClick={handleBack}>
         <i className='fa fa-arrow-left' aria-hidden='true' />
       </button>
+      {/* Render the mentor subheader with the proper information and functions */}
       <MentorSubHeader
-        title={'Your Students'}
+        title={title}
         addStudentsToTable={addStudentsToTable}
         addUserActive={true}
         classroomId={classroomId}
         cardViewActive={listView}
         listViewActive={!listView}
         setListView={setListView}
+
+        // New
+        filterText={filterText}
+        setFilterText={setFilterText}
+        searchActive={true}
+
+        // Group views
+        setGroupView={setGroupView}
+        groupViewActive={groupView}
+        studentViewActive={!groupView}
       />
-      {listView ? (
+
+      {/* render the list view or the card view if one such exists */}
+      {listView && !groupView ? (
         <ListView
           studentData={studentData}
           onEnrollToggle={onEnrollToggle}
@@ -193,13 +219,23 @@ export default function Roster({ classroomId }) {
           handleDelete={handleDelete}
           getFormattedDate={getFormattedDate}
         />
-      ) : (
+      ) : null}
+
+      {!listView && !groupView ? (
         <CardView
           studentData={studentData}
           onEnrollToggle={onEnrollToggle}
           getFormattedDate={getFormattedDate}
         />
-      )}
+      ) : null}
+
+      {/* groupView will be false by default  */}
+      {groupView ? (
+        <GroupView
+          studentData={studentData}
+          filterText={filterText}
+        />
+      ) : null}
     </div>
   );
 }

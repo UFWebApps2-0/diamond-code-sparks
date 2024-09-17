@@ -154,7 +154,6 @@ export default function ContentCreator() {
     <div className='container nav-padding'>
       <Navbar />
       <div id='main-header'>Welcome Content Creator</div>
-
       <Tabs
         onChange={(activeKey) => {
           setTab(activeKey);

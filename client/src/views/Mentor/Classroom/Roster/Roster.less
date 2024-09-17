@@ -185,3 +185,76 @@
     }
   }
 }
+
+// Search box
+
+
+#h2 {
+  margin-bottom: 0;
+  float: left;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #colors[text-secondary];
+  height: auto;
+  padding: 10px 5px;
+  width: 34%;
+  border-radius: 80px;
+  background: #colors[secondary];
+  font-size: 1.2em;
+  top: 5vh;
+  left: -2vw;
+  z-index: 1;
+}
+
+// Creates a spacing and padding for the search box
+#wrapper {
+  width: auto;
+  max-width: 31.25rem;
+  margin: auto;
+  position: relative;
+}
+
+// Styles the text that appears above the search box
+#search-label {
+  color: #colors[text-secondary];
+  display: flex;
+  justify-content: center;
+  padding: 1px;
+  position: relative;
+}
+
+// Positions and styles the search input text to be aligned with the current 
+// color scheme of the website
+#search-input {
+  color: #colors[text-primary];
+  // border-radius: 50px;
+  background: #colors[senary];
+  border: none;
+  outline: none;
+  justify-content: center;
+}
+
+// Colors the message with red
+#search-error {
+  color: red;
+  position: relative;
+  padding-right: 10px;
+}
+
+// Group styling
+.centerCollapse.ant-collapse {
+  position: relative;
+  margin: auto;
+  width: 80%;
+}
+
+#center-text {
+  position: relative;
+  margin: auto;
+  width: 50%;
+  // Prevents names from being put on new line
+  padding-inline: 20px;
+  display: inline;
+}
