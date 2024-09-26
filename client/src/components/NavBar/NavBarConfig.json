@@ -9,7 +9,9 @@
     "AccountInfo": "/account",
     "ContentCreatorDashboard": "/ccdashboard",
     "ResearcherDashboard": "/report",
-    "BugReport": "/bugreport"
+    "BugReport": "/bugreport",
+    "OrgDash": "/orgdash",
+    "CreateOrg": "/createorg"
   },
   "users": {
     "DefaultUser": ["Home", "TeacherLogin", "Sandbox", "About"],
@@ -22,6 +24,7 @@
       "SignOut",
       "BugReport"
     ],
-    "Researcher": ["ResearcherDashboard", "BugReport", "SignOut"]
+    "Researcher": ["ResearcherDashboard", "BugReport", "SignOut"],
+    "OrganizationAdministrator": ["Home", "SignOut", "AccountInfo", "OrgDash", "CreateOrg"]
   }
 }

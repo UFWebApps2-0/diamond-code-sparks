@@ -1,0 +1,220 @@
+@import "../../assets/style.less";
+
+// duplicated from Dashboard.less to achieve consistency in design; edited for organization dashboard use
+
+#org-dash-bar {
+    margin-top: -10px;
+    
+    input[type='button'] {
+        width: 13em;
+        height: 35px;
+        font-size: 1em;
+        font-weight: 500;
+        border-radius: 5px;
+        background: #colors[quaternary];
+        border: none;
+        color: #colors[text-primary];
+        transition: 0.25s;
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
+        padding: 5px;
+        float: right;
+        margin-right: 12%;
+        margin-left: 15px;
+        &:hover {
+            background: #colors[quinary];
+        }
+    }  
+
+    select {
+        width: 13em;
+        height: 35px;
+        font-size: 1em;
+        font-weight: 500;
+        border-radius: 5px;
+        background: #colors[tertiary];
+        border: none;
+        color: #colors[text-primary];
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
+        padding: 5px;
+        float: right;
+    }
+}
+
+#orgs-container {
+    margin: 6vh auto 4vh auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    width: 80vw;
+    height: auto;
+    background: #colors[senary];
+    border-radius: 5px;
+    border: 2px solid #colors[secondary];
+
+    #no-orgs-message {
+        font-size: 18px;
+        margin-top: 50px;
+    }
+}
+
+#dashboard-org-card {
+    text-align: center;
+    width: 24vw;
+    height: auto;
+    margin: auto 6vh 6vh auto;
+    background: #colors[tertiary];
+    color: #colors[text-primary];
+    border: none;
+    border-color: #colors[secondary];
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.377);
+    
+    position: relative;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+
+    #edit-org-btn {
+        height: 4vh;
+        width: 5%;
+        font-size: 1.2em;
+        font-weight: 450;
+        box-shadow: none;
+        background-color: transparent;
+        color: black;
+        border: none;
+        position: relative;
+        left: 40%;
+        margin-top: 15px;
+
+        &:hover {
+          cursor: pointer;
+        }
+    }
+
+    #card-back-btn {
+        height: 4vh;
+        width: 5%;
+        font-size: 1.5em;
+        box-shadow: none;
+        background-color: transparent;
+        color: black;
+        border: none;
+        position: relative;
+        right: 45%;
+        margin-top: 10px;
+
+        &:hover {
+          cursor: pointer;
+        }
+    }
+
+    .divider {
+        background-color: #colors[tertiary];
+        height: 4px;
+    }
+
+    .manage-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        position: relative;
+        background-color: #colors[quaternary];
+        cursor: pointer;
+        padding: 12px 0px 12px 0px;
+        color: #colors[text-primary];
+        border: none;
+
+        &:hover {
+            background: #colors[quinary];
+        }
+    }
+
+    .save-btn {
+        background-color: #colors[secondary]; // blue
+        color: white;
+
+        width: 60%;
+        border-radius: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10%;
+
+
+        &:hover {
+            background: #49a0d6; // darker blue
+        }
+    }
+
+    .warning-btn {
+        background-color: #ed5151; // red
+        color: white;
+
+        width: 60%;
+        border-radius: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1%;
+
+        &:hover {
+            background: #e83535; // darker red
+        }
+    }
+
+    #card-top-content-container {
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: -15px;
+
+        #card-title {
+            text-align: center;
+            font-size: 1.4em;
+            margin: 10px;
+            line-height: 1.6vw;
+        }
+
+        label {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        input[type='text'] {
+            border-radius: 4px;
+            border-color: #colors[secondary];
+            width: 80%;
+        }
+    }
+
+    #card-bottom-content-container {
+        display: flex;
+        flex-direction: column;
+        min-width: 100%;
+
+        .manage-btn {
+            padding: 12px 0px 0px 0px;
+        }
+    }
+
+    #card-bottom-content-container>:last-child {
+        border-radius: 0px 0px 10px 10px;
+    }
+}
+
+.org-card-front, .org-card-back {
+    backface-visibility: hidden;
+    border-radius: 10px;
+}
+
+.org-card-back {
+    transform: rotateY(180deg);
+    position: absolute;
+    width: 100%;
+    top: 0px;
+}
+
+.flipped {
+    transform: rotateY(180deg);
+}

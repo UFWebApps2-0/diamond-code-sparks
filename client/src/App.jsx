@@ -19,6 +19,13 @@ import StudentLogin from './views/StudentLogin/StudentLogin';
 import ForgetPassword from './views/TeacherLogin/ForgetPassword';
 import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
+import OrgDashboard from './views/OrgDashboard/OrgDashboard';
+import CreateOrg from './views/OrgDashboard/CreateOrg';
+import ManageAccount from './views/OrgDashboard/ManageAccount';
+// import ManageAccount from './views/OrgDashboard/ManageAccount';
+import AdminSchoolDashboard from './views/AdminSchoolView/AdminSchoolDashboard';
+import AdminGalleryDashboard from './views/AdminGalleryView/AdminGalleryDashboard';
+import CreateSchool from './views/AdminSchoolView/CreateSchool';
 
 const App = () => {
   return (
@@ -32,14 +39,17 @@ const App = () => {
         <Route path='/login' element={<StudentLogin />} />
         <Route path='/replay/:saveID' element={<Replay />} />
         <Route path='/sandbox' element={<BlocklyPage isSandbox={true} />} />
-        <Route
-          path='/report'
-          element={
-            <PrivateRoute>
-              <Report />
-            </PrivateRoute>
-          }
-        />
+        {/* Make org pages private once admin role has been created */}
+        <Route path='/orgdash' element={<OrgDashboard />} />
+        <Route path='/createorg' element={<CreateOrg />} />
+        <Route path='/manageaccount' element={<ManageAccount />} />
+        <Route path='/admindashboard' element={<AdminSchoolDashboard />} />
+        <Route path='/managegalleries' element={<AdminGalleryDashboard />} />
+        <Route path='/createschool' element={<CreateSchool/>} />
+        
+        {/* <Route path='/manageaccount' element={<ManageAccount />} /> */}
+        
+      
         <Route
           path='/activityLevel'
           element={

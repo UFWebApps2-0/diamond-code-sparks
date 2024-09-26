@@ -99,6 +99,18 @@ export default function NavBar() {
           &nbsp; Sign Out
         </Menu.Item>
       ) : null}
+      {shouldShowRoute('OrgDash') ? (
+        <Menu.Item key='9' onClick={() => handleRouteChange(routes.OrgDash)}>
+          <i className='fa fa-home' />
+          &nbsp; Org Dashboard
+        </Menu.Item>
+      ) : null}
+      {shouldShowRoute('CreateOrg') ? (
+        <Menu.Item key="10" onClick={() => handleRouteChange(routes.CreateOrg)}>
+          <i className='fa fa-home' />
+          &nbsp; Create Organization
+        </Menu.Item>
+      ) : null}
     </Menu>
   );
 
@@ -115,6 +127,8 @@ export default function NavBar() {
             ? '/student'
             : value.role === 'Researcher'
             ? '/report'
+            : value.role === 'OrganizationAdministrator'
+            ? '/orgdash'
             : '/'
         }
       >

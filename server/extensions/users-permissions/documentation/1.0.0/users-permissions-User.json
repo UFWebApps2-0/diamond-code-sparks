@@ -1250,6 +1250,48 @@
                 "type": "string"
               }
             }
+          },
+          "administrator": {
+            "required": [
+              "id",
+              "firstname",
+              "lastname"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "organizations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "firstname": {
+                "type": "string"
+              },
+              "lastname": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "schools": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -1290,6 +1332,9 @@
             "default": false
           },
           "role": {
+            "type": "string"
+          },
+          "administrator": {
             "type": "string"
           },
           "created_by": {
