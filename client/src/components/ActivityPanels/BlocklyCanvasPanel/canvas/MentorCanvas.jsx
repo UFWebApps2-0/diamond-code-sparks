@@ -306,122 +306,161 @@ export default function MentorCanvas({ activity, isSandbox, setActivity,  isMent
             size='large'
             spinning={selectedCompile}
           >
-            <Row id='icon-control-panel'>
-              <Col flex='none' id='section-header'>
-                {activity.lesson_module_name
-                  ? `${activity.lesson_module_name} - Activity ${activity.number}`
-                  : activity.name
-                  ? `Workspace: ${activity.name}`
-                  : 'New Workspace!'}
-              </Col>
-              <Col flex='auto'>
-                <Row align='middle' justify='end' id='description-container'>
-                  <Col flex={'30px'}>
-                    <button
-                      onClick={handleGoBack}
-                      id='link'
-                      className='flex flex-column'
-                    >
-                      <i id='icon-btn' className='fa fa-arrow-left' />
-                    </button>
+
+            <Row id='icon-control-panel' style={{flexDirection: "column"}}>
+              <Row id={"row-flex-row"}>
+
+                {/* Lesson Name */}
+                <Col className={"control-col"} style={{justifyContent: "flex-start"}}>
+                  <Col flex='none' id='section-header'>
+                    {activity.lesson_module_name
+                      ? `${activity.lesson_module_name} - Activity ${activity.number}`
+                      : activity.name
+                      ? `Workspace: ${activity.name}`
+                      : 'New Workspace!'}
                   </Col>
-                  <Col flex='auto' />
-                  <Row id='right-icon-container'>
-                    {!isSandbox ? (
-                      <Col
-                        className='flex flex-row'
-                        id='save-dropdown-container'
-                      >
-                        <Dropdown overlay={menuSave}>
-                          <i id='icon-btn' className='fa fa-save' />
-                        </Dropdown>
-                        <i className='fas fa-angle-down' id='caret'></i>
-                      </Col>
-                    ) : null}
-                    <Col className='flex flex-row' id='redo-undo-container'>
+                </Col>
+
+                {/* Control Panel */}
+                <Col className={"control-col"} style={{justifyContent: "flex-end"}}>
+                  <Col id={"controls-container"}>
+                    <div id='action-btn-container'>
+
+                      {/*Save*/}
+                      {!isSandbox ? (
+                          <Col
+                              className='flex flex-row'
+                              id='save-dropdown-container'
+                          >
+                            <Dropdown overlay={menuSave}>
+                              <i id='icon-btn' className='fa fa-save' />
+                            </Dropdown>
+                            <i className='fas fa-angle-down' id='caret'></i>
+                          </Col>
+                      ) : null}
+
+                      {/*<button*/}
+                      {/*    onClick={handleManualSave}*/}
+                      {/*    id='link'*/}
+                      {/*    className='flex flex-column'*/}
+                      {/*>*/}
+                      {/*  <i*/}
+                      {/*      id='icon-btn'*/}
+                      {/*      className='fa fa-save'*/}
+                      {/*      onMouseEnter={() => setHoverSave(true)}*/}
+                      {/*      onMouseLeave={() => setHoverSave(false)}*/}
+                      {/*  />*/}
+                      {/*  {hoverSave && (*/}
+                      {/*      <div className='popup ModalCompile4'>Save</div>*/}
+                      {/*  )}*/}
+                      {/*</button>*/}
+
+                      {/* Undo */}
                       <button
-                        onClick={handleUndo}
-                        id='link'
-                        className='flex flex-column'
+                          onClick={handleUndo}
+                          id='link'
+                          className='flex flex-column'
                       >
                         <i
-                          id='icon-btn'
-                          className='fa fa-undo-alt'
-                          style={
-                            workspaceRef.current
-                              ? workspaceRef.current.undoStack_.length < 1
-                                ? { color: 'grey', cursor: 'default' }
-                                : null
-                              : null
-                          }
-                          onMouseEnter={() => setHoverUndo(true)}
-                          onMouseLeave={() => setHoverUndo(false)}
+                            id='icon-btn'
+                            className='fa fa-undo-alt'
+                            onMouseEnter={() => setHoverUndo(true)}
+                            onMouseLeave={() => setHoverUndo(false)}
                         />
                         {hoverUndo && (
-                          <div className='popup ModalCompile4'>Undo</div>
+                            <div className='popup ModalCompile4'>Undo</div>
                         )}
                       </button>
+
+                      {/* Redo */}
                       <button
-                        onClick={handleRedo}
-                        id='link'
-                        className='flex flex-column'
+                          onClick={handleRedo}
+                          id='link'
+                          className='flex flex-column'
                       >
                         <i
-                          id='icon-btn'
-                          className='fa fa-redo-alt'
-                          style={
-                            workspaceRef.current
-                              ? workspaceRef.current.redoStack_.length < 1
-                                ? { color: 'grey', cursor: 'default' }
-                                : null
-                              : null
-                          }
-                          onMouseEnter={() => setHoverRedo(true)}
-                          onMouseLeave={() => setHoverRedo(false)}
+                            id='icon-btn'
+                            className='fa fa-redo-alt'
+                            onMouseEnter={() => setHoverRedo(true)}
+                            onMouseLeave={() => setHoverRedo(false)}
                         />
                         {hoverRedo && (
-                          <div className='popup ModalCompile4'>Redo</div>
+                            <div className='popup ModalCompile4'>Redo</div>
                         )}
                       </button>
-                    </Col>
-                    <Col className='flex flex-row'>
-                      <div
-                        id='action-btn-container'
-                        className='flex space-around'
-                      >
-                        <ArduinoLogo
+
+                      {/* enable split screen for lesson creation? */}
+                      {/*/!* Split Screen Toggle *!/*/}
+                      {/*<div id="display-split-screen"*/}
+                      {/*     onMouseEnter={() => setHoverSplit(true)}*/}
+                      {/*     onMouseLeave={() => setHoverSplit(false)}*/}
+                      {/*>*/}
+                      {/*  {hoverSplit && (*/}
+                      {/*      <div className='popup ModalCompile4'> Split Screen</div>*/}
+                      {/*  )}*/}
+                      {/*  <Button id="link" style={buttonStyle} onClick={toggleSplit}>*/}
+                      {/*    <font size="+1">*/}
+                      {/*      [ | ]*/}
+                      {/*    </font>*/}
+                      {/*  </Button>*/}
+                      {/*</div>*/}
+
+                      {/*Arduino Upload button*/}
+                      <ArduinoLogo
                           setHoverCompile={setHoverCompile}
                           handleCompile={handleCompile}
-                        />
-                        {hoverCompile && (
-                          <div className='popup ModalCompile'>
+                      />
+                      {hoverCompile && (
+                          <div className='popup ModalCompile4'>
                             Upload to Arduino
                           </div>
-                        )}
-                    <DisplayDiagramModal
-                      image={activity.images}
-                    />
-                        <i
+                      )}
+
+                      {/* Display Diagram - diagram will be in lesson view */}
+                      {/*<DisplayDiagramModal image={activity.images}/>*/}
+
+                      {/* Run -> Open Serial Monitor Button / Console Window*/}
+                      <i
                           onClick={() => handleConsole()}
                           className='fas fa-terminal hvr-info'
-                          style={{ marginLeft: '6px' }}
                           onMouseEnter={() => setHoverConsole(true)}
                           onMouseLeave={() => setHoverConsole(false)}
-                        />
-                        {hoverConsole && (
+                      />
+                      {hoverConsole && (
                           <div className='popup ModalCompile'>
                             Show Serial Monitor
                           </div>
-                        )}
-                        <Dropdown overlay={menu}>
-                          <i className='fas fa-ellipsis-v'></i>
-                        </Dropdown>
-                      </div>
+                      )}
+
+                      {/*Elipse: menu w/ serial plotter and ardrino code*/}
+                      <Dropdown overlay={menu}>
+                        <i className='fas fa-ellipsis-v'></i>
+                      </Dropdown>
+                    </div>
+                  </Col>
+                </Col>
+
+              </Row>
+
+              <Row id={"row-flex-row"}>
+                <Col flex='auto'>
+                  <Row id='description-container'>
+                    {/* Back Button */}
+                    <Col flex={'1 0 30px'}>
+                      <button
+                          onClick={handleGoBack}
+                          id='link'
+                          className='flex flex-column'
+                      >
+                        <i id='icon-btn' className='fa fa-arrow-left' />
+                      </button>
                     </Col>
                   </Row>
-                </Row>
-              </Col>
+                </Col>
+              </Row>
             </Row>
+
+
             <div id='blockly-canvas' />
           </Spin>
           </div>

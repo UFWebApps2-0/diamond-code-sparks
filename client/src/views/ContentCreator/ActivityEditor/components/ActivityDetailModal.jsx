@@ -1,4 +1,4 @@
-import { Button, Form, Input, message, Modal } from "antd"
+import { Button, Form, Input, message, Modal,Checkbox } from "antd"
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import {
@@ -27,10 +27,12 @@ const ActivityDetailModal = ({
   const [StandardS, setStandardS] = useState("")
   const [images, setImages] = useState("")
   const [link, setLink] = useState("")
+  const [student_vis, setStudent_vis] = useState(true);
 
   const [scienceComponents, setScienceComponents] = useState([])
   const [makingComponents, setMakingComponents] = useState([])
   const [computationComponents, setComputationComponents] = useState([])
+  
 
   const [linkError, setLinkError] = useState(false)
   const [submitButton, setSubmitButton] = useState(0)
@@ -39,6 +41,7 @@ const ActivityDetailModal = ({
   useEffect(() => {
     const showActivityDetailsModal = async () => {
       const response = await getActivity(selectActivity.id)
+      console.log(response)
       if (response.err) {
         message.error(response.err)
         return
@@ -49,6 +52,8 @@ const ActivityDetailModal = ({
       setImages(response.data.images)
       setLink(response.data.link)
       setLinkError(false)
+      console.log(response.data.student_vis)
+      setStudent_vis(response.data.student_vis)
       const science = response.data.learning_components
         .filter(component => component.learning_component_type === SCIENCE)
         .map(element => {
@@ -122,7 +127,8 @@ const ActivityDetailModal = ({
       link,
       scienceComponents,
       makingComponents,
-      computationComponents
+      computationComponents,
+      student_vis,
     )
     if (res.err) {
       message.error(res.err)
@@ -130,15 +136,21 @@ const ActivityDetailModal = ({
       message.success("Successfully saved activity")
       // just save the form
       if (submitButton === 0) {
+        console.log(student_vis)
         const getActivityAll = await getLessonModuleActivities(viewing)
         const myActivities = getActivityAll.data
         myActivities.sort((a, b) => (a.number > b.number ? 1 : -1))
         setActivities([...myActivities])
+        console.log(myActivities)
         // save the form and go to workspace
       } else if (submitButton === 1) {
         setActivityDetailsVisible(false)
         handleViewActivityLevelTemplate(res.data)
       } else if (submitButton === 2) {
+        setActivityDetailsVisible(false)
+        handleViewActivityTemplate(res.data)
+      }
+      else if (submitButton === 3) {
         setActivityDetailsVisible(false)
         handleViewActivityTemplate(res.data)
       }
@@ -222,6 +234,17 @@ const ActivityDetailModal = ({
         </Form.Item>
         <h3 id="subtitle">Additional Information</h3>
         <Form.Item
+            id = "form-label"
+            label="Split Screen Visible to student"
+          > 
+            <Checkbox 
+            checked = {student_vis}
+            onChange={e => setStudent_vis(e.target.checked)} 
+            
+            />
+        </Form.Item>
+
+        <Form.Item
           id="form-label"
           label="Link to Additional Resources (Optional)"
         >
@@ -239,7 +262,7 @@ const ActivityDetailModal = ({
         <Form.Item
           id="form-label"
           wrapperCol={{
-            offset: 6,
+            offset: 1,
             span: 30,
           }}
         >
@@ -252,6 +275,11 @@ const ActivityDetailModal = ({
             Save and Set
             <br />
             Demo Template
+          </button>
+          <button id="save--set-demo-btn" onClick={() => setSubmitButton(3)}>
+            Save and Set
+            <br />
+            Code Replay
           </button>
         </Form.Item>
         <Form.Item

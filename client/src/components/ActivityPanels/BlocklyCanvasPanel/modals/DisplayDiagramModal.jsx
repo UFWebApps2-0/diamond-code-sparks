@@ -31,7 +31,7 @@ export default function DisplayDiagramModal(props) {
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
     >
-      {hover ? <div className="popup ModalCompile">Diagrams</div> : ""}
+      {hover ? <div className="popup ModalCompile4">Diagrams</div> : ""}
       <Button id="link">
         <svg
           width="25"

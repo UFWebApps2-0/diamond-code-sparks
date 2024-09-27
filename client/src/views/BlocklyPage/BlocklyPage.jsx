@@ -3,6 +3,11 @@ import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import BlocklyCanvasPanel from "../../components/ActivityPanels/BlocklyCanvasPanel/BlocklyCanvasPanel"
 import NavBar from "../../components/NavBar/NavBar"
+import Blank from "./Blank";
+import SplitPane from 'react-split-pane';
+import CodeReplay from './CodeReplay'
+import './Blank.css'
+
 import {
   getAuthorizedWorkspaceToolbox,
   getActivityToolbox,
@@ -14,9 +19,13 @@ export default function BlocklyPage({ isSandbox }) {
   const [value] = useGlobalState("currUser")
   const [activity, setActivity] = useState({})
   const navigate = useNavigate()
+  const [splitOpen, setSplitOpen] = useState(false)
+  const [splitScreenEnabled, setSplitScreenEnabled] = useState(false);
+  const [disableSplit, setDisableSplit] = useState(false);
 
   useEffect(() => {
     const setup = async () => {
+      
       // if we are in sandbox mode show all toolbox
       const sandboxActivity = JSON.parse(localStorage.getItem("sandbox-activity"))
       if (isSandbox) {
@@ -48,7 +57,6 @@ export default function BlocklyPage({ isSandbox }) {
       // else show toolbox based on the activity we are viewing
       else {
         const localActivity = JSON.parse(localStorage.getItem("my-activity"))
-
         if (localActivity) {
           if (localActivity.toolbox) {
             setActivity(localActivity)
@@ -72,12 +80,55 @@ export default function BlocklyPage({ isSandbox }) {
     setup()
   }, [isSandbox, navigate, value.role])
 
-  return (
-    <div className="container nav-padding">
-      <NavBar />
-      <div className="flex flex-row">
-        <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
-      </div>
-    </div>
-  )
+    const [leftPaneSize, setLeftPaneSize] = useState('50%');
+    
+    const handleDrag = newSize => {
+      // The new size is greater than or equal to 50% of the window width
+      if (newSize >= window.innerWidth / 2) {
+        setLeftPaneSize(newSize);
+      }
+    };
+
+  const handleToggleSplit = () => {
+    const localActivity = JSON.parse(localStorage.getItem('my-activity'));
+    if(localActivity.student_vis == true)
+      if (!disableSplit) {
+        setSplitOpen(!splitOpen);
+      }
+    else{
+      setSplitOpen(false);
+    }
+  };
+  //handles toggling split-screen 
+  const handleToggleSplitD = () => {
+    setDisableSplit(!disableSplit);
+    setSplitOpen(false); //Close split-screen when disabling
+  };
+
+
+    return (
+        <div className="container nav-padding">
+          <NavBar />
+          { splitOpen && !disableSplit ? (
+            <SplitPane
+            split="vertical"
+            minSize="50%"
+            maxSize={-1} // No maximum size restriction
+            defaultSize={leftPaneSize}
+            onChange={handleDrag}
+            pane1Style={{ minWidth: '50%'}}
+            className="flex flex-row"
+            >
+                <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} toggleSplit={handleToggleSplit}/>
+                <SplitPane split="vertical">
+                    <Blank />
+                    <CodeReplay />
+                </SplitPane>
+            </SplitPane>
+          ) :
+          (
+            <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} toggleSplit={handleToggleSplit} />
+          )}
+        </div>
+    )
 }

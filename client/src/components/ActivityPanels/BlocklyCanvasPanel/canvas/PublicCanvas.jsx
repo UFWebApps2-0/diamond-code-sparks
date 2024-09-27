@@ -167,78 +167,63 @@ export default function PublicCanvas({ activity, isSandbox }) {
             size='large'
             spinning={selectedCompile}
           >
+            {/*Natalie*/}
             <Row id='icon-control-panel'>
               <Col flex='none' id='section-header'>
                 Program your Arduino...
               </Col>
-              <Col flex='auto'>
-                <Row align='middle' justify='end' id='description-container'>
-                  <Col flex={'30px'}>
-                    <Row>
-                      <Col>
-                        <Link id='link' to={'/'} className='flex flex-column'>
-                          <i className='fa fa-home fa-lg' />
-                        </Link>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col flex='auto' />
 
-                  <Col flex={'200px'}>
-                    <Row>
-                      <Col className='flex flex-row'>
-                        <button
+
+              <Col flex='auto'>
+                <Row id='description-container'>
+                  {/*<Col flex={'30px'}>*/}
+                  {/*  <Row>*/}
+                  {/*    <Col>*/}
+                  {/*      <Link id='link' to={'/'} className='flex flex-column'>*/}
+                  {/*        <i className='fa fa-home fa-lg' />*/}
+                  {/*      </Link>*/}
+                  {/*    </Col>*/}
+                  {/*  </Row>*/}
+                  {/*</Col>*/}
+
+                  <Col flex={'230px'}>
+                    <div id='action-btn-container' className='flex'>
+
+                      {/*Undo*/}
+                      <button
                           onClick={handleUndo}
                           id='link'
                           className='flex flex-column'
-                        >
-                          <i
+                      >
+                        <i
                             id='icon-btn'
                             className='fa fa-undo-alt'
-                            style={
-                              workspaceRef.current
-                                ? workspaceRef.current.undoStack_.length < 1
-                                  ? { color: 'grey', cursor: 'default' }
-                                  : null
-                                : null
-                            }
                             onMouseEnter={() => setHoverUndo(true)}
                             onMouseLeave={() => setHoverUndo(false)}
-                          />
-                          {hoverUndo && (
+                        />
+                        {hoverUndo && (
                             <div className='popup ModalCompile4'>Undo</div>
-                          )}
-                        </button>
-                        <button
+                        )}
+                      </button>
+
+                      {/*Redo*/}
+                      <button
                           onClick={handleRedo}
                           id='link'
                           className='flex flex-column'
-                        >
-                          <i
+                      >
+                        <i
                             id='icon-btn'
                             className='fa fa-redo-alt'
-                            style={
-                              workspaceRef.current
-                                ? workspaceRef.current.redoStack_.length < 1
-                                  ? { color: 'grey', cursor: 'default' }
-                                  : null
-                                : null
-                            }
                             onMouseEnter={() => setHoverRedo(true)}
                             onMouseLeave={() => setHoverRedo(false)}
-                          />
-                          {hoverRedo && (
+                        />
+                        {hoverRedo && (
                             <div className='popup ModalCompile4'>Redo</div>
-                          )}
-                        </button>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col flex={'230px'}>
-                    <div
-                      id='action-btn-container'
-                      className='flex space-around'
-                    >
+                        )}
+                      </button>
+
+                      {/*Arduino Upload button*/}
                       <ArduinoLogo
                         setHoverCompile={setHoverCompile}
                         handleCompile={handleCompile}
@@ -249,10 +234,10 @@ export default function PublicCanvas({ activity, isSandbox }) {
                         </div>
                       )}
 
+                      {/* Run -> Open Serial Monitor Button / Console Window*/}
                       <i
                         onClick={() => handleConsole()}
                         className='fas fa-terminal hvr-info'
-                        style={{ marginLeft: '6px' }}
                         onMouseEnter={() => setHoverConsole(true)}
                         onMouseLeave={() => setHoverConsole(false)}
                       />
@@ -261,15 +246,22 @@ export default function PublicCanvas({ activity, isSandbox }) {
                           Show Serial Monitor
                         </div>
                       )}
+
+                      {/*Elipse: menu w/ serial plotter and ardrino code*/}
                       <Dropdown overlay={menu}>
                         <i className='fas fa-ellipsis-v'></i>
                       </Dropdown>
                     </div>
                   </Col>
+
+
                 </Row>
               </Col>
+
+
+
             </Row>
-            <div id='blockly-canvas' />
+            <div id='blockly-canvas'/>
           </Spin>
         </div>
         <ConsoleModal

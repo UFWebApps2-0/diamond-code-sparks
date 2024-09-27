@@ -7,8 +7,7 @@ const ArduinoLogo = ({ setHoverCompile, handleCompile }) => {
         version='1.0'
         xmlns='http://www.w3.org/2000/svg'
         width='40px'
-        height='20px'
-        align='center'
+        height='30px'
         viewBox='450 280 300 300'
         preserveAspectRatio='xMidYMid'
         onMouseEnter={() => setHoverCompile(true)}
