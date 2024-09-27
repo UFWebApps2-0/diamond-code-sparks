@@ -1,5 +1,7 @@
 @import "../../assets/style";
 
+
+
 #activity-container {
   position: absolute;
   top: 53vh;
@@ -11,20 +13,43 @@
   border-radius: 15px;
   border: 4px solid;
   border-color: #colors[secondary];
+
+  .view-all-lessons-button {
+    font-size: 1vw;
+    font-weight: 500;
+    padding: 10px 20px;
+    background:  #colors[secondary];
+    color:  #colors[senary];
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.25s;
+    margin-right: 0px;
+    margin-bottom: -70px;
+
+    &:hover {
+      background:  #colors[secondary];
+    }
+  }
 }
+
+
+
+
 
 #header {
   background-color: #colors[secondary];
   border-radius: 80px;
   width: 40%;
-  min-height: 4vh;
+  min-height: 8vh;
+  padding: 10px;
   color: #colors[text-secondary];
-  font-size: 2.25vh;
+  font-size: 2.5vh;
   font-weight: bold;
   position: relative;
   top: -20px;
   left: -30px;
-  line-height: 45px;
+  line-height: 20px;
   text-align: center;
 }
 
@@ -48,6 +73,35 @@
     background-color: #colors[quinary];
     width: 82%;
   }
+  .custom-dropdown {
+    font-size: 1vw;
+    font-weight: 50%;
+    padding: 10px 20px;
+    background: #colors[secondary];
+    color: #colors[senary];
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.25s;
+    margin-right: 0px;
+    margin-bottom: 0px;
+  
+    &:hover {
+      background: #colors[secondary];
+    }
+  
+    .ant-select-selector {
+      border-radius: 20px;
+      border: none;
+      background: #colors[secondary];
+      color: #colors[senary];
+    }
+  
+    .ant-select-arrow {
+      color: #colors[senary];
+    }
+  }
+  
 }
 
 ul {
@@ -86,4 +140,25 @@ li {
       color: #colors[secondary];
     }
   }
+}
+
+#lesson-module-expectations {
+  font-size: 1.2em;
+  line-height: 1.2em;
+  margin: 0 auto 2.0em auto;
+  width: 90%;
+
+#code-display-text{
+  font-size: medium;
+}
+
+#display-code-btn{
+  width: 100%;        /* Ensures button fills the entire width */
+  padding: 0;         /* Adjust padding to align with li's content */
+  z-index: 10;         /* Allows positioning of the psuedo element */
+  margin: 0;          /* Remove any additional margin */
+  border: none;       /* Optional: Remove border if not needed */
+  background-color: transparent; 
+  // background-color: red; 
+  // position: ;
 }
